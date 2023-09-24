@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Poppins:wght@300;500&display=swap');
+
+* {
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+#padre{
+    width: 450px; /* Ancho máximo del formulario */
+    margin: 0 auto; /* Centrar el formulario en la página */
+    margin-top: 50px; /*distancia en el contenido de ariba entre el formulario*/
+    background-color:#50a4e4; /* Color de fondo del formulario */
+    padding: 20px; /* Espacio interno del formulario */
+    border-radius: 8px; /* Borde redondeado del formulario */
+    text-align: center;
+    font-size: 15px;
+}
+
+input[type="password"] {
+    width: 100%; /* Ancho completo del campo de entrada */
+    padding: 5px; /* Espacio interno del campo de entrada */
+    border: none; /* Sin bordes alrededor del campo de entrada */
+    border-bottom: 2px solid #ffffff; /* Línea inferior del campo de entrada */
+    background-color: transparent; /* Fondo transparente del campo de entrada */
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.51); 
+    font-size: 15px;
+}
+
+button[type="submit"] {
+    margin: 0 auto; /* Centrar el boton*/
+    display: block; /* Convertir el botón en un elemento de bloque */
+    width: 90%; /* Ancho completo del botón */
+    padding: 15px; /* Espacio interno del botón */
+    margin-top: 35px; /* Espacio superior del botón */
+    border: none; /* Sin bordes alrededor del botón */
+    border-radius: 15px; /* Borde redondeado del botón */
+    background-color: #0065B3; /* Color de fondo del botón */
+    color: #FFF; /* Color del texto del botón */
+    font-weight: bold; /* Fuente en negrita del texto del botón */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    font-size: 15px;
+}
+
+.contrasena {
+    text-align: left;
+    margin-bottom: 10px; /* Espacio inferior de los campos de entrada */
+    font-size: 20px;
+}
+
+label {
+    display: block;/* Convertir las etiquetas en elementos de bloque */
+    font-weight: bold; /* Fuente en negrita */
+    margin-bottom: 10px; /* Espacio inferior de las etiquetas */
+    color: #f2f2f2;
+}
+

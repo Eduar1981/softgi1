@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario proveedores</title>
+    <link rel="stylesheet" href="../../static/css/proveedore.css">
+</head>
+<body>
+
+    <main id="inicio">
+        <div>
+            <h2>CREAR PROVEEDORES</h2>
+        </div>
+        <div id="img-parabri">
+            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
+        </div>
+            <form action="/crearProveedores" method="post" id="formu_proveed">
+                <div class="campos">
+                    <input type="number" name="documentoProveedor" id="documentoProvedor" placeholder="Ingrese su documento" class="campo">
+                    <input type="text" name="nombreProveedor" id="nombreProveedor" placeholder="Ingrese su nombre" class="campo">
+                    <input type="number" name="numeroProveedores" id="numeroProveedores" placeholder="Ingrese su numero telefonico" class="campo">
+                    <input type="email" name="correoProveedores" id="correoProveedores" placeholder="Ingrese su correo" class="campo">
+                    <input type="text" name="direccionProveedores" id="direccionProveedores" placeholder="Ingrese su dirrecion" class="campo">
+                </div>
+                <div id="boton-atras">
+                <input type="submit" value="Registrar" class="boton-atras">
+                </div>
+            </form>
+    </main>
+        <div id="boton-atras">
+            <button class="boton-atras" onclick="window.location.href='/index'">Regresar  al Home</button>
+        </div>
+</body>
+</html>

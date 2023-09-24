@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Poppins:wght@300;500&display=swap');
+
+* {
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
+img {
+    margin: 0 0 -4px 0;
+    width: 100%;
+}
+
+figure {
+
+    background-color: rgb(113, 113, 180);
+    border-radius: 8px;
+}
+#hijo-2 {
+    align-items: left;
+    background-color: rgb(75, 139, 139);
+    border-radius: 8px;
+    position:absolute;
+    margin: 0;
+    padding: 0;
+    width: 600px;
+    height: 360px;
+}

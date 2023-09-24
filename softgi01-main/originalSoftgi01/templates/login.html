@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../static/css/login.css">
+</head>
+<body>
+    <main id="inicio">
+
+        <div id="padre">
+
+            <div id="caja-login">
+                <form  id="login" name="login" action="/login" method="post">
+
+                    <div class="cont-campos">
+                        <label for="correo">Correo Eletronico</label>
+                        <input class="ancho" type="email" name="correo" id="correo" placeholder="Ingrese su correo"  required>
+                    </div>
+
+                    <div class="cont-campos">
+                        <label for="">Contraseña</label>
+                        <input class="ancho" type="password" name="contrasena" id="contrasena" placeholder="Ingrese su contraseña"   required >
+                    </div>
+
+                    <div id="btn" >
+                    <button id="btn-entrar" class="boton" type="submit" value="Ingresar">Ingresar</button>
+                    </div>
+
+                    <div class="opciones">
+                        <div class="opcion">
+                            <a href="#">Usar Huella</a>
+                        </div>
+
+                        <div class="opcion">
+                            <a href="{{url_for ('registroF')}}">Crear Usuario</a>
+                        </div>
+
+                        <div class="opcion">
+                            <a href="{{url_for ('solicitarCambio_contraseña')}}">¿Olvidaste tu contraseña?</a>
+                        </div>
+                    </div>
+
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <ul>
+                                {% for message in messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endwith %}
+
+                </form>
+            </div>
+
+            
+            <div id="caja-logo">
+                <figure>
+                    <img src="../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" id="logo-softgi" alt="softgi">
+                </figure>
+
+                <div class="ctn-texto">
+                <p>Bienvenidos a</p>
+                <h1>SOFTGI</h1>
+                </div>
+            </div>
+
+        </div>
+        
+    </main>
+
+</body>
+</html>

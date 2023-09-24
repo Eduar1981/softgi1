@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar productos</title>
+    <link rel="stylesheet" href="../../static/css/edita_productos.css">
+</head>
+<body>
+    <main id="inicio">
+        <div id="img-parabri">
+            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
+        </div>
+        <form action="/Actualizar_clie" method="post" id="formu_productos">
+            <h2>Editar productos</h2>
+                <div class="cont-campos">
+
+                    <input type="text" name="idproducto" id="idproducto" placeholder="Id producto num-letras" value="{{resul[0]}}">
+
+                    <input type="text" name="proveedor" id="proveedor" placeholder="Nombre proveedor"  value="{{resul[1]}}">
+                        
+                    <select name="categoria" id="categoria" class="categoria">
+                        <option value="{{resul[2]}}">{{resul[2]}}</option>
+                        <!--<option value="">Categoria</option>-->
+                        <option value="parabrisas">Parabrisas</option>
+                        <option value="manija"></option>
+                        <option value="chapas"></option>
+                        <option value="empaques"></option>
+                        <option value="elevavidrios"></option>
+                    </select>
+                    <!--<input type="text" name="categoria" id="categoria" placeholder="Categoria" class="campo" value="{{resul[1]}}">-->
+
+                    <input type="text" name="nomproducto" id="nomproducto" placeholder="Nombre producto" class="campo" value="{{resul[3]}}">
+
+                    <input type="text" name="refencia" id="refencia" placeholder="Referencia" class="campo" value="{{resul[4]}}">
+
+                    <input type="number" name="preciocompra" id="preciocompra" placeholder="Precio comprar" class="campo" value="{{resul[5]}}">
+
+                    <input type="number" name="precioventa" id="precioventa" placeholder="Precio venta" class="campo" value="{{resul[6]}}">
+
+                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" class="campo" value="{{resul[7]}}">
+
+                    <input type="number" name="cantidadprod" id="cantidadprod" placeholder="Cantidad" class="campo" value="{{resul[8]}}">
+
+                    <input type="number" name="cantidadminima" id="cantidadminima" placeholder="Cantidad minima" class="campo" value="{{resul[9]}}">
+
+                    <input type="text" name="ubicacion" id="ubicacion" placeholder="Ubicación" class="campo" value="{{[10]}}">
+                </div>
+
+                <div id="contenedor_tipo" class="optiones">
+                    <select id="opt" name="tipopersona" class="tipo_persona">
+                        <option value="{{resul[6]}}">{{resul[6]}}</option>
+                        <option value="natural">Natural</option>
+                        <option value="juridica">Juridica(representante legal)</option>
+                    </select>
+               </div>
+               <div id="boton-atras">
+                    <button type="submit" class="boton-atras">Guardar</button>
+                </div>
+        </form>
+        <div id="boton-atras">
+            <button class="boton-atras" onclick="window.location.href='/clientes'">Regresar</button>
+        </div>
+    </main>
+</body>
+</html>

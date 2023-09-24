@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visaulización de clientes</title>
+    <link rel="stylesheet" href="../../static/css/muestraclientes.css">
+
+</head>
+<body>
+    <div>
+        <h1>Clientes</h1>
+    </div>
+    <div id="crear-prov">
+        <a class="crear-prov" href="{{url_for('crearClientes')}}">Crear Clientes</a> 
+    </div>
+    <table class="content-table" id="tabla_productos"> 
+        <thead> 
+        <tr> 
+            <th>Documento cliente</th>
+            <th>Nombre cliente</th> 
+            <th>Apellido cliente</th> <!-- Celda cabecera de la columna 3 -->
+            <th>Número contacto</th>
+            <th>Correo electrónico</th>
+            <th>Direccción</th>
+            <th>Tipo persona</th>
+            <th></th>
+            <th></th>
+        </tr> 
+    </thead> 
+    <tbody> 
+        {% for resul in resulta %}
+            <tr>
+                <td>
+                    {{resul[0]}}
+                </td>
+                <td>
+                    {{resul[1]}}
+                </td>
+                <td>
+                    {{resul[2]}}
+                </td>
+                <td>
+                    {{resul[3]}}
+                </td>
+                <td>
+                    {{resul[4]}}
+                </td>
+                <td>
+                    {{resul[5]}}
+                </td>
+                <td>
+                    {{resul[6]}}
+                </td>
+
+                <td>
+                    <a class="boton-editar" href="/editarClientes/{{resul[0]}}">Editar</a>
+                </td>               
+                
+
+                <td>
+                    <a  class="boton-eliminar" onclick="return confirm('Seguro que deseas eliminar el cliente?')" href="/borracliente/{{resul[0]}}">Eliminar</a>
+                </td>
+
+            </tr>
+        {% endfor %} 
+    </tbody> 
+    </table>
+        <div id="boton-atras">
+            <button class="boton-atras" onclick="window.location.href='/index'">Regresar al home</button>
+        </div>
+</body>
+</html>

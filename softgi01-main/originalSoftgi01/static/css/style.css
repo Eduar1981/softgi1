@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Poppins:wght@300;500&display=swap');
+
+
+body {
+    background:#ffffff;margin:0
+}
+.contact-form{
+    --form-ok-color:#4caf50;
+    --form-error-color:#f44336;
+    margin-left: auto;
+    margin-right: auto;
+    width:540px;height:820px;
+    background:#007FE0;border-radius:20px;
+    box-shadow:0 0 40px -10px #ffffff;
+    margin:calc(50vh - 220px) auto;
+    padding:20px 30px;max-width:calc(100vw - 40px);
+    box-sizing:border-box;font-family:'Roboto';
+    position:relative
+}
+.contact-form-response {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.form-label {
+    color: #000000;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.usuario {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.contact-form {
+    color: #1a1616;
+}
+
+.registro {
+    text-align: center;
+    font-weight: bold;
+    font-style: 6px;
+    font: #000000;
+    letter-spacing: 2px;
+}
+
+img {
+    display: block;
+    width: 60%;
+    margin: auto;
+}
+input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    background-color: transparent;
+    font-weight: bold;
+    color: rgba(0,0,0, 0.51);
+
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    background-color: transparent;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.51);
+
+}
+
+::placeholder {
+    color: white;
+}
+ 
+input[type="email"] {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    background-color: transparent;
+    font-weight: bold;
+    color: rgba(0,0,0,0.51);
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    background-color: transparent;
+    font-weight: bold;
+    color: rgba(0,0,0, 0.51);
+}
+
+.opciones{
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    background-color:#ffffff;
+    font-weight: bold;
+    color: rgba(255, 255,255, 0.51);
+}
+#opt {
+    background-color: #ffffff;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+    border: #000000;
+}
+.boton-guardar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.boton-guardar #guardar {
+    background-color: #e6e9ec; /* Color de fondo normal */
+    color:#000000; /* Color de texto */
+    border: none;
+    border-radius: 20px;
+    width: 80%;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.boton-guardar #guardar:hover {
+    background-color: #bc656c; /* Color de fondo al pasar el cursor */
+}
+
+.ocho-caracteres p{
+    font-weight: bold;
+    color: #000000;
+}
+#logo {
+    width: 70px;
+}
+  form fieldset {
+    float: left;
+    width: 40%;
+    border: none;
+}
+
+
+.select-label-rol {
+    display: block;
+    font-size: 17px;
+    font-weight: bolder;
+    color: #000000;
+    margin-bottom: 10px;
+}
+.custom-select {
+    appearance: none;
+    border: none;
+    border-bottom: 5px solid #000000;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 25px;
+    letter-spacing: 2px;
+    color: rgba(0, 0, 0, 0.51);
+    width: 60%;
+    outline: none; /* Remover el contorno al hacer clic */
+}
+.optiones {
+    position: relative; /* Permite posicionar el label correctamente */
+}
+/* Estilo para el option de "Seleccionar" */
+.custom-select option:first-child {
+    color: #000000;
+}
+.custom-select::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #000000;
+    position: absolute;
+    bottom: -5px; /* Posiciona la línea debajo del select */
+    left: 0; /* Alinea la línea a la izquierda */
+}
+.custom-select option[value=""] {
+    display: none;
+}
+
+
+
+
+
+
+

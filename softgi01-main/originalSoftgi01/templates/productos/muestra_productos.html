@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muestras productos</title>
+    <link rel="stylesheet" href="../../static/css/muestra_productos.css">
+</head>
+<body>
+    <div></div>
+    <h1>Productos</h1>
+    <div id="crear-prov">
+    <a class="crear-prov" href="{{url_for('proveedoress')}}">Crear Productos</a>
+    </div>
+    <br>
+
+    <table class="content-table" id="tabla_productos">
+        <thead >
+            <tr>
+                <th>Id producto</th>
+                <th>Proveedor</th>
+                <th>Categoria</th>
+                <th>Nombre producto</th>
+                <th>Referencia</th>
+                <th>Precio de compra</th>
+                <th>Precio de venta</th>
+                <th>Descripción</th>
+                <th>Cantidad de entrada</th>
+                <th>Cantidad minima</th>
+                <th>Ubicación</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in resul %}
+                <tr>
+                    {% for i in range(0,8) %}
+
+                        <td>{{c[i]}}</td>
+
+                    {% endfor %}
+
+                        <td>
+                            <a class="boton-editar" href="/muestra_info_prov/{{c[0]}}">Editar</a>
+                        </td>
+
+                        <td>
+                            <a class="boton-eliminar"  onclick="return confirm('Seguro que deseas eliminar el producto?')" href="/borraprovee/{{c[0]}}">Eliminar</a>
+                        </td>
+
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/index'">Regresar al Home</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+*{
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+
+img{
+    margin: 0 0 -4px;
+    padding: 0;
+    width: 100%;
+}
+
+
+body,html{
+    margin: 0;
+    padding: 0;
+}
+
+
+form#formu_prueba{
+    margin: 0;
+    padding: 21px;
+}
+
+
+    #formu_prueba #contenedor_chulo{
+        justify-content: flex-start;
+    }
+
+
+        #formu_prueba #cliente_termino{
+            margin-left: 8px;
+            margin-right: 13px;
+            transform: scale(1.8);
+        }
+
+
+
+
+    #formu_prueba input{
+        /* background-color: rgba(255, 255, 255, 0.65); */
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.25));
+        border: none;
+        border-radius: 2em;
+        color: #000000;
+        font-family: 'Trebuchet MS',sans-serif;
+        font-size: 14px;
+        margin: 11px 0;
+        padding: 11px 18px;
+            }
+
+        
+        #formu_prueba div.cont-campos{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+
+        #formu_prueba button[type="submit"]{
+            position: relative;
+            left: 130px;
+            background: linear-gradient(90deg, #0EF76A, #18F44D);
+            background-color: greenyellow;
+            border: none;
+            box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 2em;
+            margin: 11px 0 0 0;
+            padding: 11px 18px;
+            width: 150px;
+        }
+
+
+        #formu_prueba h2{
+            color: #000000;
+            font-family: 'Trebuchet MS',sans-serif;
+            font-size: 31px;
+        }
+
+
+main#inicio{
+    background: url(../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png) center center /cover no-repeat;
+    min-height: 100vh;
+    width: 100vw;
+    display: grid;
+    place-items: center;
+}
+
+
+/* objectos que parametriso con id */
+
+#padre{
+    max-width: 1024px;
+    min-height: 65vh;
+    min-width: 520px;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+
+}
+
+
+    #padre #caja_formulario{
+        flex-basis: 65%;
+        background-color: rgba(132, 165, 255, 0.747);
+        -webkit-backdrop-filter: blur(7px);
+        backdrop-filter: blur(7px);
+    }
+
+
+    #padre #caja_logo{
+        background-color: rgba(20, 139, 243, 0.75);
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(7px);
+        padding: 18px;
+        flex-basis: 35%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+        #caja_logo h1{
+            font-family: 'Trebuchet MS',sans-serif;
+            font-size: 21px;
+            margin: 8px 0;
+            text-align: center;
+        }
+
+
+        #caja_logo .cont_txt{
+            margin-top: 24px;
+        }
+
+
+
+#imagen{
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    filter: drop-shadow(0px 0px 16px #333);
+
+}
+
+
+/* clases */
+.ancho-full{
+    width: 100%;
+}
+.ancho-medio{
+    width: 48%;
+}
+
+.custom-select{
+    border: none;
+    font-size: 15px;
+    font-family: 'Trebuchet MS',sans-serif;
+    border-radius: 8PX;
+    padding: 10px !important ;
+}
+

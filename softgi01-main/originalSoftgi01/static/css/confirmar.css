@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Poppins:wght@300;500&display=swap');
+
+* {
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+#padre{
+    width: 350px; /* Ancho máximo del formulario */
+    margin: 0 auto; /* Centrar el formulario en la página */
+    margin-top: 50px; /*distancia en el contenido de ariba entre el formulario*/
+    background-color:#50a4e4; /* Color de fondo del formulario */
+    padding: 20px; /* Espacio interno del formulario */
+    border-radius: 8px; /* Borde redondeado del formulario */
+    text-align: center;
+    font-size: 20px;
+}
+#padre h3 {
+    color: #FFF;
+}
+
+button[type="submit"] {
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.7);
+    margin: 0 auto; /* Centrar el boton*/
+    display: block; /* Convertir el botón en un elemento de bloque */
+    width: 90%; /* Ancho completo del botón */
+    padding: 15px; /* Espacio interno del botón */
+    margin-top: 35px; /* Espacio superior del botón */
+    border: none; /* Sin bordes alrededor del botón */
+    border-radius: 15px; /* Borde redondeado del botón */
+    background-color: #33f13d; /* Color de fondo del botón */
+    color: #FFF; /* Color del texto del botón */
+    font-weight: bold; /* Fuente en negrita del texto del botón */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    font-size: 18px;
+}

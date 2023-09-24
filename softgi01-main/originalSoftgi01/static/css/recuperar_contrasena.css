@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;900&family=Nunito+Sans:opsz,wght@6..12,200;6..12,400&family=Ubuntu:wght@300;400;500&display=swap');
+
+* {
+    /* estilo de texto para todo */
+    font-family: 'Inter', sans-serif;  
+}
+
+
+
+
+.contenedor_loguin {
+    background-color: #007FE0;
+    position: absolute;
+    width: 400px;
+    height: 600px;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 30px;
+    gap: 100px;
+
+    /* elemento dentro del contenedor */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor_loguin h3 {
+    font-size: larger;
+}
+
+form {
+    /* elemento dentro del formulario */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+label {
+    /* elementos dentro del label de form */    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label span {
+    /* texto del input */
+    font-size: larger;
+    font-weight: 600;
+}
+
+label input {
+    /* tamaño y color del input */
+    width: 250px;
+    height: 50px;
+    border: none;
+    background-color: #007FE0;
+    border-bottom: 3px solid #ffffff;
+    outline: none;
+}
+
+label input[type="email"] {
+    /* tamaño y color del texto dentro del input */
+    font-size: larger;
+    color: black;
+    font-weight: 500;
+}
+
+button {
+    /* boton de enviar */
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+    font-weight: 600;
+    transition: background-color 0.4s;
+}
+
+button:hover {
+    /* cuando el cursor este sobre el boten */
+    background-color: rgba(255, 255, 255, 0.548);
+    cursor: pointer;
+}
+
+button:active {
+    background-color: rgba(255, 255, 255, 0.973);
+}
+
+
+.texto {
+    position: absolute;
+    color: black;
+    top: 515px;
+}

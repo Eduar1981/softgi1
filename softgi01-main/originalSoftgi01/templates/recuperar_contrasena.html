@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar contraseña</title>
+    <link rel="stylesheet" href="/static/css/recuperar_contrasena.css">
+</head>
+sitios123
+
+<body>
+    <a href="/">Regresar</a>
+    <div class="contenedor_loguin">
+        <h3>Vamos a restablecer tu contraseña</h3>
+        <form method="POST">
+            <label for="email"><span>Email</span>
+                <input type="email" name="email" id="email"  required>
+            </label>
+            <button type="submit">Recuperar</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    </div>
+
+</body>
+</html>

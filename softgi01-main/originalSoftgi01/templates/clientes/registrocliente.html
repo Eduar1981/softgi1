@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de clientes</title>
+    <link rel="stylesheet" href="../../static/css/registrocliente.css">
+</head>
+<body>
+    <main id="inicio">
+        <div id="img-parabri">
+            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
+        </div>
+        <form action="/crear_cliente" method="post" id="formu_clientes">
+            <h2>Registrar cliente</h2>
+                <div class="cont-campos">
+                    <input type="number" name="docclie" id="documento" placeholder="Documento" class="campo">
+                        
+                    <input type="text" name="nomclie" id="nombre" placeholder="Nombres" class="campo">
+
+                    <input type="text" name="apeclie" id="apellido" placeholder="Apellidos" class="campo">
+
+                    <input type="number" name="contclie" id="contacto" placeholder="Numero de contacto" class="campo">
+
+                    <input type="email" name="emaclie" id="correo" placeholder="email" class="campo">
+
+                    <input type="text" name="direclie" id="direccion" placeholder="Dirección" class="campo">
+                </div>
+
+                <div id="contenedor_tipo" class="optiones">
+                    <select id="opt" name="tipopersona" class="tipo_persona">
+                        <option value="">seleciona tipo de persona</option>
+                        <option value="natural">Natural</option>
+                        <option value="juridica">Juridica(representante legal)</option>
+                    </select>
+               </div>
+               <div>
+                    <button type="submit">Guardar</button>
+                </div>
+        </form>
+        <div id="boton-atras">
+            <button class="boton-atras" onclick="window.location.href='/index'">Regresar  al Home</button>
+        </div>
+    </main>
+</body>
+</html>

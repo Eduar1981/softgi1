@@ -1,0 +1,137 @@
+/* Reset de estilos y estilos generales */
+
+*{
+    box-sizing: border-box;
+    transition: all 0.1s ease-in-out;
+}
+
+body, html{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Kanit', Segoe UI, sans-serif;
+    font-size: 18px;
+}
+
+img{
+    margin: 0;
+    height: 100%;
+    width: 215px;
+}
+
+
+/* Estilos del encabezado */
+header {
+    background-color: #358CB4; /* Color de fondo del encabezado */
+    color: #fff; /* Color de texto del encabezado */
+    display: flex;
+    flex-wrap: nowrap;
+    height: 15vh;
+    justify-content: space-between;
+    /*align-items: center;*/
+    padding: 0;
+    width: 100%;
+}
+div#caja-logo {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 30%;
+}
+    figure {
+        margin: 0;
+        height: 100%;
+        padding: 0;
+        width: 100%;
+    }
+
+/*.logo img {
+    width: 100px;  Tamaño del logo, ajusta según tu diseño 
+}*/
+
+/*.header-content {
+    margin: 0;
+}*/
+
+
+nav#lista-opciones{
+    align-items: center;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    
+}
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        nav ul li {
+            display: inline;
+            margin-right: 100px;
+            
+            
+        }
+
+            nav ul li a {
+                text-decoration: none;
+                color: #fff;
+                font-weight: bold;
+                transition: color 0.3s ease-in-out;
+            }
+
+            nav ul li a:hover {
+                background-color: #BCBCBC;
+                border-radius: 7px;
+                color: #111113; /* Cambia el color al pasar el mouse por encima */
+                left: 200px;
+                padding: 8px;
+            }
+
+/* Estilos del contenido principal */
+
+section {
+    background: url('../../static/img/parabrisas_fondo.jpg') center center / cover no-repeat;
+    margin: 0;
+    padding: 0;
+    
+}
+
+
+
+footer {
+    background-color: #BCBCBC;
+    bottom: 0px;
+    color: #111113;
+    margin: 0px;
+    padding: 2px;   
+    position: absolute;
+    text-align: center;
+    width: 100%;
+
+}
+/* Estilos adicionales y personalización según tus preferencias */
+
+
+/*--------------------------------------- CLASES ---------------------------------------*/
+/*contenido-cabecera {
+    text-align: left;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between; 
+}
+/* Alineación entre los elementos */
+
+
+.main-content {
+    background-color: rgb(239, 249, 249); /* Color de fondo del contenido principal */
+    border-radius: 5px; /* Bordes redondeados para el contenido */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra ligera */
+    margin: 0;
+    padding: 20px;
+}

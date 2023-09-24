@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar categoria</title>
+    <link rel="stylesheet" href="../../static/css/registrar_categorias.css">
+</head>
+<body>
+    <main id="inicio">
+        <div id="img-parabri">
+            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
+        </div>
+        <form action="/crear_categoria" method="post" id="formu_categoria">
+            <h2>Registrar categoria</h2>
+                <div class="cont-campos">
+
+                    <input type="text" name="nomcat" id="nombre" placeholder="Categoria" class="campo">
+                        
+                </div>
+
+               <div>
+                    <button type="submit">Guardar</button>
+                </div>
+        </form>
+        <div id="boton-atras">
+            <button class="boton-atras" onclick="window.location.href='/index'">Regresar  al Home</button>
+        </div>
+    </main>
+</body>
+</html>

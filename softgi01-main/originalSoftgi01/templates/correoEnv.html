@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recuperación de contraseña</title>
+    <link rel="stylesheet" href="/static/css/enviocontra.css">
+</head>
+<body>
+    <h1>Hola {{ user.nombre }},</h1>
+    <p>Se ha enviado una solicitud de cambio  de contraseña. </p>
+    <p>Para restablecer tu contraseña, haz clic en el siguiente enlace: <a href="{{ token_url }}">Restablecer contraseña</a></p>
+    <p>Si no solicitaste un restablecimiento de contraseña, ignora este correo.</p>
+    <p>Gracias.</p>
+
+ <!--    <div id="hijo-2">
+            
+        <figure id="foto">
+            <img src="/static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo">
+        </figure>
+    </div>  --> 
+</body>
+</html>

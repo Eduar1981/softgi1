@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Poppins:wght@300;500&display=swap');
+
+* {
+    box-sizing: border-box; /*todos los objetos calculan desde su borde*/
+    transition: all 0.3s ease-in-out;
+    display: block;
+}
+img {
+    margin: 0 0 -4px 0;
+    padding: 0;
+    width: 100%;
+}
+body, html{
+    margin: 0;
+    padding: 0;
+}
+/*---con todo lo de arriba se organiza en general desde cero en cualquier navegador---*/
+
+/*---objetos---*/
+form#login {
+    margin: 0;
+    padding: 21px;
+}
+
+    #login input {
+        /*background-color: rgba(255, 255, 255, 0.65);*/
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.05));
+        border: none;
+        border-radius: 2em;
+        color: #2a2828;
+        font-size: 17px;
+        margin: 16px 0;
+        padding: 15px 21px;
+        align-content: center;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0px 4px 2px rgba(33,33,33,0.23);
+    }
+
+    #login div.cont-campos {
+        display: block;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #login div.opciones {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    #login #btn {
+        margin: 0px;
+        padding: 0;
+        align-content: center;
+        display: flex;
+        justify-content: center;
+    }
+
+        
+    #login button[type='submit']{
+        background-color: #89CC1E;
+        border: none;
+        border-radius: 3em;
+        color:#111113;
+        margin: 11px 0 0 0;
+        padding: 11px 18px;
+        width: 150px;
+        cursor: pointer;
+        box-shadow: 0px 4px 2px rgba(33,33,33,0.23);
+        font-weight: bold;
+
+        
+    }
+    #login button[type="submit"]:hover {
+        background-color: #358cb4;
+    }
+
+
+main#inicio {
+    background-color: #E1E1DF;
+    height: 100vh; /*viewport height*/
+    width: 100vw; /*viewport width*/
+    display: grid;
+    place-items: center;
+}
+#padre {
+    border-radius: 16px;
+    margin: 0;
+    max-width: 1024px;
+    min-height:65vh;
+    min-width: 520px;
+    overflow: hidden; /*que se esconda toso lo que está fuera de la caja */
+    padding: 0;
+    position: relative;
+    width: 65%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+    #padre #caja-login {
+        background-color: #83A7BF;
+        -webkit-backdrop-filter: blur(7px);
+        backdrop-filter: blur(7px); 
+        flex-basis: 65%; /*se usa cuando el padre tiene display flex*/
+        padding: 50px;
+    }
+    #padre #caja-logo {
+        background-color: #358cb4;
+        -webkit-backdrop-filter: blur(11px);
+        backdrop-filter: blur(11px);
+        padding: 7px;
+        flex-basis: 35%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #caja-logo h1{
+        font-size: 30px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        text-align: center;
+        margin: 8px, 0;
+    }
+
+    #caja-logo .ctn-texto {
+        margin-top: 24px;
+    }
+
+    #caja-logo p {
+        font-size: 30px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 8px 0;
+        text-align: center;
+    }
+
+
+#logo-softgi {
+    width: 170px;
+    margin: 0;
+
+    /*sombra para png es: 
+    filter: drop-shadow(0px 0px 25px #333);*/
+    
+}
+
+.opcion {
+    padding: 2px;
+}
+
+.ancho {
+    width: 80%;
+}
+

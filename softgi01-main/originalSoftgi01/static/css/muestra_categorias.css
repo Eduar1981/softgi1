@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Poppins:wght@300;500&display=swap');
+*{
+   box-sizing: border-box;
+   transition: all 0.3s ease-in-out;
+}
+
+
+img{
+   margin: 0 0 -4px;
+   padding: 0;
+   width: 100%;
+}
+body {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   height: 100vh; /* Esto asegura que ocupe toda la altura de la ventana */
+}
+
+
+body,html{
+   margin: 0;
+   padding: 0;
+}
+
+table { 
+    border-collapse: collapse;
+     margin: 25px 0; 
+     font-size: 1em; 
+     font-family: sans-serif; 
+     min-width: 450px; 
+     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
+    }
+    table thead tr { background-color:  #358CB4; 
+        color: #ffffff; text-align: middle;
+     }
+     table th, td { 
+        padding: 12px 15px;
+     }
+     table tbody tr { 
+        border-bottom: 1px solid #dddddd;
+     } 
+     table tbody tr:nth-of-type(even) {
+         background-color: #f3f3f3;
+         }table tbody tr:last-of-type {
+             border-bottom: 2px solid #009879;
+             }
+
+
+
+/* Estilos para el botón "Atrás" */
+.boton-atras {
+   background-color: #83A7BF;
+   color: #222;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 4px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 16px;
+   margin-top: 20px;
+   cursor: pointer;
+   transition: background-color 0.3s ease-in-out;
+}
+
+.boton-atras:hover {
+   background-color: #358CB4;
+}
+.crear-prov {
+   background-color: #89CC1E;
+   color: #222;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 4px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 16px;
+   margin-top: 20px;
+   cursor: pointer;
+   transition: background-color 0.3s ease-in-out;
+}
+.crear-prov:hover {
+   background-color: #358CB4;
+}
+
+/* Estilos para botones Editar y Eliminar */
+.boton-editar,
+.boton-eliminar {
+   background-color: #358CB4;
+   color: #ffffff;
+   padding: 8px 12px;
+   border: none;
+   border-radius: 4px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 14px;
+   margin: 4px 2px;
+   cursor: pointer;
+   transition: background-color 0.3s ease-in-out;
+   display: block; /* Para que los botones ocupen todo el ancho */
+   width: 100%;
+}
+
+.boton-editar:hover,
+.boton-eliminar:hover {
+   background-color: #111113;
+}
+
+/* Estilos para las celdas th en la tabla */
+table th {
+   background-color: #358CB4;
+   color: #ffffff;
+   text-align: middle;
+   padding: 8px 12px; /* Añade espacio de relleno para que los botones y las celdas tengan el mismo alto */
+}
+
+h1 {
+   font-size: 40px;
+}
