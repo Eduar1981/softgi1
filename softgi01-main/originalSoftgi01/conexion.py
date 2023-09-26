@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, g,session
+from flask import Flask, render_template, request, redirect, url_for, flash, g, session
 from flaskext.mysql import MySQL
 from flask_mail import Mail, Message
 from email.mime.text import MIMEText
@@ -23,10 +23,10 @@ app.secret_key = 'tu_clave_secreta_aqui'  # Clave secreta recordar cambiarla
 # Configuración de la base de datos MySQL
 try:
     app.config['MYSQL_DATABASE_SECRET_KEY'] = 'tu_clave_secreta_aqui'
-    app.config['MYSQL_DATABASE_USER'] = 'cristobulo_12345'
-    app.config['MYSQL_DATABASE_PASSWORD'] = '1234Jena+'
-    app.config['MYSQL_DATABASE_DB'] = 'sofgi_01'
-    app.config['MYSQL_DATABASE_HOST'] = 'db4free.net'
+    app.config['MYSQL_DATABASE_USER'] = 'nicol_pruebas'
+    app.config['MYSQL_DATABASE_PASSWORD'] = 'pruebas_12345'
+    app.config['MYSQL_DATABASE_DB'] = 'softgi'
+    app.config['MYSQL_DATABASE_HOST'] = 'localhost'
     app.config['MYSQL_DATABASE_PORT'] = 3306
     app.config['MYSQL_DATABASE_CHARSET'] = 'utf8mb4'
     print('Conexion de la base de datos exitosa')

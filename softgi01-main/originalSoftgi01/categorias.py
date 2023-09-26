@@ -6,13 +6,13 @@ class Categorias:
         self.cursor = self.conexion.cursor()
 
     def crear_categoria(self, categoria):           
-            sql = f"INSERT INTO categoria(nomcat) VALUES ('{categoria[1]}')"
+            sql = f"INSERT INTO categorias('id_categoria', 'nom_categoria') VALUES ('{categoria[0]}', '{categoria[1]}')"
             self.cursor.execute(sql)
             self.conexion.commit()
-
+ 
 
     def categoria_existe_en_db(self, categoria):
-        sql = f"SELECT COUNT(*) FROM categoria WHERE nomcat = '{categoria}'"
+        sql = f"SELECT COUNT(*) FROM categoria WHERE nom_categoria = '{categoria}'"
 
         self.cursor.execute(sql)
         resultado = self.cursor.fetchone()

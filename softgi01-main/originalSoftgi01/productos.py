@@ -5,38 +5,39 @@ class productos:
         self.conexion = self.mysql.connect()
         self.cursor = self.conexion.cursor()
         
-    def crearProductos(self, agreagr):
-        bsdsql = F"INSERT INTO `productos`(`idprod`,`prov`, `cat`, `nomprod`, `ref`, `precomp`, `prevent`, `desprod`, `cantprod`, `stockmin`, `ubicacion`, `estado`) VALUES ('{agreagr[0]}','{agreagr[1]}','{agreagr[2]}','{agreagr[3]}','{agreagr[4]}','{agreagr[5]}','{agreagr[6]}','{agreagr[7]}','{agreagr[8]}','{agreagr[9]}','{agreagr[10]}','ACTIVO')"
+    def crearProductos(self, agregar):
+        bsdsql = F"INSERT INTO `productos`(`id_producto`, `referencia_producto`, `categoria`, `proveedor`, `nombre_producto`, `precio_compra`, `precio_venta`, `cantidad_producto`, `stockminimo`, `ubicacion`, `estante`, `operador_producto` `estado_producto`,)VALUES ('{agregar[0]}','{agregar[1]}','{agregar[2]}','{agregar[3]}','{agregar[4]}','{agregar[5]}','{agregar[6]}','{agregar[7]}','{agregar[8]}','{agregar[9]}','{agregar[10]}', '{agregar[11]}', 'ACTIVO')"
+
         self.cursor.execute(bsdsql)
         self.conexion.commit()
 
     #Eliminar productos
     def borrar(self,id_producto):
-        sql=f"UPDATE productos SET estado='INACTIVO' WHERE idprod='{id_producto}'"
+        sql=f"UPDATE productos SET estado_producto ='INACTIVO' WHERE id_producto ='{id_producto}'"
         self.cursor.execute(sql)
         self.conexion.commit()
 
 
     #leer producto
     def leerProducto(self, id_producto):
-        sql = f"SELECT * FROM productos WHERE idprod = '{id_producto}' AND estado = 'ACTIVO'"
+        sql = f"SELECT * FROM productos WHERE id_producto = '{id_producto}' AND estado = 'ACTIVO'"
         self.cursor.execute(sql)
         producto = self.cursor.fetchone()
 
         if producto:
             return {
-                'idprod': producto[0],
-                'prov': producto[1],
-                'cat': producto[2],
-                'nomprod': producto[3],
-                'ref': producto[4],
-                'precomp': producto[5],
-                'prevent': producto[6],
-                'desprod': producto[7],
-                'cantprod': producto[8],
-                'stockmin': producto[9],
-                'ubicacion': producto[10],
-                'estado': producto[11]
+                'id_producto': producto[0],
+                'referencia_producto': producto[1],
+                'categoria': producto[2],
+                'proveedor': producto[3],
+                'nombre_producto': producto[4],
+                'precio_compra': producto[5],
+                'precio_venta': producto[6],
+                'cantidad_producto': producto[7],
+                'stockminimo': producto[8],
+                'ubicacion': producto[9],
+                'estante': producto[10],
+                'operador_producto': producto[11],
             }
         else:
             return None

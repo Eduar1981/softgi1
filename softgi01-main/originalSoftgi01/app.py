@@ -17,52 +17,52 @@ def generate_token(length=32): # Esta funcion genera un token de 32 caracteres e
 
 @app.route('/registroF') # defino la ruta de registro
 def registroF(): # defino la funcion de la ruta de registro llamada registroF
-    return render_template('/registro_usuario.html') # lo retorno o lo devuelvo a el html de registro de usuario en este caso el archivo registro_usuario.html y para eso se untiliza render_template
+    return render_template('/registro_usuario.html') # lo retorno o lo devuelvo al html de registro de usuario en este caso el archivo registro_usuario.html y para eso se untiliza render_template
 
 
 # Ruta de registro de usuario
 @app.route('/registro', methods=['POST']) # defino la ruta que me envia los datos ingresado en el formulario a la base de datos con el metodo post que se utiliza para envio de datos 
 def registro_usuario(): #defino la funcion de la ruta 
     
-    conn = mysql.connect() # Uso mysql.connect para conectar o hacer la conexion con la base de datos, mysql.connect es una de las funciones que utliza flask para conectarse a una base de dato
+    conn = mysql.connect() # Uso mysql.connect para conectar o hacer la conexion con la base de datos, mysql.connect es una de las funciones que utliza flask para conectarse a una base de datos
     cursor = conn.cursor() # Utilizo el con.cursor para ejecutar declaraciones  para comunicarse con la base de dato
-    docempl = request.form['documento'] # Utilizo request.form Para trear los datos dijitados en el formulario y la variable docempl la almacena
-    nomempl = request.form['nombre']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable nomempl la almacena
-    apeempl = request.form['apellido']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable apempl la almacena
-    emaempl = request.form['correo']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable emaempl la almacena
+    doc_empleado = request.form['documento'] # Utilizo request.form Para trear los datos dijitados en el formulario y la variable docempl la almacena
+    nom_empleado = request.form['nombre']# Utilizo request.form Para traer los datos dijitados en el formulario y la variable nomempl la almacena
+    ape_empleado = request.form['apellido']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable apempl la almacena
+    email_empleado = request.form['correo']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable emaempl la almacena
     rol = request.form['rol']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable rol la almacena
     
     # Validación del correo electrónico
-    if not re.match(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", emaempl):# Hago una toma de desicion donde el correo no tenga los carateres suficiente q se les requieren muestre un mensaje de error 
+    if not re.match(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", email_empleado):# Hago una toma de desicion donde el correo no tenga los carateres suficiente q se les requieren muestre un mensaje de error 
         return render_template('/registro_usuario.html', flash="Correo electrónico inválido. Intente nuevamente.") # muestra el mesaje de la toma de desiciones anterior
     
     clave1 = request.form['contrasena'] # Utilizo request.form Para trear los datos dijitados en el formulario y la variable clave1 la almacena
     clave2 = request.form['confirmada']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable clave2 la almacena
-    if clave1 == clave2: # Comparo las contraseñas digitadas para confirmar si conciden 
+    if clave1 == clave2: # Comparo las contraseñas digitadas para confirmar si coinciden 
         cifrada = hashlib.sha512(clave1.encode("utf-8")).hexdigest() # Cifro la contraseña con el metodo hashlib 
-        consul = f"SELECT * FROM empleados WHERE docempl='{docempl}' OR emaempl='{emaempl}'"# Consulto en la base de dato que el usuario digitado no  exista ni su correo ni su numero de documento
+        consul = f"SELECT * FROM empleados WHERE doc_empleado='{doc_empleado}' OR email_empleado='{email_empleado}'"# Consulto en la base de dato que el usuario digitado no  exista ni su correo ni su numero de documento
         cursor.execute(consul)# Ejecuto la consulta de la base de dato
         resultado_1 = cursor.fetchone() # guardo los datos de la consulta que se hizo 
         if resultado_1 is not None: # hago una toma de desicion que donde la consulta resultado tiene dato o no esta vacia me haga el siguiente metodo
             flash('Este usuario ya ha sido registrado') # que envie este mensaje para que el usuario lo vea 
-            return redirect(url_for('home'))# me retorne o me devuelva a la pagina home en este caso untilizo redirect(url_for('home')) para que me redirija desde python a esa funcion llamada home
+            return redirect(url_for('home'))# me retorne o me devuelva a la pagina home en este caso utilizo redirect(url_for('home')) para que me redirija desde python a esa funcion llamada home
         else: # en caso de que la consulta hecha no exista en la base de datos que me tome la siguiente desicion
             mi_token2 = generate_token()  # agrego a la variable mi_token2 la funcion generar token, cada vez que se quiera resgistrar un suario nuevo se genera un token nuevo ya q se ejecuta la funcion generate_token()
 
             # Envía el correo de confirmación
-            enviar_correo_confirmacion(nomempl, emaempl, mi_token2)# ejecuto la funcion de enviar_correo_confirmacion(nomempl, emaempl, mi_token2) enviado 3 variables que son nomempl, emaempl, mi_token2 para enviar como imformacion al correo segun definido en la variable emaempl con un on token unico y el nombre de la persona q se le envia el correo
+            enviar_correo_confirmacion(nom_empleado, email_empleado, mi_token2)# ejecuto la funcion de enviar_correo_confirmacion(nom_empleado, email_empleado, mi_token2) enviado 3 variables que son nom_empleado, email_empleado, mi_token2 para enviar como imformacion al correo segun definido en la variable email_empleado con un token unico y el nombre de la persona q se le envia el correo
             
             
-            sql = "INSERT INTO empleados (docempl, nomempl, apeempl, emaempl, contrasena, rol ) VALUES ( %s, %s, %s, %s, %s, %s)"# Inserto o registro los datos en la base de datos en la tabla empleado 
-            cursor.execute(sql, (docempl, nomempl, apeempl, emaempl, cifrada, rol)) # ejecuto el registro hecho 
+            sql = "INSERT INTO empleados (doc_empleado, nom_empleado, ape_empleado, email_empleado, contrasena, rol ) VALUES ( %s, %s, %s, %s, %s, %s)"# Inserto o registro los datos en la base de datos en la tabla empleados 
+            cursor.execute(sql, (doc_empleado, nom_empleado, ape_empleado, email_empleado, cifrada, rol)) # ejecuto el registro hecho 
             conn.commit()#hago un conn.commit confirmando la transacción actual
             
-            fecha_registro = datetime.datetime.now()#la variable fecha _registro optiene el tiempo hora fecha año y segundo que estas actual
-            tok = f"INSERT INTO tokens (doc_empleado, nom_empleado, email_empleado, token, confir_user, tiemp_registro) VALUES ('{docempl}', '{nomempl}', '{emaempl}','{mi_token2}', 'no confirmado', '{fecha_registro}' )" # Inserto o registro los datos en la base de datos en la tabla tokens
+            fecha_registro = datetime.datetime.now()#la variable fecha _registro obtiene el tiempo hora fecha año y segundo que estas actual
+            tok = f"INSERT INTO tokens (doc_empleado, nom_empleado, email_empleado, token, confir_user, tiempo_registro) VALUES ('{doc_empleado}', '{nom_empleado}', '{email_empleado}','{mi_token2}', 'no confirmado', '{fecha_registro}' )" # Inserto o registro los datos en la base de datos en la tabla tokens
             cursor.execute(tok)# ejecuto el registro hecho
             conn.commit()#hago un conn.commit confirmando la transacción actual
             conn.close()# Utilizamos esta funcion para cerrar la conexion aunque la conexion se ciera sola cuando sale de alcance
-            flash('Tu usuario ha sido registrado exitosamente') # mostramos este mensaje donde el registro sea exitoso
+            ###flash('Tu usuario ha sido registrado exitosamente') # mostramos este mensaje donde el registro sea exitoso
             flash("Se envio un correo para confirmar tu registro, revisa la bandeja de entrada o spam")# mostramos un mensaje donde el registro sea exitoso y le idicamos que se envio un correo
             return render_template('login.html')# se envia a login.html ya cumplido todo
             
@@ -92,7 +92,7 @@ def enviar_correo_confirmacion(nombre, email, token):#Esta funcion recibe lo env
 
 # Ruta de confirmación de correo electrónico    
 @app.route('/confirmar_correo/<token>', methods=['GET', 'POST'])# ruta de confirmacion  de correo recibe el token segun el correo y pongo el metdo recibir y enviar GET y POST
-def confirmar_correo(token): #dlaclaro la funcion con el nombre confirma_correo
+def confirmar_correo(token): #declaro la funcion con el nombre confirma_correo
     cursor = mysql.get_db().cursor()
     # Consulto el usuario que tiene tiene el token que se envio segun el correo 
     cursor.execute("SELECT doc_empleado, nom_empleado, email_empleado, confir_user FROM tokens WHERE token = %s", (token,)) #ejecuto la consulta 
@@ -101,7 +101,7 @@ def confirmar_correo(token): #dlaclaro la funcion con el nombre confirma_correo
             flash('El token de confirmación no es válido.', 'danger') # le indico el mensaje al usuario
             return redirect(url_for('home')) # redirijo a la pagina home
 
-    email = usuario_data[2] # Almaceno  el campo email_empleado de la base de dato a la variable email
+    email = usuario_data[2] # Almaceno  el campo email_empleado de la base de datos a la variable email
     correo_confirmado = usuario_data[3] # Almaceno el campo confir_user de la base de dato a la variable correo_confirmado
 
     if correo_confirmado == 'confirmado':# toma de desicion que se aplica en el caso de que el correo este confirmado
@@ -110,7 +110,7 @@ def confirmar_correo(token): #dlaclaro la funcion con el nombre confirma_correo
     
     #en caso tal de que no se apliquen los metodos anteriores 
     if request.method == 'POST': # Verifico si la solicitud HTTP es un método POST
-        confi= request.form['confir'] # Utilizo request.form Para trear los datos dijitados en el formulario
+        confi= request.form['confir'] # Utilizo request.form Para traer los datos dijitados en el formulario
         # Actualizar el estado de correo a "confirmado"
         cursor.execute(f"UPDATE tokens SET confir_user = '{confi}' WHERE email_empleado = '{email}'") # ejecuto la atualizacion a la base de datos
         mysql.get_db().commit()# obtengo la conexion a la base de dato y confirmo los cambio
@@ -125,10 +125,10 @@ def confirmar_correo(token): #dlaclaro la funcion con el nombre confirma_correo
 
 @app.route('/inicio')# Ruta de inicio
 def inicio(): # hago la funcion de la ruta en este caso su nombre es inicio
-    if "emaempl" in session:# verifico que se alla iniciado sesion
+    if "email_empleado" in session:# verifico que se alla iniciado sesion
         return render_template('index.html') # renderizo a la pagina inicioexitoso.html
-    else: # de lo contrario que no alla inicado sesion
-        flash('Algo esta mal en sus datos digitados') # indico un mensaje 
+    else: # de lo contrario que no haya inicado sesion
+        flash('Algo está mal en sus datos digitados') # indico un mensaje 
         return redirect(url_for('home')) # redirijo a la pagina home
 
 
@@ -148,19 +148,21 @@ def login():# hago la funcion de la ruta en este caso su nombre es login
     connt = mysql.connect()# Utilizo el con.cursor para ejecutar declaraciones  para comunicarse con la base de dato
     cursor = connt.cursor()# Utilizo el con.cursor para ejecutar declaraciones  para comunicarse con la base de dato
     cifrado = hashlib.sha512(password.encode('utf-8')).hexdigest()# Cifro la contraseña con el metodo hashlib 
-    """  bsql_emp = f"SELECT emaempl='{email}', contrasena='{cifrado}' FROM empleados WHERE conemail='confirmado'" """
-    bsql_emp = f"SELECT empleados.emaempl, empleados.contrasena='{cifrado}', tokens. confir_user  FROM empleados INNER JOIN tokens ON empleados.docempl = tokens.doc_empleado WHERE empleados.emaempl = '{email}'"
+
+    """ bsql_emp = f"SELECT email_empleado='{email}', contrasena='{cifrado}' FROM empleados WHERE conemail='confirmado'" """
+
+    bsql_emp = f"SELECT empleados.email_empleado, empleados.contrasena='{cifrado}', tokens. confir_user  FROM empleados INNER JOIN tokens ON empleados.doc_empleado = tokens.doc_empleado WHERE empleados.email_empleado  = '{email}'"
     cursor.execute(bsql_emp)# ejecuto la consulta 
     resultado = cursor.fetchone()# agrego el resultado de la consulta a la variable resultado
-    if resultado is not None:# hago una toma de desicion que donde la consulta resultado tega dato o no esta vacia me haga el siguiente metodo
+    if resultado is not None:# hago una toma de desicion que donde la consulta resultado tenga dato o no esta vacia me haga el siguiente metodo
         if resultado[2] == 'confirmado':# toma de desicion que se aplica en el caso de que el correo este confirmado 
-            session["emaempl"] = resultado[0]# Utilizo session para guardar la informacion de la persona ingresada
+            session["email_empleado"] = resultado[0]# Utilizo session para guardar la informacion de la persona ingresada
             return redirect(url_for('inicio'))#redirijo 
         else:
             flash("No has confirmado tu cuenta, por favor revisa la bandeja de entrada o spam", category="danger")
             return redirect(url_for('home'))
     else:
-        flash('ALgo esta mal en tus credenciales o tu correo no ha sido confirmado.', 'success')
+        flash('Algo esta mal en tus credenciales o tu correo no ha sido confirmado.', 'success')
         return redirect(url_for('home'))
     
     
@@ -175,7 +177,7 @@ class User:# creo una clase User que la utlizare para crear objetos en este caso
         self.nombre = nombre  # hago una copia propia de la variable nombre
         
 class PasswordResetToken:# creo una clase User que la utlizare para crear objetos en este caso PasswordResetToken se esta utilizado como plantilla
-    def __init__(self, userio_id):# defino el metodo, con sus parametro y los argumentos 
+    def __init__(self, userio_id):# defino el metodo, con sus parametros y los argumentos 
         self.userio_id = userio_id # hago una copia propia de la variable usuario_id
         
         
@@ -197,7 +199,7 @@ def solicitarCambio_contraseña():
     if request.method == 'POST':
         email = request.form.get('email')
         cursor = mysql.get_db().cursor()
-        msql = f"SELECT * FROM empleados  WHERE emaempl  = '{email}'"
+        msql = f"SELECT * FROM empleados  WHERE email_empleado  = '{email}'"
         cursor.execute(msql)
         userio_data = cursor.fetchone()
 
@@ -208,21 +210,21 @@ def solicitarCambio_contraseña():
             cursor = mysql.get_db().cursor()
 
             # Verificar si hay registros en la tabla recuperarcontrasena para ese correo electrónico
-            cursor.execute("SELECT * FROM recuperarcontrasena WHERE email = %s", (userio.email,))
+            cursor.execute("SELECT * FROM recuperarcontrasena WHERE email_usuario = %s", (userio.email,))
             existing_token = cursor.fetchone()
             token_recuperar = token_recuperar_contrasena()  #Token que se genera para cambio de contraseña
             """ if existing_token:
                 # Si ya existe un token para ese correo, actualiza su fecha de vencimiento
                 expiration_time = datetime.datetime.now() + datetime.timedelta(minutes=3)
-                cursor.execute("UPDATE recuperarcontrasena SET fhsoli= %s, fhexp = %s, codigo = %s WHERE email = %s", (datetime.datetime.now(),expiration_time, token_recuperar, userio.email))
+                cursor.execute("UPDATE recuperarcontrasena SET fechahora_solicitud= %s, fechahora_termina = %s, codigo = %s WHERE email = %s", (datetime.datetime.now(),expiration_time, token_recuperar, userio.email))
             else:
                 # Si no existe un token para ese correo, crea uno nuevo
                 expiration_time = datetime.datetime.now() + datetime.timedelta(minutes=3)
-                cursor.execute("INSERT INTO recuperarcontrasena (idsoli, email, fhsoli, fhexp, codigo, usuario) VALUES (%s, %s, %s, %s, %s, %s)",
+                cursor.execute("INSERT INTO recuperarcontrasena (id_solicitud, email_usuario, fechahora_solicitud, fechahora_termina, codigo, usuario) VALUES (%s, %s, %s, %s, %s, %s)",
                                 (userio.nombre, userio.email, datetime.datetime.now(), expiration_time, token_recuperar, userio.id)) """
             # Si no existe un token para ese correo, crea uno nuevo
             expiration_time = datetime.datetime.now() + datetime.timedelta(minutes=3)
-            cursor.execute("INSERT INTO recuperarcontrasena (idsoli, email, fhsoli, fhexp, codigo, usuario) VALUES (%s, %s, %s, %s, %s, %s)",
+            cursor.execute("INSERT INTO recuperarcontrasena (id_solicitud, email_usuario, fechahora_solicitud, fechahora_termina, codigo, usuario) VALUES (%s, %s, %s, %s, %s, %s)",
                             (userio.nombre, userio.email, datetime.datetime.now(), expiration_time, token_recuperar, userio.id)) 
             mysql.get_db().commit()
             
@@ -249,7 +251,7 @@ def token_recuperar_contrasena(length=32):
 def recuperar_contraseña(token_rctsn):
     print(f"Token recibido: {token_rctsn}")
     cursor = mysql.get_db().cursor()
-    cursor.execute("SELECT  fhexp, codigo, usuario FROM recuperarcontrasena WHERE codigo  = %s", (token_rctsn,))
+    cursor.execute("SELECT  fechahora_termina, codigo, usuario FROM recuperarcontrasena WHERE codigo  = %s", (token_rctsn,))
     datos_db = cursor.fetchone()
 
     if not datos_db:
@@ -270,8 +272,8 @@ def recuperar_contraseña(token_rctsn):
         password = request.form.get('password')
         cifrado = hashlib.sha512(password.encode('utf-8')).hexdigest()
 
-        cursor.execute("UPDATE empleados SET contrasena  = %s WHERE docempl = %s", (cifrado, usuario))
-        cursor.execute("UPDATE recuperarcontrasena SET usado ='si' WHERE codigo = %s", (codigo))
+        cursor.execute("UPDATE empleados SET contrasena  = %s WHERE doc_empleado = %s", (cifrado, usuario))
+        cursor.execute("UPDATE recuperarcontrasena SET usuario='si' WHERE codigo = %s", (codigo))
         mysql.get_db().commit()
 
         flash('Tu contraseña ha sido restablecida.', 'success')
@@ -283,8 +285,8 @@ def recuperar_contraseña(token_rctsn):
 
 @app.route("/clientes")
 def clientes():
-    if "emaempl" in session: 
-        sql = "SELECT * FROM clientes WHERE estado = 'ACTIVO'"
+    if "email_empleado" in session: 
+        sql = "SELECT * FROM clientes WHERE estado_cliente ='ACTIVO'"
         conn = mysql.connect()                    # muestra los clientes
         cursor = conn.cursor()
         cursor.execute(sql)                                          
@@ -297,7 +299,7 @@ def clientes():
 
 @app.route("/crearClientes")
 def crearClientes():
-    if "emaempl" in session:                                
+    if "email_empleado" in session:                                
         return render_template('clientes/registrocliente.html')        #crea clientes
     else:
             flash('Algo esta mal en sus datos digitados')
@@ -305,33 +307,33 @@ def crearClientes():
     
 @app.route("/crear_cliente", methods=['POST'])
 def crear_cliente():
-    if "emaempl" in session:
-        docclie = request.form['docclie']
-        nomclie = request.form['nomclie']
-        apeclie = request.form['apeclie']
-        contclie = request.form['contclie']
-        emaclie = request.form['emaclie']
-        direclie = request.form['direclie']
-        tipopersona = request.form['tipopersona']                 #crea clientes
+    if "email_empleado" in session:
+        doc_cliente = request.form['doc_cliente']
+        nom_cliente = request.form['nom_cliente']
+        ape_cliente = request.form['ape_cliente']
+        contacto_cliente = request.form['contacto_cliente']
+        email_cliente = request.form['email_cliente']
+        direccion_cliente = request.form['direccion_cliente']
+        tipo_persona = request.form['tipopersona']                 #crea clientes
         """ now = datetime.now()
         tiempo = now.strftime("%Y%m%d%H%M%S")
         """
-        if not losClientes.buscar(docclie):
-            losClientes.crear_cliente([docclie, nomclie, apeclie, contclie, emaclie, direclie, tipopersona])
+        if not losClientes.buscar(doc_cliente):
+            losClientes.crear_cliente([doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, tipo_persona])
             return redirect('/crearClientes')
         else:
             mensaje="Cliente ya existe"
-            cliente =[docclie,nomclie, apeclie, contclie, emaclie, direclie,tipopersona]
+            cliente =[doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, tipo_persona]
             return render_template('clientes/muestraclientes.html', mensaje=mensaje, cliente=cliente)
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
     
 
 @app.route("/editarClientes/<documento>")
 def edit_cliente(documento):
-    if "emaempl" in session:
-        sql = f"SELECT * FROM clientes WHERE docclie = '{documento}'"
+    if "email_empleado" in session:
+        sql = f"SELECT * FROM clientes WHERE doc_cliente = '{documento}'"
         conn = mysql.connect()
         cursor = conn.cursor()                                    #muestra toda la informacion y pone en los imputs
         cursor.execute(sql)
@@ -339,49 +341,49 @@ def edit_cliente(documento):
         conn.commit()
         return render_template("/clientes/edita_clientes.html", resul=resultado[0])
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
 @app.route("/Actualizar_clie", methods=['POST','GET'])
 def Actualizar_clie():
-    if "emaempl" in session:
-        docclie = request.form['docclie']
-        nomclie = request.form['nomclie']
-        apeclie = request.form['apeclie']                # actualiza la info de clientes
-        contclie = request.form['contclie']
-        emaclie = request.form['emaclie']
-        direclie = request.form['direclie']
-        tipopersona = request.form['tipopersona']  
-        losClientes.modificar([docclie,nomclie,apeclie,contclie,emaclie,direclie,tipopersona])
+    if "email_empleado" in session:
+        doc_cliente = request.form['doc_cliente']
+        nom_cliente = request.form['nom_cliente']
+        ape_cliente = request.form['ape_cliente']
+        contacto_cliente = request.form['contacto_cliente']
+        email_cliente = request.form['email_cliente']
+        direccion_cliente = request.form['direccion_cliente']
+        tipo_persona = request.form['tipo_persona']  
+        losClientes.modificar([doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, tipo_persona])
         return redirect('/clientes')
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
     
 @app.route('/buscar_cliente', methods=['POST'])
 def buscar_cliente():
-    if "emaempl" in session:
+    if "email_empleado" in session:
         if request.method == 'POST':
             busqueda = request.form['busqueda']
             # Realiza la consulta en la base de datos utilizando MySQL y Flask-MySQL
             conn = mysql.connect()
             cursor = conn.cursor()
-            cursor.execute(f"SELECT * FROM clientes WHERE nombre LIKE %s", (f"%{busqueda}%",))   #buscador de clientes
+            cursor.execute(f"SELECT * FROM clientes WHERE nom_cliente LIKE %s", (f"%{busqueda}%",))   #buscador de clientes
             resultados = cursor.fetchall()
             conn.close()
             return render_template('registroclientes.html', resultados=resultados) # Envía los resultados al mismo formulario de registroclientes.html
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
     
 @app.route('/borracliente/<documento>')
 def borrarcliente(documento):
-    if "emaempl" in session:
+    if "email_empleado" in session:
         losClientes.borrar_cliente(documento)
         return redirect('/clientes')
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
 
@@ -389,44 +391,45 @@ def borrarcliente(documento):
 
 
 #---------------------------------------------- Provedores ------------------------------------------------ 
-@app.route("/muestra_info_prov/<docprov>")   # muestra info del proveedor y la envia a los imputs en actualizar
-def muestra_info_prov(docprov):
-    if "emaempl" in session:
-        documento = docprov
-        sql = f"SELECT docprov, nomprov, contprov, emaprov, direprov FROM proveedores WHERE docprov='{documento}'"
+
+@app.route("/muestra_info_prov/<doc_proveedor>")   # muestra info del proveedor y la envia a los imputs en actualizar
+def muestra_info_prov(doc_proveedor):
+    if "email_empleado" in session:
+        documento = doc_proveedor
+        sql = f"SELECT doc_proveedor, nom_proveedor, contacto_proveedor, email_proveedor, direccion_proveedor FROM proveedores WHERE doc_proveedor='{documento}'"
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute(sql)
         resultado = cursor.fetchall()
-        conn.commit()                                                                              # no me toque el codigo niche pleace
+        conn.commit()               # no me toque el codigo niche pleace
         return render_template("/provedor/actualizar_proveedores.html", resul = resultado[0])
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
 
 @app.route("/modificarprovee", methods=['POST', 'GET'])
 def modificarprovee():
-    if "emaempl" in session:
+    if "email_empleado" in session:
         documento = request.form['documentoProveedor']
         nombre = request.form['nombreProveedor']
         numero = request.form['numeroProveedores']
         correo = request.form['correoProveedores']                           
-        direcion = request.form['direccionProveedores']
-        proveedores.modificar([documento,nombre,numero,correo,direcion])
+        direccion = request.form['direccionProveedores']
+        proveedores.modificar([documento,nombre,numero,correo,direccion])
         return redirect('/muestra_Proveedores')
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
 
-@app.route('/borraprovee/<docprov>')
-def borraprovee(docprov):
-    if "emaempl" in session:
-        proveedores.borrar(docprov)                        #borra proveedor
+@app.route('/borraprovee/<doc_proveedor>')
+def borraprovee(doc_proveedor):
+    if "email_empleado" in session:
+        proveedores.borrar(doc_proveedor)                        #borra proveedor
         return redirect("/muestra_Proveedores")
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
 
@@ -435,17 +438,17 @@ def borraprovee(docprov):
 #-----------------------------------------------------------Crear proveedores---------------------------------------
 @app.route('/proveedores')
 def proveedoress():
-    if "emaempl" in session:
+    if "email_empleado" in session:
         return render_template('/provedor/proveedore.html')
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
 
 
 @app.route('/crearProveedores', methods=['POST'])
 def crearProveedores():
-    if "emaempl" in session:
+    if "email_empleado" in session:
         documento = request.form['documentoProveedor']
         nombre = request.form['nombreProveedor']
         numero = request.form['numeroProveedores']
@@ -454,7 +457,7 @@ def crearProveedores():
         proveedores.crear([documento,nombre,numero,correo,direcion])
         return render_template('/htmldeprueba/registradoX.html')
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
     
     
@@ -462,8 +465,8 @@ def crearProveedores():
 
 @app.route('/muestra_Proveedores')
 def muestra_Proveedores():
-    if "emaempl" in session:
-        sql = "SELECT * FROM `proveedores` WHERE estado='ACTIVO'"           # consulta toda la info de proveedores.
+    if "email_empleado" in session:
+        sql = "SELECT * FROM `proveedores` WHERE estado_proveedor='ACTIVO'"           # consulta toda la info de proveedores.
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -476,7 +479,7 @@ def muestra_Proveedores():
             return render_template("/provedor/muestra_proveedores.html", resul2=resultado2)
     # sino se muestra el mensaje de resultado2.
     else:
-        flash('Algo esta mal en sus datos digitados')
+        flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
     
 

@@ -8,7 +8,7 @@
 
 
 
-.contenedor_loguin {
+.contenedor_login {
     background-color: #007FE0;
     position: absolute;
     width: 400px;
@@ -27,7 +27,7 @@
     align-items: center;
 }
 
-.contenedor_loguin h3 {
+.contenedor_login h3 {
     font-size: larger;
 }
 

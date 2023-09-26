@@ -7,13 +7,13 @@ class Clientes:
         self.cursor = self.conexion.cursor()
 
     def crear_cliente(self, cliente):           
-        sql = f"INSERT INTO clientes(docclie, nomclie, apeclie, contclie, emaclie, direclie, tipopersona, estado) VALUES ('{cliente[0]}','{cliente[1]}','{cliente[2]}','{cliente[3]}','{cliente[4]}','{cliente[5]}','{cliente[6]}', 'ACTIVO')"
+        sql = f"INSERT INTO clientes(doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, tipo_persona, estado_cliente) VALUES ('{cliente[0]}','{cliente[1]}','{cliente[2]}','{cliente[3]}','{cliente[4]}','{cliente[5]}','{cliente[6]}', 'ACTIVO')"
         self.cursor.execute(sql)
         self.conexion.commit()
 
 
     def cliente_existe_en_db(self, cliente):
-        sql = f"SELECT COUNT(*) FROM clientes WHERE docclie = '{cliente}'"
+        sql = f"SELECT COUNT(*) FROM clientes WHERE doc_cliente = '{cliente}'"
 
         self.cursor.execute(sql)
         resultado = self.cursor.fetchone()
@@ -24,8 +24,8 @@ class Clientes:
             return False
 
         
-    def buscar_cliente(self, docclie):
-        sql = f"SELECT docclie FROM clientes WHERE docclie = '{docclie}'"
+    def buscar_cliente(self, doc_cliente):
+        sql = f"SELECT doc_cliente FROM clientes WHERE doc_cliente = '{doc_cliente}'"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
         self.conexion.commit()
@@ -36,7 +36,7 @@ class Clientes:
         
     #modificar clientes
     def modificar_cliente(self,clientes):
-        sql=f"UPDATE clientes SET docclie='{clientes[0]}', nomclie='{clientes[1]}', apeclie='{clientes[2]}', contclie='{clientes[3]}', emaclie='{clientes[4]}', direclie='{clientes[5]}', tipopersona='{clientes[6]}' WHERE docclie='{clientes[0]}'"
+        sql=f"UPDATE clientes SET doc_cliente='{clientes[0]}', nom_cliente='{clientes[1]}', ape_cliente='{clientes[2]}', contacto_cliente='{clientes[3]}', email_cliente='{clientes[4]}', direccion_cliente='{clientes[5]}', tipo_persona='{clientes[6]}' WHERE doc_cliente='{clientes[0]}'"
         self.cursor.execute(sql)
         self.conexion.commit()
     
@@ -45,7 +45,7 @@ class Clientes:
         if not self.cliente_existe_en_db(documento):
             return False  
 
-        sql = f"UPDATE clientes SET estado='INACTIVO' WHERE docclie = '{documento}'"
+        sql = f"UPDATE clientes SET estado='INACTIVO' WHERE doc_cliente = '{documento}'"
 
         try:
             self.cursor.execute(sql)
