@@ -5,10 +5,10 @@ class Categorias:
         self.conexion = self.mysql.connect()  # Usa el método connect() para crear la conexión
         self.cursor = self.conexion.cursor()
 
-    def crear_categoria(self, categoria):           
-            sql = f"INSERT INTO categorias('id_categoria', 'nom_categoria') VALUES ('{categoria[0]}', '{categoria[1]}')"
-            self.cursor.execute(sql)
-            self.conexion.commit()
+    def crear_categoria(self, categoria):    
+        sql = f"INSERT INTO categorias('id_categoria', 'nom_categoria' 'operador_categoria', 'fechahora_creacion','estado_categorias') VALUES ('{categoria[0]}', '{categoria[1]}', '1112388921', '{categoria[3]}', 'ACTIVO')"
+        self.cursor.execute(sql)
+        self.conexion.commit()
  
 
     def categoria_existe_en_db(self, categoria):

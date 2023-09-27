@@ -308,22 +308,24 @@ def crearClientes():
 @app.route("/crear_cliente", methods=['POST'])
 def crear_cliente():
     if "email_empleado" in session:
+
         doc_cliente = request.form['doc_cliente']
         nom_cliente = request.form['nom_cliente']
         ape_cliente = request.form['ape_cliente']
         contacto_cliente = request.form['contacto_cliente']
         email_cliente = request.form['email_cliente']
         direccion_cliente = request.form['direccion_cliente']
+        ciudad_cliente = request.form['ciudad_cliente']
         tipo_persona = request.form['tipopersona']                 #crea clientes
-        """ now = datetime.now()
-        tiempo = now.strftime("%Y%m%d%H%M%S")
-        """
-        if not losClientes.buscar(doc_cliente):
-            losClientes.crear_cliente([doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, tipo_persona])
-            return redirect('/crearClientes')
+        tiempo = datetime.datetime.now()
+        
+
+        if not losClientes.buscar_cliente(doc_cliente):
+            losClientes.crear_cliente([doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, tiempo])
+            return redirect('/clientes')
         else:
             mensaje="Cliente ya existe"
-            cliente =[doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, tipo_persona]
+            cliente =[doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona]
             return render_template('clientes/muestraclientes.html', mensaje=mensaje, cliente=cliente)
     else:
         flash('Algo está mal en los datos digitados')
@@ -350,11 +352,13 @@ def Actualizar_clie():
         doc_cliente = request.form['doc_cliente']
         nom_cliente = request.form['nom_cliente']
         ape_cliente = request.form['ape_cliente']
+        fecha_nacimiento_cliente = request.form['fecha_nacimiento_cliente']
         contacto_cliente = request.form['contacto_cliente']
         email_cliente = request.form['email_cliente']
         direccion_cliente = request.form['direccion_cliente']
+        ciudad_cliente = request.form['ciudad_cliente']
         tipo_persona = request.form['tipo_persona']  
-        losClientes.modificar([doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, tipo_persona])
+        losClientes.modificar_cliente([doc_cliente, nom_cliente, ape_cliente, fecha_nacimiento_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona])
         return redirect('/clientes')
     else:
         flash('Algo está mal en los datos digitados')
@@ -396,7 +400,7 @@ def borrarcliente(documento):
 def muestra_info_prov(doc_proveedor):
     if "email_empleado" in session:
         documento = doc_proveedor
-        sql = f"SELECT doc_proveedor, nom_proveedor, contacto_proveedor, email_proveedor, direccion_proveedor FROM proveedores WHERE doc_proveedor='{documento}'"
+        sql = f"SELECT doc_proveedor, nom_proveedor, contacto_proveedor, email_proveedor, direccion_proveedor, ciudad_proveedor FROM proveedores WHERE doc_proveedor='{documento}'"
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -416,12 +420,13 @@ def modificarprovee():
         numero = request.form['numeroProveedores']
         correo = request.form['correoProveedores']                           
         direccion = request.form['direccionProveedores']
-        proveedores.modificar([documento,nombre,numero,correo,direccion])
+        ciudad = request.form['ciudadProveedor']
+        proveedores.modificar([documento,nombre,numero,correo,direccion,ciudad])
         return redirect('/muestra_Proveedores')
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
-
+ 
 
 @app.route('/borraprovee/<doc_proveedor>')
 def borraprovee(doc_proveedor):
@@ -436,7 +441,7 @@ def borraprovee(doc_proveedor):
 
 
 #-----------------------------------------------------------Crear proveedores---------------------------------------
-@app.route('/proveedores')
+@app.route('/proveedoress')
 def proveedoress():
     if "email_empleado" in session:
         return render_template('/provedor/proveedore.html')
@@ -454,8 +459,11 @@ def crearProveedores():
         numero = request.form['numeroProveedores']
         correo = request.form['correoProveedores']
         direcion = request.form['direccionProveedores']
-        proveedores.crear([documento,nombre,numero,correo,direcion])
-        return render_template('/htmldeprueba/registradoX.html')
+        ciudad = request.form['ciudadProveedor']
+        tiempo = datetime.datetime.now()
+
+        proveedores.crear([documento,nombre,numero,correo,direcion,ciudad, tiempo])
+        return redirect('/muestra_Proveedores')
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
@@ -489,23 +497,21 @@ def muestra_Proveedores():
 @app.route("/categorias")
 def categorias():
     sql = "SELECT * FROM categorias"
-    conn = mysql.connect()                    # muestra los clientes
+    conn = mysql.connect()                    # muestra las categorias
     cursor = conn.cursor()
     cursor.execute(sql)                                          
     resultado = cursor.fetchall()
     return render_template('/categorias/muestracategorias.html', resulta=resultado)
 
-##################################################################
-##################################################################
 
 @app.route("/crearCategorias")
 def crearCategoria():                                
-    return render_template('categorias/registrar_categorias.html')        #crea clientes
+    return render_template('categorias/registrar_categorias.html')        #crea categorias
     
 @app.route("/registrar_categorias", methods=['POST'])
 def registrar_categorias():
-    if "emaempl" in session:
-        nomcat = request.form['nomcat']#crea clientes
+    if "email_empleado" in session:
+        nombre_categoria = request.form['nom_categoria']#crea clientes
         """ now = datetime.now()
         tiempo = now.strftime("%Y%m%d%H%M%S")
         """

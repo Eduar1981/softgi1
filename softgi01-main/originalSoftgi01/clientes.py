@@ -7,7 +7,7 @@ class Clientes:
         self.cursor = self.conexion.cursor()
 
     def crear_cliente(self, cliente):           
-        sql = f"INSERT INTO clientes(doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, tipo_persona, estado_cliente) VALUES ('{cliente[0]}','{cliente[1]}','{cliente[2]}','{cliente[3]}','{cliente[4]}','{cliente[5]}','{cliente[6]}', 'ACTIVO')"
+        sql = f"INSERT INTO clientes(doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, estado_cliente, operador_cliente) VALUES ('{cliente[0]}','{cliente[1]}','{cliente[2]}','{cliente[3]}','{cliente[4]}','{cliente[5]}','{cliente[6]}', '{cliente[7]}','ACTIVO','1112388921')"
         self.cursor.execute(sql)
         self.conexion.commit()
 
@@ -36,7 +36,7 @@ class Clientes:
         
     #modificar clientes
     def modificar_cliente(self,clientes):
-        sql=f"UPDATE clientes SET doc_cliente='{clientes[0]}', nom_cliente='{clientes[1]}', ape_cliente='{clientes[2]}', contacto_cliente='{clientes[3]}', email_cliente='{clientes[4]}', direccion_cliente='{clientes[5]}', tipo_persona='{clientes[6]}' WHERE doc_cliente='{clientes[0]}'"
+        sql=f"UPDATE clientes SET doc_cliente='{clientes[0]}', nom_cliente='{clientes[1]}', ape_cliente='{clientes[2]}', fecha_nacimiento_cliente='{clientes[3]}', contacto_cliente='{clientes[4]}', email_cliente='{clientes[5]}', direccion_cliente='{clientes[6]}', ciudad_cliente='{clientes[7]}', tipo_persona='{clientes[8]}' WHERE doc_cliente='{clientes[0]}'"
         self.cursor.execute(sql)
         self.conexion.commit()
     
@@ -45,7 +45,7 @@ class Clientes:
         if not self.cliente_existe_en_db(documento):
             return False  
 
-        sql = f"UPDATE clientes SET estado='INACTIVO' WHERE doc_cliente = '{documento}'"
+        sql = f"UPDATE clientes SET estado_cliente='INACTIVO' WHERE doc_cliente = '{documento}'"
 
         try:
             self.cursor.execute(sql)

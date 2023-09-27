@@ -14,24 +14,28 @@
         <form action="/Actualizar_clie" method="post" id="formu_clientes">
             <h2>Editar clientes</h2>
                 <div class="cont-campos">
-                    <input type="number" name="docclie" id="documento" placeholder="Documento" class="campo"  value="{{resul[0]}}">
+                    <input type="number" name="doc_cliente" id="documento" placeholder="Documento" class="campo"  value="{{resul[0]}}">
                         
-                    <input type="text" name="nomclie" id="nombre" placeholder="Nombres" class="campo" value="{{resul[1]}}">
+                    <input type="text" name="nom_cliente" id="nombre" placeholder="Nombres" class="campo" value="{{resul[1]}}">
 
-                    <input type="text" name="apeclie" id="apellido" placeholder="Apellidos" class="campo" value="{{resul[2]}}">
+                    <input type="text" name="ape_cliente" id="apellido" placeholder="Apellidos" class="campo" value="{{resul[2]}}">
 
-                    <input type="number" name="contclie" id="contacto" placeholder="Numero de contacto" class="campo" value="{{resul[3]}}">
+                    <input type="date" name="fecha_nacimiento_cliente" id="contacto" placeholder="Numero de contacto" class="campo" value="{{resul[3]}}">
 
-                    <input type="email" name="emaclie" id="correo" placeholder="email" class="campo" value="{{resul[4]}}">
+                    <input type="text" name="contacto_cliente" id="contacto" placeholder="Numero de contacto" class="campo" value="{{resul[4]}}">
 
-                    <input type="text" name="direclie" id="direccion" placeholder="Dirección" class="campo" value="{{resul[5]}}">
+                    <input type="email" name="email_cliente" id="correo" placeholder="email" class="campo" value="{{resul[5]}}">
+
+                    <input type="text" name="direccion_cliente" id="direccion" placeholder="Dirección" class="campo" value="{{resul[6]}}">
+
+                    <input type="text" name="ciudad_cliente" id="ciudad" placeholder="ciudad" class="campo" value="{{resul[7]}}">
                 </div>
 
                 <div id="contenedor_tipo" class="optiones">
-                    <select id="opt" name="tipopersona" class="tipo_persona">
-                        <option value="{{resul[6]}}">{{resul[6]}}</option>
+                    <select id="opt" name="tipo_persona" class="tipo_persona">
+                        <option value="{{resul[8]}}">{{resul[8]}}</option>
                         <option value="natural">Natural</option>
-                        <option value="juridaca">Juridica(representante legal)</option>
+                        <option value="juridica">Juridica(representante legal)</option>
                     </select>
                </div>
                <div id="boton-atras">
