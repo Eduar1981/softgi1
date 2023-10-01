@@ -567,10 +567,15 @@ def borrarcliente(documento):
 
                                         
 #----------------------------------------------Crud de productos------------------------------------------------ 
-@app.route('/crear_producto')
+@app.route('/productos')
 def crear_producto():
     if "emaempl" in session:
-        return render_template('/productos/registrar_productos.html')
+        sql = "SELECT * FROM productos WHERE estado_producto = 'ACTIVO"
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        return render_template('/productos/muestra_productos.html', resulta=resultado)
     else:
             flash('Algo esta mal en sus datos digitados')
             return redirect(url_for('home'))
@@ -578,33 +583,59 @@ def crear_producto():
     
 @app.route('/crearProductos', methods=['POST'])
 def crearProductos():
-    if "emaempl" in session:
-        id_producto = request.form['idproducto']
-        proveedor = request.form['proveedor']
-        cantidad = request.form['cantidadprod']
-        nombreProducto = request.form['nomproducto']
-        referencia = request.form['refencia']                 # crea productos
-        precioCompra = request.form['preciocompra']
-        precioVenta = request.form['precioventa']
-        descipcionProducto = request.form['descripcion']
-        cantindadProductos = request.form['categoria']
-        cantidadMinima = request.form['cantidadminima']
-        ubicacion = request.form['ubicacion']
-        Crudproductos.crearProductos([id_producto,proveedor,cantidad,nombreProducto,referencia,precioCompra,precioVenta,descipcionProducto,cantindadProductos,cantidadMinima,ubicacion])
-        return redirect(url_for('/crear_producto'))
+    if "email_empleado" in session:
+        return render_template('productos/registro_productos.html')
     else:
-            flash('Algo esta mal en sus datos digitados')
+        flash('Algo esta mal en los datos digitados')
+        return redirect(url_for('home'))
+    
+@app.route('/crearProductos')
+def crearProductos():
+        if "email_empleado" in session:
+            return render_template('productos/registrar_productos.html')
+        else:
+            flash('Algo esta mal en los datos digitados')
             return redirect(url_for('home'))
+        
+@app.route("/crearProducto", methods=['POST'])
+def crearProductos():
+    if "email_empleado" in session:
+        id_producto = request.form['id_producto']
+        referencia_producto = request.form['referencia_producto']
+        cantegoria = request.form['cantegoria']
+        proveedor = request.form['proveedor']
+        nombre_producto = request.form['nombre_producto']
+        precio_compra = request.form['precio_compra']
+        precio_venta = request.form['precio_venta']
+        cantindad_producto = request.form['cantidad_producto']
+        descipcion = request.form['descripcion']
+        stockminimo = request.form['stockminimo']
+        estado_producto = request.form['estado_producto']
+        ubicacion = request.form['ubicacion']
+        estante = request.form['estante']
+        operador_producto = request.form['operador_producto']
+        tiempo = datetime.datetime.now()
+
+        productos.crear([id_producto,referencia_producto,cantegoria,proveedor,nombre_producto,precio_compra,precio_venta,cantindad_producto,descipcion,stockminimo,estado_producto,ubicacion,estante,operador_producto])
+        return redirect('/muestra_productos')
+    else:
+        flash('Algo esta mal en los datos digitados')
+
+        """ if not losProductos.buscar_producto(id_producto):
+            losProductos.crearProducto([id_producto, referencia_producto, cantegoria, proveedor, nombre_producto, precio_compra, precio_venta, cantindad_producto, descipcion, stockminimo, estado_producto, ubicacion, estante, operador_producto])
+            return redirect('/productos') """
+
+        
 
 
 @app.route('/borra_produc/<idprod>')
 def borra_produc(id_producto):
-    if "emaempl" in session:
+    if "email_empleado" in session:
         Crudproductos.borrar(id_producto)        # Eliminar productos
-        return redirect("/MUESTRA PRODUCTOS")   
+        return redirect("/muestra_productos")   
     else:
-            flash('Algo esta mal en sus datos digitados')
-            return redirect(url_for('home'))
+        flash('Algo esta mal en los datos digitados')
+        return redirect(url_for('home'))
 
 
 

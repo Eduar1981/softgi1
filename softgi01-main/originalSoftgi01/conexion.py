@@ -23,8 +23,8 @@ app.secret_key = 'tu_clave_secreta_aqui'  # Clave secreta recordar cambiarla
 # Configuración de la base de datos MySQL
 try:
     app.config['MYSQL_DATABASE_SECRET_KEY'] = 'tu_clave_secreta_aqui'
-    app.config['MYSQL_DATABASE_USER'] = 'nicol_pruebas'
-    app.config['MYSQL_DATABASE_PASSWORD'] = 'pruebas_12345'
+    app.config['MYSQL_DATABASE_USER'] = 'eduar'
+    app.config['MYSQL_DATABASE_PASSWORD'] = '12345'
     app.config['MYSQL_DATABASE_DB'] = 'softgi'
     app.config['MYSQL_DATABASE_HOST'] = 'localhost'
     app.config['MYSQL_DATABASE_PORT'] = 3306
