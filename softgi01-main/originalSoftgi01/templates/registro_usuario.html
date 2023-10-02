@@ -15,28 +15,36 @@
                 <form action="/registro" method="post" id="formu_prueba" name="formu_preuba">
                     <h2>Registrar usuario</h2>
                     <div class="cont-campos">
-                        <input type="text" name="nombre" id="nombre" placeholder="Tu nombre" class="ancho-medio">
 
-                        <input type="text" name="apellido" id="apellido" placeholder="Tu apellido" class="ancho-medio">
+                        <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="ancho-medio" required>
+                        <input type="text" name="apellido" id="apellido" placeholder="Apellido" class="ancho-medio" required>
                     </div>
-                    <input type="number" name="documento" id="documento" placeholder="Documeto" class="ancho-full">
-                    <input type="email" name="correo" id="correo" placeholder="email" class="ancho-full">
+                        <input type="number" name="documento" id="documento" placeholder="Documento" class="ancho-full" required>
+                        <input type="text" name="direccion" id="direccion" placeholder="Direccion" class="ancho-full" pattern="([a-zA-ZÀ-ÿ\u00f1\u00d1\s]{2,249})+([0-9]{2,5})" required>
+                        <input type="text" name="contactoEmpleado" id="contactoEmpleado" placeholder="Numero de Contacto" class="ancho-full" required>
+                        <input type="text" name="ciudad" id="ciudad" placeholder="Ciudad" class="ancho-full" required>
+                        <input type="email" name="correo" id="correo" placeholder="Correo electronico" class="ancho-full" required>
 
-                    <input type="password" name="contrasena" id="contrasena" placeholder="contraseña" class="ancho-full" title="La contraseña debe tener entre 8 y 16 caracteres, al menos una minúscula , al menos una mayúscula y al menos un simbolo." 
-                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,16}$"  required>
-                    <input type="password" name="confirmada" id="confirmada" placeholder="confirmar contraseña" class="ancho-full"title="La contraseña debe tener entre 8 y 16 caracteres, al menos una minúscula , al menos una mayúscula y al menos un simbolo." 
-                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,16}$"  required>
+                        <input type="password" name="contrasena" id="contrasena" placeholder="Contraseña" class="ancho-full" title="La contraseña debe tener entre 8 y 16 caracteres, al menos una minúscula , al menos una mayúscula y al menos un simbolo." 
+                        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,16}$"  required>
+                        <input type="password" name="confirmada" id="confirmada" placeholder="Confirmar contraseña" class="ancho-full"title="La contraseña debe tener entre 8 y 16 caracteres, al menos una minúscula , al menos una mayúscula y al menos un simbolo." 
+                        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,16}$"  required>
+                        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                        <div class="cont-campos">
+                            <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="ancho-medio">
 
-                    <div id="contenedor_chulo" class="optiones">
-                        <select id="opt" name="rol" class="custom-select">
-                            <option value="">seleciona rol</option>
-                            <option value=" administrador">Administrador</option>
-                            <option value="vendedor">Vendedor</option>
-                            <option value="almacenista">Almacenista</option>
-                        </select>
-                    </div>
 
-                    <button type="submit">ENTRAR</button>
+                            <div id="contenedor_chulo" class="ancho-medio">
+                                <select id="opt" name="rol" class="custom-select" required>
+                                    <option value="">seleciona rol</option>
+                                    <option value=" administrador">Administrador</option>
+                                    <option value="vendedor">Vendedor</option>
+                                    <option value="almacenista">Almacenista</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    <button type="submit">REGISTRAR</button>
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         <ul>

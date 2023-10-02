@@ -10,6 +10,7 @@ from proveedores import Proveedores
 from productos import productos
 from clientes import Clientes
 from categorias import Categorias
+from ManejoUsuarios import manejoUsuarios
 
 
 
@@ -23,6 +24,7 @@ app.secret_key = 'tu_clave_secreta_aqui'  # Clave secreta recordar cambiarla
 # Configuración de la base de datos MySQL
 try:
     app.config['MYSQL_DATABASE_SECRET_KEY'] = 'tu_clave_secreta_aqui'
+
     app.config['MYSQL_DATABASE_USER'] = 'root'
     app.config['MYSQL_DATABASE_PASSWORD'] = ''
     app.config['MYSQL_DATABASE_DB'] = 'softgi'
@@ -46,11 +48,7 @@ mail = Mail(app)
 # Inicializar la extensión MySQL
 mysql.init_app(app)
 
-
 proveedores = Proveedores(mysql, app) # proveedores = crearProveedores()# Crear una instancia de la clase Proveedores
-
 losClientes = Clientes(mysql,app)#clientes = Clientes()# Crear una instancia de la clase Cliente
-
 Crudproductos = productos(mysql, app) #Productos = Clientes()# Crear una instancia de la clase Cliente
-
-'''losClientes = Clientes(mysql, app)'''
+ManejoUsuario = manejoUsuarios(mysql, app)
