@@ -1,6 +1,4 @@
 from conexion import * #Importo la conexion de la base de datos y las funciones de flask, que en este caso se encuentra en el archivo conexion.py 
-from clientes import Clientes  # Importa la clase Clientes desde clientes.py
-from categorias import Categorias
 
 
 
@@ -29,8 +27,9 @@ def registro_usuario(): #defino la funcion de la ruta
     doc_empleado = request.form['documento'] # Utilizo request.form Para trear los datos dijitados en el formulario y la variable docempl la almacena
     nom_empleado = request.form['nombre']# Utilizo request.form Para traer los datos dijitados en el formulario y la variable nomempl la almacena
     ape_empleado = request.form['apellido']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable apempl la almacena
-    direcion = request.form['direccion']
-    cuidad = request.form['cuidad']
+    direccion = request.form['direccion']
+    contactoEmpleado = request.form['contactoEmpleado']
+    ciudad = request.form['ciudad']
     fechaNacimiento = request.form['fechaNacimiento']
     email_empleado = request.form['correo']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable emaempl la almacena
     rol = request.form['rol']# Utilizo request.form Para trear los datos dijitados en el formulario y la variable rol la almacena
@@ -54,11 +53,8 @@ def registro_usuario(): #defino la funcion de la ruta
 
             # Envía el correo de confirmación
             enviar_correo_confirmacion(nom_empleado, email_empleado, mi_token2)# ejecuto la funcion de enviar_correo_confirmacion(nom_empleado, email_empleado, mi_token2) enviado 3 variables que son nom_empleado, email_empleado, mi_token2 para enviar como imformacion al correo segun definido en la variable email_empleado con un token unico y el nombre de la persona q se le envia el correo
-            
-            
-            sql = "INSERT INTO empleados (doc_empleado, nom_empleado, ape_empleado, email_empleado, contrasena, rol ) VALUES ( %s, %s, %s, %s, %s, %s)"# Inserto o registro los datos en la base de datos en la tabla empleados 
-            cursor.execute(sql, (doc_empleado, nom_empleado, ape_empleado, email_empleado, cifrada, rol)) # ejecuto el registro hecho 
-            conn.commit()#hago un conn.commit confirmando la transacción actual
+            tiemporegistro = datetime.datetime.now()
+            manejoUsuarios.registroUsuarios([doc_empleado, nom_empleado, ape_empleado, fechaNacimiento, contactoEmpleado, email_empleado, direccion, ciudad, clave1, rol, tiemporegistro ])
             
             fecha_registro = datetime.datetime.now()#la variable fecha _registro obtiene el tiempo hora fecha año y segundo que estas actual
             tok = f"INSERT INTO tokens (doc_empleado, nom_empleado, email_empleado, token, confir_user, tiempo_registro) VALUES ('{doc_empleado}', '{nom_empleado}', '{email_empleado}','{mi_token2}', 'no confirmado', '{fecha_registro}' )" # Inserto o registro los datos en la base de datos en la tabla tokens
@@ -326,6 +322,7 @@ def crear_cliente():
         doc_cliente = request.form['doc_cliente']
         nom_cliente = request.form['nom_cliente']
         ape_cliente = request.form['ape_cliente']
+        fecha_nacimiento_cliente = request.form['fecha_nacimiento_cliente']
         contacto_cliente = request.form['contacto_cliente']
         email_cliente = request.form['email_cliente']
         direccion_cliente = request.form['direccion_cliente']
@@ -335,7 +332,7 @@ def crear_cliente():
         
 
         if not losClientes.buscar_cliente(doc_cliente):
-            losClientes.crear_cliente([doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, documento_registro, tiempo])
+            losClientes.crear_cliente([doc_cliente, nom_cliente, ape_cliente, fecha_nacimiento_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, documento_registro, tiempo])
             return redirect('/clientes')
         else:
             mensaje="Cliente ya existe"
@@ -477,6 +474,8 @@ def crearProveedores():
         resultado = cursor.fetchone()
         print(resultado)
         documento_registro = resultado[0]
+        nombre_operador = resultado[1]
+        apellido_operador = resultado[2]
         documento = request.form['documentoProveedor']
         nombre = request.form['nombreProveedor']
         numero = request.form['numeroProveedores']
@@ -485,7 +484,7 @@ def crearProveedores():
         ciudad = request.form['ciudadProveedor']
         tiempo = datetime.datetime.now()
 
-        proveedores.crear([documento,nombre,numero,correo,direcion,ciudad, tiempo, documento_registro])
+        proveedores.crear([documento,nombre,numero,correo,direcion,ciudad, tiempo, documento_registro, nombre_operador, apellido_operador])
         return redirect('/muestra_Proveedores')
     else:
         flash('Algo está mal en los datos digitados')
