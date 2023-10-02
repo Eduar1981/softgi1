@@ -8,7 +8,7 @@ class Proveedores:
     #Crear provedores
     def crear(self, agregar):
 
-        bsdsql = f" INSERT INTO `proveedores`(`doc_proveedor`, `nom_proveedor`, `contacto_proveedor`, `email_proveedor`, `direccion_proveedor`, `ciudad_proveedor`, `registro_proveedor`, `operador_proveedor`, `estado_proveedor` ) VALUES ('{agregar[0]}','{agregar[1]}','{agregar[2]}','{agregar[3]}','{agregar[4]}', '{agregar[5]}', '{agregar[6]}', '1112388921','ACTIVO')"
+        bsdsql = f" INSERT INTO `proveedores`(`doc_proveedor`, `nom_proveedor`, `contacto_proveedor`, `email_proveedor`, `direccion_proveedor`, `ciudad_proveedor`, `registro_proveedor`, `operador_proveedor`, `estado_proveedor` ) VALUES ('{agregar[0]}','{agregar[1]}','{agregar[2]}','{agregar[3]}','{agregar[4]}', '{agregar[5]}', '{agregar[6]}', '{agregar[7]}','ACTIVO')"
         self.cursor.execute(bsdsql)
         self.conexion.commit()
 

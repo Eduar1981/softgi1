@@ -151,12 +151,17 @@ def login():# hago la funcion de la ruta en este caso su nombre es login
 
     """ bsql_emp = f"SELECT email_empleado='{email}', contrasena='{cifrado}' FROM empleados WHERE conemail='confirmado'" """
 
-    bsql_emp = f"SELECT empleados.email_empleado, empleados.contrasena='{cifrado}', tokens. confir_user  FROM empleados INNER JOIN tokens ON empleados.doc_empleado = tokens.doc_empleado WHERE empleados.email_empleado  = '{email}'"
+    bsql_emp = f"SELECT empleados.email_empleado, empleados.doc_empleado, empleados.nom_empleado, empleados.ape_empleado, empleados.contrasena='{cifrado}', tokens.confir_user  FROM empleados INNER JOIN tokens ON empleados.doc_empleado = tokens.doc_empleado WHERE empleados.email_empleado  = '{email}'"
     cursor.execute(bsql_emp)# ejecuto la consulta 
     resultado = cursor.fetchone()# agrego el resultado de la consulta a la variable resultado
     if resultado is not None:# hago una toma de desicion que donde la consulta resultado tenga dato o no esta vacia me haga el siguiente metodo
-        if resultado[2] == 'confirmado':# toma de desicion que se aplica en el caso de que el correo este confirmado 
-            session["email_empleado"] = resultado[0]# Utilizo session para guardar la informacion de la persona ingresada
+        if resultado[5] == 'confirmado':# toma de desicion que se aplica en el caso de que el correo este confirmado 
+            session["email_empleado"] = email# Utilizo session para guardar la informacion de la persona ingresada
+            session["doc_empleado"] = resultado[1]
+            session["nom_empleado"] = resultado[2]
+            session["ape_empleado"] = resultado[3]
+            print(session)
+            print(resultado)
             return redirect(url_for('inicio'))#redirijo 
         else:
             flash("No has confirmado tu cuenta, por favor revisa la bandeja de entrada o spam", category="danger")
@@ -201,16 +206,16 @@ def solicitarCambio_contraseña():
         cursor = mysql.get_db().cursor()
         msql = f"SELECT * FROM empleados  WHERE email_empleado  = '{email}'"
         cursor.execute(msql)
-        userio_data = cursor.fetchone()
+        usuario_data = cursor.fetchone()
 
-        if userio_data:
-            userio = User(id=userio_data[0], email=userio_data[3], nombre=userio_data[1])
+        if usuario_data:
+            usuario = User(id=usuario_data[0], email=usuario_data[5], nombre=usuario_data[1])
             
 
             cursor = mysql.get_db().cursor()
 
             # Verificar si hay registros en la tabla recuperarcontrasena para ese correo electrónico
-            cursor.execute("SELECT * FROM recuperarcontrasena WHERE email_usuario = %s", (userio.email,))
+            cursor.execute("SELECT * FROM recuperarcontrasena WHERE email_usuario = %s", (usuario.email,))
             existing_token = cursor.fetchone()
             token_recuperar = token_recuperar_contrasena()  #Token que se genera para cambio de contraseña
             """ if existing_token:
@@ -224,13 +229,13 @@ def solicitarCambio_contraseña():
                                 (userio.nombre, userio.email, datetime.datetime.now(), expiration_time, token_recuperar, userio.id)) """
             # Si no existe un token para ese correo, crea uno nuevo
             expiration_time = datetime.datetime.now() + datetime.timedelta(minutes=3)
-            cursor.execute("INSERT INTO recuperarcontrasena (id_solicitud, email_usuario, fechahora_solicitud, fechahora_termina, codigo, usuario) VALUES (%s, %s, %s, %s, %s, %s)",
-                            (userio.nombre, userio.email, datetime.datetime.now(), expiration_time, token_recuperar, userio.id)) 
+            cursor.execute("INSERT INTO recuperarcontrasena (email_usuario, fechahora_solicitud, fechahora_termina, codigo, usuario,utilizado) VALUES (%s, %s, %s, %s, %s,%s)",
+                            (usuario.email, datetime.datetime.now(), expiration_time, token_recuperar, usuario.id,'no')) 
             mysql.get_db().commit()
             
             
-            envio_correo(userio, token_recuperar)
-            print(userio, token_recuperar)
+            envio_correo(usuario, token_recuperar)
+            print(usuario, token_recuperar)
             flash('Se ha enviado un correo electrónico con instrucciones para restablecer la contraseña.', 'success')
             return redirect(url_for('home'))
         else:
@@ -273,7 +278,7 @@ def recuperar_contraseña(token_rctsn):
         cifrado = hashlib.sha512(password.encode('utf-8')).hexdigest()
 
         cursor.execute("UPDATE empleados SET contrasena  = %s WHERE doc_empleado = %s", (cifrado, usuario))
-        cursor.execute("UPDATE recuperarcontrasena SET usuario='si' WHERE codigo = %s", (codigo))
+        cursor.execute("UPDATE recuperarcontrasena SET utilizado='si' WHERE codigo = %s", (codigo))
         mysql.get_db().commit()
 
         flash('Tu contraseña ha sido restablecida.', 'success')
@@ -308,7 +313,13 @@ def crearClientes():
 @app.route("/crear_cliente", methods=['POST'])
 def crear_cliente():
     if "email_empleado" in session:
-
+        email = session["email_empleado"]
+        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(bsq)
+        resultado = cursor.fetchone()
+        documento_registro = resultado[0]
         doc_cliente = request.form['doc_cliente']
         nom_cliente = request.form['nom_cliente']
         ape_cliente = request.form['ape_cliente']
@@ -321,7 +332,7 @@ def crear_cliente():
         
 
         if not losClientes.buscar_cliente(doc_cliente):
-            losClientes.crear_cliente([doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, tiempo])
+            losClientes.crear_cliente([doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, documento_registro, tiempo])
             return redirect('/clientes')
         else:
             mensaje="Cliente ya existe"
@@ -454,6 +465,15 @@ def proveedoress():
 @app.route('/crearProveedores', methods=['POST'])
 def crearProveedores():
     if "email_empleado" in session:
+        email = session["email_empleado"]
+        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
+        print(bsq)
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(bsq)
+        resultado = cursor.fetchone()
+        print(resultado)
+        documento_registro = resultado[0]
         documento = request.form['documentoProveedor']
         nombre = request.form['nombreProveedor']
         numero = request.form['numeroProveedores']
@@ -462,7 +482,7 @@ def crearProveedores():
         ciudad = request.form['ciudadProveedor']
         tiempo = datetime.datetime.now()
 
-        proveedores.crear([documento,nombre,numero,correo,direcion,ciudad, tiempo])
+        proveedores.crear([documento,nombre,numero,correo,direcion,ciudad, tiempo, documento_registro])
         return redirect('/muestra_Proveedores')
     else:
         flash('Algo está mal en los datos digitados')
