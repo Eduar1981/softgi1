@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muestras productos</title>
+    <title>Muestra productos</title>
     <link rel="stylesheet" href="../../static/css/muestra_productos.css">
 </head>
 <body>
     <div></div>
     <h1>Productos</h1>
-    <div id="crear-prov">
-    <a class="crear-prov" href="{{url_for('proveedoress')}}">Crear Productos</a>
+    <div id="crear-producto">
+    <a class="crear-producto" href="{{url_for('crearProducto')}}">Crear Productos</a>
     </div>
     <br>
 
@@ -18,31 +18,30 @@
         <thead >
             <tr>
                 <th>Id producto</th>
-                <th>Proveedor</th>
-                <th>Categoria</th>
-                <th>Nombre producto</th>
                 <th>Referencia</th>
-                <th>Precio de compra</th>
+                <th>Categoria</th>
+                <th>Proveedor</th>
+                <th>Nombre producto</th>
+                <th>Precio de entrada</th>
                 <th>Precio de venta</th>
+                <th>Cantidad</th>
                 <th>Descripción</th>
-                <th>Cantidad de entrada</th>
-                <th>Cantidad minima</th>
+                <th>Stock mínimo</th>
                 <th>Ubicación</th>
-                <th></th>
-                <th></th>
+                <th>Estante</th>
             </tr>
         </thead>
         <tbody>
             {% for c in resul %}
                 <tr>
-                    {% for i in range(0,8) %}
+                    {% for i in range(0,12) %}
 
                         <td>{{c[i]}}</td>
 
                     {% endfor %}
 
                         <td>
-                            <a class="boton-editar" href="/muestra_info_prov/{{c[0]}}">Editar</a>
+                            <a class="boton-editar" href="/muestra_info_produc/{{c[0]}}">Editar</a>
                         </td>
 
                         <td>

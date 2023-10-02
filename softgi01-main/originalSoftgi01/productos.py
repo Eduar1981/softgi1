@@ -5,9 +5,17 @@ class productos:
         self.conexion = self.mysql.connect()
         self.cursor = self.conexion.cursor()
         
-    def crearProductos(self, agregar):
+    """ def crearProductos(self, agregar):
         sql = F"INSERT INTO `productos`('id_producto`, `referencia_producto, `categoria`, `proveedor`, `nombre_producto`, `precio_compra`, `precio_venta`, `cantidad_producto`, 'descripcion', `stockminimo`, 'estado_producto', `ubicacion`, `estante`, `operador_producto`)VALUES ('{agregar[0]}','{agregar[1]}','{agregar[2]}','{agregar[3]}','{agregar[4]}','{agregar[5]}','{agregar[6]}','{agregar[7]}','{agregar[8]}','{agregar[9]}','{agregar[10]}', '{agregar[11]}', '{agregar[12]}', '{agregar[13]}' 'ACTIVO')"
         self.cursor.execute(sql)
+        self.conexion.commit() """
+    def crearProductos(self, agregar):
+        sql = """
+        INSERT INTO productos
+        (id_producto, referencia_producto, categoria, proveedor, nombre_producto, precio_compra, precio_venta, cantidad_producto, descripcion, stockminimo, estado_producto, ubicacion, estante, operador_producto)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        self.cursor.execute(sql, agregar)
         self.conexion.commit()
 
     def producto_existe_en_db(self, producto):
@@ -22,7 +30,7 @@ class productos:
 
 
     #leer producto
-    def mostrarProducto(self, id_producto):
+    def muestra_Productos(self, id_producto):
         sql = f"SELECT * FROM productos WHERE id_producto = '{id_producto}' AND estado = 'ACTIVO'"
         self.cursor.execute(sql)
         producto = self.cursor.fetchone()
@@ -39,10 +47,8 @@ class productos:
                 'cantidad_producto': producto[7],
                 'descripcion' : producto[8],
                 'stockminimo': producto[9],
-                'estado_producto' : producto[10],
-                'ubicacion': producto[11],
-                'estante': producto[12],
-                'operador_producto': producto[13],
+                'ubicacion': producto[10],
+                'estante': producto[11]
             }
         else:
             return None
