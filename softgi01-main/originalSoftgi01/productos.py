@@ -22,7 +22,7 @@ class productos:
 
 
     #leer producto
-    def leerProducto(self, id_producto):
+    def mostrarProducto(self, id_producto):
         sql = f"SELECT * FROM productos WHERE id_producto = '{id_producto}' AND estado = 'ACTIVO'"
         self.cursor.execute(sql)
         producto = self.cursor.fetchone()

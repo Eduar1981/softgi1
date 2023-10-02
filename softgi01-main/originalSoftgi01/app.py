@@ -567,6 +567,7 @@ def borrarcliente(documento):
 
                                         
 #----------------------------------------------Crud de productos------------------------------------------------ 
+
 @app.route('/productos')
 def crear_producto():
     if "emaempl" in session:
@@ -580,6 +581,14 @@ def crear_producto():
             flash('Algo esta mal en sus datos digitados')
             return redirect(url_for('home'))
     
+""" 
+@app.route('/crearProductos')
+def crearProductos():
+        if "email_empleado" in session:
+            return render_template('productos/registrar_productos.html')
+        else:
+            flash('Algo esta mal en los datos digitados')
+            return redirect(url_for('home'))
     
 @app.route('/crearProductos', methods=['POST'])
 def crearProductos():
@@ -588,14 +597,8 @@ def crearProductos():
     else:
         flash('Algo esta mal en los datos digitados')
         return redirect(url_for('home'))
-    
-@app.route('/crearProductos')
-def crearProductos():
-        if "email_empleado" in session:
-            return render_template('productos/registrar_productos.html')
-        else:
-            flash('Algo esta mal en los datos digitados')
-            return redirect(url_for('home'))
+     """
+
         
 @app.route("/crearProducto", methods=['POST'])
 def crearProductos():
