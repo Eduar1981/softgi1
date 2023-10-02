@@ -14,12 +14,21 @@
         <div id="img-parabri">
             <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
         </div>
-            <form action="/crearProductos" method="post" id="formu_producto">
+            <form action="/crearProducto" method="post" id="formu_producto">
                 <div class="campos">
-                    <input type="text" name="idproducto" id="idproducto" placeholder="Id producto num-letras">
-                    <input type="text" name="proveedor" id="proveedor" placeholder="Nombre proveedor">
+                    <input type="number" name="id_producto" id="idproducto" placeholder="Id producto num-letras" class="campo">
+                    <input type="text" name="referencia_producto" id="referencia_producto" placeholder="Referencia de producto" class="campo">
+                    <input type="text" name="categoria" id="categoria" placeholder="Categoria" class="campo">
+                    <input type="text" name="proveedor" id="proveedor" placeholder="Nombre proveedor" class="campo">
+                    <input type="text" name="nombre_producto" id="nombre_producto" placeholder="Nombre producto" class="campo">
+                    <input type="number" name="precio_compra" id="precio_compra" placeholder="Precio entrada" class="campo">
+                    <input type="number" name="precio_venta" id="precio_venta" placeholder="Precio de venta" class="campo">
+                    <input type="number" name="cantidad_producto" id="cantidad_producto" placeholder="Cantidad" class="campo">
+                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" class="campo">
+                    <input type="text" name="ubicacion" id="ubicacion" placeholder="Ubicación" class="campo">
+                    <input type="text" name="estante" id="estante" placeholder="Estante" class="campo">
 
-                    
+                    <!-- 
                         <select name="categoria" id="categoria">
                             <option value="">Categoria</option>
                             <option value="1">Parabrisas</option>
@@ -27,19 +36,8 @@
                             <option value="3">Chapas</option>
                             <option value="4">Empaques</option>
                             <option value="5">Elevavidrios</option>
-                        </select>
+                        </select> -->
                       
-                    <input type="text" name="nomproducto" id="nomproducto" placeholder="Nombre producto" class="campo">
-                    <input type="text" name="refencia" id="refencia" placeholder="Referencia" class="campo">
-
-                    <input type="number" name="preciocompra" id="preciocompra" placeholder="Precio comprar" class="campo">
-                    <input type="number" name="precioventa" id="precioventa" placeholder="Precio venta" class="campo">
-
-                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" class="campo">
-                    <input type="number" name="cantidadprod" id="cantidadprod" placeholder="Cantidad" class="campo">
-                    
-                    <input type="number" name="cantidadminima" id="cantidadminima" placeholder="Cantidad minima" class="campo">
-                    <input type="text" name="ubicacion" id="ubicacion" placeholder="Ubicación" class="campo">
                 </div>
                 <div id="boton-atras">
                     <input type="submit" value="Registrar" class="boton-atras">
