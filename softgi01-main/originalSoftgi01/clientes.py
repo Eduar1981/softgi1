@@ -7,7 +7,7 @@ class Clientes:
         self.cursor = self.conexion.cursor()
 
     def crear_cliente(self, cliente):           
-        sql = f"INSERT INTO clientes(doc_cliente, nom_cliente, ape_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, operador_cliente, fechahora_registro, estado_cliente) VALUES ('{cliente[0]}','{cliente[1]}','{cliente[2]}','{cliente[3]}','{cliente[4]}','{cliente[5]}','{cliente[6]}', '{cliente[7]}','{cliente[8]}','{cliente[9]}','ACTIVO')"
+        sql = f"INSERT INTO clientes(doc_cliente, nom_cliente, ape_cliente, fecha_nacimiento_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, operador_cliente, fechahora_registro, estado_cliente) VALUES ('{cliente[0]}','{cliente[1]}','{cliente[2]}','{cliente[3]}','{cliente[4]}','{cliente[5]}','{cliente[6]}', '{cliente[7]}','{cliente[8]}','{cliente[9]}', '{cliente[10]}','ACTIVO')"
         self.cursor.execute(sql)
         self.conexion.commit()
 
