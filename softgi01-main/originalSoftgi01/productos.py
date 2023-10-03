@@ -22,8 +22,8 @@ class Productos:
             return False
 
 
-    def modificar_producto(self, productos):
-        sql=f"UPDATE productos SET id_producto='{productos[0]}', referencia='{productos[1]}', categoria='{productos[2]}',proveedor='{productos[3]}', nom_producto='{productos[4]}', precio_compra='{productos[5]}', precio_venta='{productos[6]}', cantidad='{productos[7]}', descripcion='{productos[8]}', stockminimo='{productos[9]}', ubicacion='{productos[10]}', estante='{productos[11]}'"
+    def modificar(self,productos):
+        sql=f"UPDATE productos SET id_producto='{productos[0]}', referencia='{productos[1]}', categoria='{productos[2]}',proveedor='{productos[3]}', nombre_proveedor='{productos[4]}' nom_producto='{productos[5]}', precio_compra='{productos[6]}', precio_venta='{productos[7]}', cantidad='{productos[8]}', descripcion='{productos[9]}', stockminimo='{productos[10]}', ubicacion='{productos[11]}', estante='{productos[12]}'"
 
         self.cursor.execute(sql)
         self.conexion.commit()
