@@ -8,6 +8,12 @@
 </head>
 <body>
     <table>
+        <div>
+            <h1>CATEGORIAS</h1>
+        </div>
+        <div>
+            <a href="{{url_for('crearCategoria')}}">Crea categorias</a>
+        </div>
         <thead>
             <tr>
                 <th>Id Categoría</th>
@@ -29,12 +35,12 @@
                         
         
                         <td>
-                            <a class="boton-editar" href="/editarClientes/{{resul[0]}}">Editar</a>
+                            <a class="boton-editar" href="/editarCategorias/{{resul[0]}}">Editar</a>
                         </td>               
                         
         
                         <td>
-                            <a  class="boton-eliminar" onclick="return confirm('Seguro que deseas eliminar el cliente?')" href="/borracliente/{{resul[0]}}">Eliminar</a>
+                            <a  class="boton-eliminar" onclick="return confirm('Seguro que deseas eliminar el cliente?')" href="/borracategoria/{{resul[0]}}">Eliminar</a>
                         </td>
         
                     </tr>
