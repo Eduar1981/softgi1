@@ -6,7 +6,7 @@ class Categorias:
         self.cursor = self.conexion.cursor()
 
     def crear_categoria(self, categoria):    
-        sql = f"INSERT INTO categorias('id_categoria', 'nom_categoria' 'operador_categoria', 'fechahora_creacion','estado_categorias') VALUES ('{categoria[0]}', '{categoria[1]}', '1112388921', '{categoria[3]}', 'ACTIVO')"
+        sql = f"INSERT INTO `categorias`(`nom_categoria`, `fechahora_creacion`, `documento_operador`, `nombre_operador`, `apellido_operador`, `estado_categorias`) VALUES ('{categoria[0]}', '{categoria[1]}', '{categoria[2]}', '{categoria[3]}', '{categoria[4]}','ACTIVO')"
         self.cursor.execute(sql)
         self.conexion.commit()
  

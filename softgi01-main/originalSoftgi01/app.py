@@ -517,28 +517,47 @@ def muestra_Proveedores():
 
 #----------------------------------------------Crud de categorías------------------------------------------------ 
 
+# muestra las categorias
 @app.route("/categorias")
 def categorias():
-    sql = "SELECT * FROM categorias"
-    conn = mysql.connect()                    # muestra las categorias
+    sql = "SELECT * FROM categorias WHERE estado_categorias ='ACTIVO'"
+    conn = mysql.connect()                    
     cursor = conn.cursor()
     cursor.execute(sql)                                          
     resultado = cursor.fetchall()
     return render_template('/categorias/muestracategorias.html', resulta=resultado)
 
-
-@app.route("/crearCategorias")
-def crearCategoria():                                
-    return render_template('categorias/registrar_categorias.html')        #crea categorias
+ #crea categorias
+@app.route("/crearCategoria")
+def crearCategoria(): 
+    if "email_empleado" in session:                                   
+        return render_template('categorias/registrar_categorias.html')       
+    else:
+            flash('Algo esta mal en sus datos digitados')
+            return redirect(url_for('home'))
+    
     
 @app.route("/registrar_categorias", methods=['POST'])
 def registrar_categorias():
     if "email_empleado" in session:
-        nombre_categoria = request.form['nom_categoria']#crea clientes
-        """ now = datetime.now()
-        tiempo = now.strftime("%Y%m%d%H%M%S")
-        """
-        return render_template('/muestracategorias/registrado.html')
+        email = session["email_empleado"]
+        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
+        print(bsq)
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(bsq)
+        resultado = cursor.fetchone()
+        print(resultado)
+        documento_registro = resultado[0]
+        nombre_operador = resultado[1]
+        apellido_operador = resultado[2]
+        nombre_categoria = request.form['nom_categoria']
+        tiempo = datetime.datetime.now()
+
+        lascategorias.crear_categoria([nombre_categoria,tiempo, documento_registro, nombre_operador, apellido_operador])
+        return redirect('categorias')
+    
+
     else:
         flash('Algo esta mal en sus datos digitados')
         return redirect(url_for('home'))

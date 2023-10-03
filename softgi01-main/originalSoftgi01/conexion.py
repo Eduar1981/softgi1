@@ -25,8 +25,8 @@ app.secret_key = 'tu_clave_secreta_aqui'  # Clave secreta recordar cambiarla
 try:
     app.config['MYSQL_DATABASE_SECRET_KEY'] = 'tu_clave_secreta_aqui'
 
-    app.config['MYSQL_DATABASE_USER'] = 'root'
-    app.config['MYSQL_DATABASE_PASSWORD'] = ''
+    app.config['MYSQL_DATABASE_USER'] = 'nicol_pruebas'
+    app.config['MYSQL_DATABASE_PASSWORD'] = 'pruebas_12345'
     app.config['MYSQL_DATABASE_DB'] = 'softgi'
     app.config['MYSQL_DATABASE_HOST'] = 'localhost'
     app.config['MYSQL_DATABASE_PORT'] = 3306
@@ -52,3 +52,5 @@ proveedores = Proveedores(mysql, app) # proveedores = crearProveedores()# Crear 
 losClientes = Clientes(mysql,app)#clientes = Clientes()# Crear una instancia de la clase Cliente
 Crudproductos = productos(mysql, app) #Productos = Clientes()# Crear una instancia de la clase Cliente
 manejoDsuario = manejoUsuarios(mysql, app)
+
+lascategorias = Categorias(mysql, app)
