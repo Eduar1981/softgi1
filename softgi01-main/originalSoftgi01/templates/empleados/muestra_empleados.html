@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados</title>
+</head>
+<body>
+    <h1>Empleados</h1>
+
+    <table id="tabla">
+        <thead >
+            <tr>
+                <th>doc_empleado</th>
+                <th>nombre</th>
+                <th>apellido</th>
+                <th>fecha de nacimiento</th>
+                <th>contacto</th>
+                <th>email</th>
+                <th>Direccion</th>
+                <th>ciudad</th>
+                <th>Rol</th>
+                <th>fecha de registro</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for c in resul %}
+            <tr>
+                {% for i in range(0,10) %}
+                    <td>{{c[i]}}</td>
+                {% endfor %}
+                    <td>
+                        <a href="###/{{c[0]}}">Editar empleado</a>
+                    </td>
+                    <td>
+                        <a  onclick="return confirm('Seguro que deseas eliminar el usuario administrador?')" href="###/{{c[0]}}"><i class="lni lni-cross-circle"></i></a>
+                    </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

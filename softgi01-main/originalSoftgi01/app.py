@@ -286,7 +286,7 @@ def recuperar_contraseña(token_rctsn):
 
     return render_template('reset_password.html')
 
-#-----------------conexión de la clase cliente------------------
+#----------------------------------------conexión de la clase cliente-------------------------------------
 
 @app.route("/clientes")
 def clientes():
@@ -707,6 +707,20 @@ def borra_produc(idprod):
     else:
         flash('Algo esta mal en los datos digitados')
         return redirect(url_for('home'))
+    
+
+#----------------------------------------------Crud de empleados------------------------------------------------ 
+
+@app.route('/muestra_empleados')         # muestra datos de los empleados
+def muestra_empleados():
+    sql = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado`, `fecha_nacimiento_empleado`, `contacto_empleado`, `email_empleado`, `direccion_empleado`, `ciudad_empleado`, `rol`, `fechahora_registroempleado` FROM `empleados`"
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    resultado = cursor.fetchall()  
+    conn.commit()
+    return render_template("/empleados/muestra_empleados.html", resul=resultado) 
+
 
 
 
