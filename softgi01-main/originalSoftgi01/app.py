@@ -612,7 +612,8 @@ def crearProducto():
         documento_registro = resultado[0]
         nombre_operador = resultado[1]
         apellido_operador = resultado[2]
-        sql = f"SELECT * FROM `proveedores` WHERE documento_operador= '{documento_registro}'"
+        nombreProveedor = request.form['nombreProveedor']
+        sql = f"SELECT doc_proveedor FROM proveedores WHERE nom_proveedor= '{nombreProveedor}'"
         cursor.execute(sql)
         resultado2 = cursor.fetchone()
         print(resultado2)
@@ -631,7 +632,7 @@ def crearProducto():
         estante = request.form['estante']
         tiempoRegistro = datetime.datetime.now()
 
-        Crudproductos.crearProductos([id_producto, referencia_producto, categoria, proveedor, nombre_producto, precio_compra, precio_venta, cantidad_producto, descripcion, stockminimo, ubicacion, estante, tiempoRegistro, documento_registro, nombre_operador, apellido_operador])
+        Crudproductos.crearProductos([id_producto, referencia_producto, categoria, proveedor, nombre_producto, precio_compra, precio_venta, cantidad_producto, descripcion, stockminimo, ubicacion, estante, tiempoRegistro, documento_registro, nombre_operador, apellido_operador, nombreProveedor])
         return redirect('/muestra_productos') 
     else:
         flash('Algo esta mal en los datos digitados')
@@ -658,9 +659,9 @@ def muestra_Productos():
 
 
 @app.route('/borra_produc/<idprod>')
-def borra_produc(id_producto):
+def borra_produc(idprod):
     if "email_empleado" in session:
-        Crudproductos.borrar(id_producto)        # Eliminar productos
+        Crudproductos.borrar_producto(idprod)        # Eliminar productos
         return redirect("/muestra_productos")   
     else:
         flash('Algo esta mal en los datos digitados')
