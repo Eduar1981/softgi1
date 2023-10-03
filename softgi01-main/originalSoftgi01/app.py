@@ -592,66 +592,52 @@ def borrarcliente(documento):
 #----------------------------------------------Crud de productos------------------------------------------------ 
 
 @app.route('/productos')
-def crear_producto():
+def productos():
+        return render_template('/productos/muestra_productos.html')
+    
+@app.route('/registrar_productos')
+def registrar_productos():
+    return render_template('/productos/registrar_productos.html')
+        
+@app.route('/crear_producto', methods=['POST'])
+def crearProducto():
     if "email_empleado" in session:
-        sql = "SELECT * FROM productos WHERE estado_producto = 'ACTIVO' "
+        email = session["email_empleado"]
+        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
+        print(bsq)
         conn = mysql.connect()
         cursor = conn.cursor()
+        cursor.execute(bsq)
+        resultado = cursor.fetchone()
+        documento_registro = resultado[0]
+        nombre_operador = resultado[1]
+        apellido_operador = resultado[2]
+        sql = f"SELECT * FROM `proveedores` WHERE documento_operador= '{documento_registro}'"
         cursor.execute(sql)
-        resultado = cursor.fetchall()
-        return render_template('/productos/muestra_productos.html', resulta=resultado)
-    else:
-            flash('Algo esta mal en sus datos digitados')
-            return redirect(url_for('home'))
-    
-""" 
-@app.route('/crearProductos')
-def crearProductos():
-        if "email_empleado" in session:
-            return render_template('productos/registrar_productos.html')
-        else:
-            flash('Algo esta mal en los datos digitados')
-            return redirect(url_for('home'))
-    
-@app.route('/crearProductos', methods=['POST'])
-def crearProductos():
-    if "email_empleado" in session:
-        return render_template('productos/registro_productos.html')
-    else:
-        flash('Algo esta mal en los datos digitados')
-        return redirect(url_for('home'))
-     """
-
-        
-@app.route("/crearProducto", methods=['POST'])
-def crearProductos():
-    if "email_empleado" in session:
+        resultado2 = cursor.fetchone()
+        print(resultado2)
         id_producto = request.form['id_producto']
         referencia_producto = request.form['referencia_producto']
-        cantegoria = request.form['cantegoria']
-        proveedor = request.form['proveedor']
+        categoria = request.form['categoria']
+        proveedor = resultado2[0]
+        print(proveedor)
         nombre_producto = request.form['nombre_producto']
         precio_compra = request.form['precio_compra']
         precio_venta = request.form['precio_venta']
-        cantindad_producto = request.form['cantidad_producto']
-        descipcion = request.form['descripcion']
+        cantidad_producto = request.form['cantidad_producto']
+        descripcion = request.form['descripcion']
         stockminimo = request.form['stockminimo']
-        estado_producto = request.form['estado_producto']
         ubicacion = request.form['ubicacion']
         estante = request.form['estante']
-        operador_producto = request.form['operador_producto']
-        tiempo = datetime.datetime.now()
+        tiempoRegistro = datetime.datetime.now()
 
-        productos.crear([id_producto,referencia_producto,cantegoria,proveedor,nombre_producto,precio_compra,precio_venta,cantindad_producto,descipcion,stockminimo,estado_producto,ubicacion,estante,operador_producto])
-        return redirect('/muestra_productos')
+        Crudproductos.crearProductos([id_producto, referencia_producto, categoria, proveedor, nombre_producto, precio_compra, precio_venta, cantidad_producto, descripcion, stockminimo, ubicacion, estante, tiempoRegistro, documento_registro, nombre_operador, apellido_operador])
+        return redirect('/muestra_productos') 
     else:
         flash('Algo esta mal en los datos digitados')
+        return redirect(url_for('home'))
 
-        """ if not losProductos.buscar_producto(id_producto):
-            losProductos.crearProducto([id_producto, referencia_producto, cantegoria, proveedor, nombre_producto, precio_compra, precio_venta, cantindad_producto, descipcion, stockminimo, estado_producto, ubicacion, estante, operador_producto])
-            return redirect('/productos') """
-
-""" @app.route('/muestra_productos')
+@app.route('/muestra_productos')
 def muestra_Productos():
     if "email_empleado" in session:
         sql = "SELECT * FROM `productos` WHERE estado_producto ='ACTIVO'"           # consulta toda la informacion de productos.
@@ -679,8 +665,8 @@ def borra_produc(id_producto):
     else:
         flash('Algo esta mal en los datos digitados')
         return redirect(url_for('home'))
- """
-@app.route('/muestra_productos')
+
+"""@app.route('/muestra_productos')
 def muestra_Productos():
     if "email_empleado" in session:
         sql = "SELECT * FROM productos WHERE estado_producto ='ACTIVO'"
@@ -705,7 +691,7 @@ def crearProducto():
             id_producto = request.form['id_producto']
             referencia_producto = request.form['referencia_producto']
             categoria = request.form['categoria']
-            proveedor = request.form['proveedor']
+            proveedor = resultado
             nombre_producto = request.form['nombre_producto']
             precio_compra = request.form['precio_compra']
             precio_venta = request.form['precio_venta']
@@ -719,14 +705,14 @@ def crearProducto():
 
             producto_nuevo = [id_producto, referencia_producto, categoria, proveedor, nombre_producto, precio_compra, precio_venta, cantidad_producto, descripcion, stockminimo, estado_producto, ubicacion, estante, operador_producto]
 
-            productos.crearProductos(producto_nuevo)  # Llama a la función para crear el nuevo producto
+            Crudproductos.crearProductos(producto_nuevo)  # Llama a la función para crear el nuevo producto
             flash('Producto creado exitosamente')
             return redirect('/muestra_productos')
         else:
             return render_template('productos/registrar_productos.html')
     else:
         flash('Algo está mal en los datos digitados')
-        return redirect(url_for('home'))
+        return redirect(url_for('home'))"""
 
 if __name__ == '__main__':
 

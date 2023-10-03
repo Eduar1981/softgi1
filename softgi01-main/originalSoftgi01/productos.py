@@ -1,25 +1,18 @@
-class productos:
+class Productos:
     def __init__(self, DB, app):
         self.mysql = DB
         self.app = app
         self.conexion = self.mysql.connect()
         self.cursor = self.conexion.cursor()
         
-    """ def crearProductos(self, agregar):
-        sql = F"INSERT INTO `productos`('id_producto`, `referencia_producto, `categoria`, `proveedor`, `nombre_producto`, `precio_compra`, `precio_venta`, `cantidad_producto`, 'descripcion', `stockminimo`, 'estado_producto', `ubicacion`, `estante`, `operador_producto`)VALUES ('{agregar[0]}','{agregar[1]}','{agregar[2]}','{agregar[3]}','{agregar[4]}','{agregar[5]}','{agregar[6]}','{agregar[7]}','{agregar[8]}','{agregar[9]}','{agregar[10]}', '{agregar[11]}', '{agregar[12]}', '{agregar[13]}' 'ACTIVO')"
+    def crearProductos(self, producto):
+        sql = F"INSERT INTO `productos`( `id_producto`, `referencia_producto`, `categoria`, `proveedor`, `nombre_producto`, `precio_compra`, `precio_venta`, `cantidad_producto`, `descripcion`, `stockminimo`, `ubicacion`, `estante`, `fechahora_registro`, `documento_operador`, `nombre_operador`, `apellido_operador`, `estado_producto`) VALUES ('{producto[0]}','{producto[1]}','{producto[2]}','{producto[3]}','{producto[4]}','{producto[5]}','{producto[6]}','{producto[7]}','{producto[8]}','{producto[9]}','{producto[10]}', '{producto[11]}', '{producto[12]}', '{producto[13]}' , '{producto[14]}', '{producto[15]}', 'ACTIVO')"
         self.cursor.execute(sql)
-        self.conexion.commit() """
-    def crearProductos(self, agregar):
-        sql = """
-        INSERT INTO productos
-        (id_producto, referencia_producto, categoria, proveedor, nombre_producto, precio_compra, precio_venta, cantidad_producto, descripcion, stockminimo, estado_producto, ubicacion, estante, operador_producto)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """
-        self.cursor.execute(sql, agregar)
-        self.conexion.commit()
+        self.conexion.commit() 
+    
 
     def producto_existe_en_db(self, producto):
-        sql = f"SELECT COUNT(*) FROM clientes WHERE id_producto = '{producto}'"
+        sql = f"SELECT COUNT(*) FROM productos WHERE id_producto = '{producto}'"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchone()
 
@@ -29,37 +22,24 @@ class productos:
             return False
 
 
-    #leer producto
-    def muestra_Productos(self, id_producto):
-        sql = f"SELECT * FROM productos WHERE id_producto = '{id_producto}' AND estado = 'ACTIVO'"
-        self.cursor.execute(sql)
-        producto = self.cursor.fetchone()
+    def modificar_producto(self, productos):
+        sql=f"UPDATE productos SET id_producto='{productos[0]}', referencia='{productos[1]}', categoria='{productos[2]}',proveedor='{productos[3]}', nom_producto='{productos[4]}', precio_compra='{productos[5]}', precio_venta='{productos[6]}', cantidad='{productos[7]}', descripcion='{productos[8]}', stockminimo='{productos[9]}', ubicacion='{productos[10]}', estante='{productos[11]}'"
 
-        if producto:
-            return {
-                'referencia_producto': producto[0],
-                'id_producto': producto[1],
-                'categoria': producto[2],
-                'proveedor': producto[3],
-                'nombre_producto': producto[4],
-                'precio_compra': producto[5],
-                'precio_venta': producto[6],
-                'cantidad_producto': producto[7],
-                'descripcion' : producto[8],
-                'stockminimo': producto[9],
-                'ubicacion': producto[10],
-                'estante': producto[11]
-            }
-        else:
-            return None
-        
-def modificar(self, producto):
-        sql=f"UPDATE productos SET id_producto ='{producto[0]}',referencia_producto='{producto[1]}', categoria ='{producto[2]}', proveedor ='{producto[3]}', nombre_producto ='{producto[4]}', precio_compra ='{producto[5]}', precio_venta = '{producto[6]}', cantidad_producto = '{producto[7]}', descripcion = '{producto[8]}', stockminimo = '{producto[9]}', estado_producto = '{producto[10]}', ubicacion = '{producto[11]}', operador_producto = '{producto[12]}'WHERE doc_proveedor='{producto[0]}'"
         self.cursor.execute(sql)
         self.conexion.commit()
 
- #Eliminar productos
-def borra_produc(self,id_producto):
-    sql=f"UPDATE productos SET estado_producto ='INACTIVO' WHERE id_producto ='{id_producto}'"
-    self.cursor.execute(sql)
-    self.conexion.commit()
+    
+    def borrar_producto(self, id_producto):
+        if not self.producto_existe_en_db(id_producto):
+            return False  
+
+        sql = f"UPDATE productos SET estado='INACTIVO' WHERE id_producto = '{id_producto}'"
+
+        try:
+            self.cursor.execute(sql)
+            self.conexion.commit()
+            return True  # Borrado exitoso
+        except Exception as e:
+            print(f"Error al borrar el producto: {str(e)}")
+            self.conexion.rollback()
+            return False

@@ -7,7 +7,7 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignat
 from email.message import EmailMessage
 
 from proveedores import Proveedores
-from productos import productos
+from productos import Productos
 from clientes import Clientes
 from categorias import Categorias
 from ManejoUsuarios import manejoUsuarios
@@ -50,5 +50,5 @@ mysql.init_app(app)
 
 proveedores = Proveedores(mysql, app) # proveedores = crearProveedores()# Crear una instancia de la clase Proveedores
 losClientes = Clientes(mysql,app)#clientes = Clientes()# Crear una instancia de la clase Cliente
-Crudproductos = productos(mysql, app) #Productos = Clientes()# Crear una instancia de la clase Cliente
+Crudproductos = Productos(mysql, app) #Productos = Clientes()# Crear una instancia de la clase Cliente
 manejoDsuario = manejoUsuarios(mysql, app)
