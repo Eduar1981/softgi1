@@ -780,6 +780,11 @@ def Actualiza_empleados():
     return redirect('/muestra_empleados')
 
 
+@app.route('/elimina_empleados/<doc_empleado>')        # Elimina los empleados
+def elimina_empleados(doc_empleado):
+    empleados.eliminar(doc_empleado)
+    return redirect('/muestra_empleados')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port="5096")
