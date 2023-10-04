@@ -48,14 +48,6 @@ div#caja-logo {
         width: 100%;
     }
 
-/*.logo img {
-    width: 100px;  Tamaño del logo, ajusta según tu diseño 
-}*/
-
-/*.header-content {
-    margin: 0;
-}*/
-
 
 nav#lista-opciones{
     align-items: center;
@@ -73,7 +65,7 @@ nav#lista-opciones{
 
         nav ul li {
             display: inline;
-            margin-right: 100px;
+            margin-right: 90px;
             
             
         }
