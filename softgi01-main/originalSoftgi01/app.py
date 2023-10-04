@@ -755,11 +755,33 @@ def muestra_empleados():
     return render_template("/empleados/muestra_empleados.html", resul=resultado) 
 
 
+@app.route('/edita_empleados/<doc_empleado>')      # muestra los datos del empleado en los inputs de editar
+def edita_empleados(doc_empleado):
+    sql = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado`, `fecha_nacimiento_empleado`, `contacto_empleado`, `email_empleado`, `direccion_empleado`, `ciudad_empleado`, `rol` FROM `empleados` WHERE doc_empleado='{doc_empleado}'"
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    resultado = cursor.fetchall()  
+    conn.commit()
+    return render_template("edita_empleados.html", resul=resultado[0])
+
+@app.route('/Actualiza_empleados', methods=['POST'])
+def Actualiza_empleados():
+    doc_empleado = request.form['doc_empleado']
+    nom_empleado = request.form['nom_empleado']             # actualiza la info del empleado
+    ape_empleado = request.form['ape_empleado']
+    fecha_nacimiento = request.form['fecha_nacimiento']
+    contacto_empleado = request.form['contacto_empleado']
+    email_empleado = request.form['email_empleado']
+    direccion_empleado = request.form['direccion_empleado']
+    ciudad_empleado = request.form['ciudad_empleado']
+    rol = request.form['rol']
+    empleados.modificar([doc_empleado,nom_empleado,ape_empleado,fecha_nacimiento,contacto_empleado,email_empleado,direccion_empleado,ciudad_empleado,rol])
+    return redirect('/muestra_empleados')
+
 
 
 if __name__ == '__main__':
-
-
     app.run(host='0.0.0.0', debug=True, port="5096")
 
 
