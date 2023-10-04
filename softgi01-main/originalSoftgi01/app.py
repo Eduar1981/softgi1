@@ -763,7 +763,7 @@ def edita_empleados(doc_empleado):
     cursor.execute(sql)
     resultado = cursor.fetchall()  
     conn.commit()
-    return render_template("edita_empleados.html", resul=resultado[0])
+    return render_template("/empleados/edita_empleados.html", resul=resultado[0])
 
 @app.route('/Actualiza_empleados', methods=['POST'])
 def Actualiza_empleados():
