@@ -676,14 +676,44 @@ def muestra_Productos():
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))      
 
-@app.route('/modificarProducto', methods=['POST', 'GET'])
-def modificarProducto():
+@app.route("/modificar_producto/<id_producto>")
+def editar_producto(id_producto):
     if "email_empleado" in session:
+        
+        sql = f"SELECT * FROM productos WHERE id_producto='{id_producto}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        resultado = cursor.fetchall()  
+        conn.commit()
+        return render_template("/productos/edita_productos.html", resul= resultado[0])
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))      
+
+
+@app.route('/modificar_producto', methods=['POST', 'GET'])
+def modificarProducto():
+     if "email_empleado" in session:
+        email = session["email_empleado"]
+        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
+        print(bsq)
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(bsq)
+        resultado = cursor.fetchone()
+        documento_registro = resultado[0]
+        nombre_operador = resultado[1]
+        apellido_operador = resultado[2]
+        nombreProveedor = request.form['nombreProveedor']
+        sql = f"SELECT doc_proveedor FROM proveedores WHERE nom_proveedor= '{nombreProveedor}'"
+        cursor.execute(sql)
+        resultado2 = cursor.fetchone()
+        print(resultado2)
         id_producto = request.form['id_producto']
         referencia_producto = request.form['referencia_producto']
         categoria = request.form['categoria']
         proveedor = request.form['proveedor']
-        nombre_proveedor = request.form['nombre_proveedor']
         nombre_producto = request.form['nombre_producto']
         precio_compra = request.form['precio_compra']
         precio_venta = request.form['precio_venta']
@@ -692,9 +722,9 @@ def modificarProducto():
         stockminimo = request.form['stockminimo']
         ubicacion = request.form['ubicacion']
         estante = request.form['estante']
-        productos.modificar([id_producto, referencia_producto, categoria, proveedor, nombre_proveedor,nombre_producto, precio_compra, precio_venta, cantidad_producto, descripcion, stockminimo, ubicacion, estante])
+        Crudproductos.modificar([id_producto, referencia_producto, categoria, proveedor, nombre_producto, precio_compra, precio_venta, cantidad_producto, descripcion, stockminimo, ubicacion, estante, documento_registro, nombre_operador, apellido_operador, nombreProveedor])
         return redirect('/muestra_productos')
-    else:
+     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
  

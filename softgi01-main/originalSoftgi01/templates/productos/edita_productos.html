@@ -15,32 +15,39 @@
             <h2>Editar productos</h2>
                 <div class="cont-campos">
 
-                        <input type="number" name="id_producto" id="idproducto" placeholder="Numero de identificacion del producto" class="campo" value="{{0}}">
-                        <input type="text" name="referencia_producto" id="referencia_producto" placeholder="Referencia de producto" class="campo" value="{{1}}">
-                             
-                        <input type="text" name="categoria" id="categoria" placeholder="Categoria" value="{{2}}">
+                        <input type="number" name="id_producto" id="idproducto" class="campo" value="{{resul[0]}}">
+                        <input type="text" name="referencia_producto" id="referencia_producto" class="campo" value="{{resul[1]}}">
+
+                        <select name="categoria" id="categoria" >
+                            <option value="{{resul[12]}}">Categoria</option>
+                            <option value="1">Parabrisas</option>
+                            <option value="2">Manijas</option>
+                            <option value="3">Chapas</option>
+                            <option value="4">Empaques</option>
+                            <option value="5">Elevavidrios</option>
+                        </select>
                           
-                        <input type="text" name="proveedor" id="proveedor" placeholder="Documento proveedor" class="campo" value="{{3}}">
-                        <input type="text" name="nombreProveedor" id="nombreProveedor" placeholder="Nombre proveedor" class="campo" value="{{4}}">
+                        <input type="text" name="proveedor" id="proveedor" class="campo" value="{{resul[3]}}">
+                        <input type="text" name="nombreProveedor" id="nombreProveedor" class="campo" value="{{resul[4]}}">
     
-                        <input type="text" name="nombre_producto" id="nombre_producto" placeholder="Nombre producto" class="campo" value="{{5}}">
-                        <input type="number" name="precio_compra" id="precio_compra" placeholder="Precio entrada" class="campo" value="{{6}}">
+                        <input type="text" name="nombre_producto" id="nombre_producto" class="campo" value="{{resul[5]}}">
+                        <input type="number" name="precio_compra" id="precio_compra" class="campo" value="{{resul[6]}}">
     
-                        <input type="number" name="precio_venta" id="precio_venta" placeholder="Precio de venta" class="campo" value="{{7}}">
-                        <input type="number" name="cantidad_producto" id="cantidad_producto" placeholder="Cantidad" class="campo" value="{{8}}">
+                        <input type="number" name="precio_venta" id="precio_venta" class="campo" value="{{resul[7]}}">
+                        <input type="number" name="cantidad_producto" id="cantidad_producto" class="campo" value="{{resul[8]}}">
     
-                        <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" class="campo" value="{{9}}">
-                        <input type="number" name="stockminimo" id="stockminimo" placeholder="Cantidad minima" class="campo" value="{{10}}">
+                        <input type="text" name="descripcion" id="descripcion"  class="campo" value="{{resul[9]}}">
+                        <input type="number" name="stockminimo" id="stockminimo"  class="campo" value="{{resul[10]}}">
     
                      
-                        <select name="ubicacion" id="ubicacion" value="{{11}}">
-                            <option value="">Ubicación</option>
+                        <select name="ubicacion" id="ubicacion" value="">
+                            <option value="{{resul[11]}}">Ubicación</option>
                             <option value="Bodega">Bodega</option>
                             <option value="Estante">Estante</option>
                             <option value="Almacen">Almacen</option>
                         </select>
                           
-                        <input type="text" name="estante" id="estante" placeholder="Estante" class="campo" value="{{12}}">
+                        <input type="text" name="estante" id="estante" class="campo" value="{{resul[12]}}">
                 </div>
 
                 <div id="boton-atras">
