@@ -11,6 +11,7 @@ from productos import Productos
 from clientes import Clientes
 from categorias import Categorias
 from ManejoUsuarios import manejoUsuarios
+from empleados import Empleados
 
 
 
@@ -52,5 +53,6 @@ proveedores = Proveedores(mysql, app) # proveedores = crearProveedores()# Crear 
 losClientes = Clientes(mysql,app)#clientes = Clientes()# Crear una instancia de la clase Cliente
 Crudproductos = Productos(mysql, app) #Productos = Clientes()# Crear una instancia de la clase Cliente
 manejoDsuario = manejoUsuarios(mysql, app)
+empleados = Empleados(mysql, app)
 
 lascategorias = Categorias(mysql, app)
