@@ -13,3 +13,5 @@ class Empleados:
 
     def eliminar(self,doc_empleado):
         sql = f"DELETE FROM `empleados` WHERE doc_empleado='{doc_empleado}'"
+        self.cursor.execute(sql)
+        self.conexion.commit()
