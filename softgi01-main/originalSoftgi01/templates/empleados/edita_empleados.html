@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edita empleados | Administrador</title>
+</head>
+<body>
+    
+    <a href="#">Regresar</a>
+
+    <form action="#" method="post">
+
+        <input type="number" name="doc_empleado" id="doc_empleado" placeholder="documento" value="{{resul[0]}}">
+
+        <input type="text" name="nom_empleado" id="nom_empleado" placeholder="nombre" value="{{resul[1]}}">
+
+        <input type="text" name="ape_empleado" id="ape_empleado" placeholder="apellido" value="{{resul[2]}}">
+
+        <input type="datetime" name="fecha_nacimiento" id="fecha_nacimiento_empleado" placeholder="fecha de nacimiento" value="{{resul[3]}}">
+
+        <input type="tel" name="contacto_empleado" id="contacto_empleado" placeholder="contacto" value="{{resul[4]}}">
+
+        <input type="email" name="email_empleado" id="email_empleado" placeholder="correo" value="{{resul[5]}}">
+
+        <input type="text" name="direccion_empleado" id="direccion_empleado" placeholder="descripcion" value="{{resul[6]}}">
+
+        <select name="ciudad_empleado" id="ciudad_empleado">
+            <option value="{{resul[7]}}">{{resul[7]}}</option>
+            <option value="buga">buga</option>
+            <option value="tulua">tulua</option>
+            <option value="sonso">sonso</option>
+            <option value="el vinculo">el vinculo</option>
+            <option value="guacari">guacari</option>
+            <option value="cali">cali</option>
+            <option value="restrepo">restrepo</option>
+        </select>
+
+        <select name="rol" id="rol">
+            <option value="{{resul[8]}}">{{resul[8]}}</option>
+            <option value="administrador">administrador</option>
+            <option value="vendedor">vendedor</option>
+            <option value="almacenista">almacenista</option>
+        </select>
+
+        <button type="submit">actualizar</button>
+
+    </form>
+
+</body>
+</html>
