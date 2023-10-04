@@ -12,7 +12,7 @@ class Categorias:
  
 
     def categoria_existe_en_db(self, categoria):
-        sql = f"SELECT COUNT(*) FROM categoria WHERE nom_categoria = '{categoria}'"
+        sql = f"SELECT COUNT(*) FROM categorias WHERE nom_categoria = '{categoria}'"
 
         self.cursor.execute(sql)
         resultado = self.cursor.fetchone()
@@ -24,22 +24,12 @@ class Categorias:
         
         
     def modificar_categoria(self, categorias):
-        sql=f"UPDATE categorias SET id_categoria='{categorias[0]}', nom_categoria='{categorias[1]}'"
+        sql=f"UPDATE categorias SET id_categoria='{categorias[0]}', nom_categoria='{categorias[1]}' WHERE id_categoria='{categorias[0]}'"
         self.cursor.execute(sql)
         self.conexion.commit()
 
-    
-    def borrar_categoria(self, idcategoria):
-        if not self.categoria_existe_en_db(idcategoria):
-            return False  
 
-        sql = f"UPDATE categorias SET estado='INACTIVO' WHERE idcat = '{idcategoria}'"
-
-        try:
-            self.cursor.execute(sql)
-            self.conexion.commit()
-            return True  # Borrado exitoso
-        except Exception as e:
-            print(f"Error al borrar la categoria: {str(e)}")
-            self.conexion.rollback()
-            return False
+    def borrar_categoria(self,id_categoria):
+        sql=f"UPDATE categorias SET estado_categorias='INACTIVO' WHERE id_categoria='{id_categoria}'"
+        self.cursor.execute(sql)
+        self.conexion.commit()

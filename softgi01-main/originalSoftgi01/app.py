@@ -286,7 +286,7 @@ def recuperar_contraseña(token_rctsn):
 
     return render_template('reset_password.html')
 
-#-----------------conexión de la clase cliente------------------
+#----------------------------------------conexión de la clase cliente-------------------------------------
 
 @app.route("/clientes")
 def clientes():
@@ -517,7 +517,8 @@ def muestra_Proveedores():
 
 #----------------------------------------------Crud de categorías------------------------------------------------ 
 
-# muestra las categorias
+# muestra las categorias-------------------------------------------
+
 @app.route("/categorias")
 def categorias():
     sql = "SELECT * FROM categorias WHERE estado_categorias ='ACTIVO'"
@@ -527,7 +528,9 @@ def categorias():
     resultado = cursor.fetchall()
     return render_template('/categorias/muestracategorias.html', resulta=resultado)
 
- #crea categorias
+
+ #crea categorias--------------------------------------------------
+
 @app.route("/crearCategoria")
 def crearCategoria(): 
     if "email_empleado" in session:                                   
@@ -536,7 +539,8 @@ def crearCategoria():
             flash('Algo esta mal en sus datos digitados')
             return redirect(url_for('home'))
     
-    
+   
+
 @app.route("/registrar_categorias", methods=['POST'])
 def registrar_categorias():
     if "email_empleado" in session:
@@ -563,49 +567,48 @@ def registrar_categorias():
         return redirect(url_for('home'))
     
         
-'''
-@app.route("/editarClientes/<documento>")
-def edit_cliente(documento):
-    sql = f"SELECT * FROM clientes WHERE docclie = '{documento}'"
-    conn = mysql.connect()
-    cursor = conn.cursor()                                    #muestra toda la informacion y pone en los imputs
-    cursor.execute(sql)
-    resultado = cursor.fetchall()
-    conn.commit()
-    return render_template("/clientes/edita_clientes.html", resul=resultado[0])
+#editar categorias---------------------------------------------
 
-@app.route("/Actualizar_clie", methods=['POST','GET'])
-def Actualizar_clie():
-    docclie = request.form['docclie']
-    nomclie = request.form['nomclie']
-    apeclie = request.form['apeclie']                # actualiza la info de clientes
-    contclie = request.form['contclie']
-    emaclie = request.form['emaclie']
-    direclie = request.form['direclie']
-    tipopersona = request.form['tipopersona']  
-    losClientes.modificar([docclie,nomclie,apeclie,contclie,emaclie,direclie,tipopersona])
-    return redirect('/clientes')
+#muestra los datos para editar---------------------------
 
-    
-@app.route('/buscar_cliente', methods=['POST'])
-def buscar_cliente():
-    if request.method == 'POST':
-        busqueda = request.form['busqueda']
-        # Realiza la consulta en la base de datos utilizando MySQL y Flask-MySQL
+@app.route("/editarCategorias/<id_categoria>")  
+def editarctegorias(id_categoria):
+    if "email_empleado" in session:
+        idcategoria = id_categoria
+        sql = f"SELECT * FROM categorias WHERE id_categoria = '{idcategoria}'"
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute(f"SELECT * FROM clientes WHERE nombre LIKE %s", (f"%{busqueda}%",))   #buscador de clientes
-        resultados = cursor.fetchall()
-        conn.close()
-        return render_template('registroclientes.html', resultados=resultados) # Envía los resultados al mismo formulario de registroclientes.html
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        conn.commit()          
+        return render_template("/categorias/editar_categorias.html", resul = resultado[0])
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
     
-@app.route('/borracliente/<documento>')
-def borrarcliente(documento):
-    losClientes.borrar_cliente(documento)
-    return redirect('/clientes')
+#edita-----------------------------------------------
 
-'''
+@app.route("/editar_categoria", methods=['POST', 'GET'])
+def editacategoria():
+    if "email_empleado" in session:
+        idcategoria = request.form['id_categoria']
+        nombre_categoria = request.form['nom_categoria']
+        lascategorias.modificar_categoria([idcategoria, nombre_categoria])
+        return redirect('/categorias')
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
+    
+ #elimina------------------------------------------
 
+@app.route('/borracategoria/<id_categoria>')
+def borracategoria(id_categoria):
+    if "email_empleado" in session:
+        lascategorias.borrar_categoria (id_categoria)                      
+        return redirect('/categorias')
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
 
                                         
 #----------------------------------------------Crud de productos------------------------------------------------ 
@@ -737,6 +740,20 @@ def borra_produc(idprod):
     else:
         flash('Algo esta mal en los datos digitados')
         return redirect(url_for('home'))
+    
+
+#----------------------------------------------Crud de empleados------------------------------------------------ 
+
+@app.route('/muestra_empleados')         # muestra datos de los empleados
+def muestra_empleados():
+    sql = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado`, `fecha_nacimiento_empleado`, `contacto_empleado`, `email_empleado`, `direccion_empleado`, `ciudad_empleado`, `rol`, `fechahora_registroempleado` FROM `empleados`"
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    resultado = cursor.fetchall()  
+    conn.commit()
+    return render_template("/empleados/muestra_empleados.html", resul=resultado) 
+
 
 
 
