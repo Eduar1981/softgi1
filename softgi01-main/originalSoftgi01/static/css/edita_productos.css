@@ -65,7 +65,7 @@ h2 {
 
 
 /* Formulario */
-form#formu_productos {
+form#formu_productos_modificar{
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
