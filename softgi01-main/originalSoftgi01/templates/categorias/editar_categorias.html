@@ -10,11 +10,13 @@
         <div id="img-parabri">
             <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
         </div>
-        <form action="/Actualizar_clie" method="post" id="formu_clientes">
+        <form action="/editar_categoria" method="post" id="formu_categorias">
             <h2>Editar clientes</h2>
                 <div class="cont-campos">
 
-                    <input type="text" name="nomcat" id="nomcat" placeholder="Nombre" class="campo"  value="{{resul[1]}}">
+                    <input type="text" name="id_categoria" id="id_categoria" class="campo"  value="{{resul[0]}}">
+
+                    <input type="text" name="nom_categoria" id="nomcat" class="campo"  value="{{resul[1]}}">
                     
                 </div>
 
@@ -23,7 +25,7 @@
                 </div>
         </form>
         <div id="boton-atras">
-            <button class="boton-atras" onclick="window.location.href='/clientes'">Regresar</button>
+            <button class="boton-atras" onclick="window.location.href='/categorias'">Regresar</button>
         </div>
     </main>
 </body>
