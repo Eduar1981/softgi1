@@ -19,7 +19,7 @@ body,html{
 }
 
 
-form#formu_clientes{
+form#formu_categorias{
     margin: 0;
     padding: 0;
  
@@ -32,7 +32,7 @@ form#formu_clientes{
 .cont-campos  .campo {
     border-radius: 6px;
     background: #fff;
-    padding: 12px;
+    padding: 8px;
     color: #222;
     }
 #img-parabri {
@@ -65,7 +65,7 @@ h2 {
 
 
 /* Formulario */
-form#formu_clientes {
+form#formu_categorias {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
@@ -149,4 +149,9 @@ button[type="submit"]:hover {
 .boton-atras:hover {
     background-color: #111113;
 }
+
+
+
+
+
 

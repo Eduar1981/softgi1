@@ -320,6 +320,8 @@ def crear_cliente():
         cursor.execute(bsq)
         resultado = cursor.fetchone()
         documento_registro = resultado[0]
+        nombre_operador = resultado[1]
+        apellido_operador = resultado[2]
         doc_cliente = request.form['doc_cliente']
         nom_cliente = request.form['nom_cliente']
         ape_cliente = request.form['ape_cliente']
@@ -333,7 +335,7 @@ def crear_cliente():
         
 
         if not losClientes.buscar_cliente(doc_cliente):
-            losClientes.crear_cliente([doc_cliente, nom_cliente, ape_cliente, fecha_nacimiento_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, documento_registro, tiempo])
+            losClientes.crear_cliente([doc_cliente, nom_cliente, ape_cliente, fecha_nacimiento_cliente, contacto_cliente, email_cliente, direccion_cliente, ciudad_cliente, tipo_persona, tiempo, documento_registro, nombre_operador, apellido_operador])
             return redirect('/clientes')
         else:
             mensaje="Cliente ya existe"
