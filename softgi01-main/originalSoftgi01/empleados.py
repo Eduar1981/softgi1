@@ -7,7 +7,7 @@ class Empleados:
         self.cursor = self.conexion.cursor()
 
     def modificar(self,empleados):
-        sql = f"UPDATE `empleados` SET `doc_empleado`='{empleados[0]}',`nom_empleado`='{empleados[1]}',`ape_empleado`='{empleados[2]}',`fecha_nacimiento_empleado`='{empleados[3]}',`contacto_empleado`='{empleados[4]}',`email_empleado`='{empleados[5]}',`direccion_empleado`='{empleados[6]}',`ciudad_empleado`='{empleados[7]}',`rol`='{empleados[8]}' WHERE "
+        sql = f"UPDATE empleados SET doc_empleado='{empleados[0]}', nom_empleado='{empleados[1]}', ape_empleado='{empleados[2]}', fecha_nacimiento_empleado='{empleados[3]}',`contacto_empleado`='{empleados[4]}',`email_empleado`='{empleados[5]}', direccion_empleado='{empleados[6]}',`ciudad_empleado`='{empleados[7]}', rol='{empleados[8]}' WHERE doc_empleado='{empleados[0]}' "
         self.cursor.execute(sql)
         self.conexion.commit()
 

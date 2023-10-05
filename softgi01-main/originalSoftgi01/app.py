@@ -778,7 +778,7 @@ def Actualiza_empleados():
     direccion_empleado = request.form['direccion_empleado']
     ciudad_empleado = request.form['ciudad_empleado']
     rol = request.form['rol']
-    empleados.modificar([doc_empleado,nom_empleado,ape_empleado,fecha_nacimiento,contacto_empleado,email_empleado,direccion_empleado,ciudad_empleado,rol])
+    empleados.modificar([doc_empleado, nom_empleado, ape_empleado, fecha_nacimiento, contacto_empleado, email_empleado, direccion_empleado, ciudad_empleado, rol])
     return redirect('/muestra_empleados')
 
 

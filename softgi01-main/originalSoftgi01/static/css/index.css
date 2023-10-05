@@ -12,7 +12,7 @@ body, html{
 
 body{
     font-family: 'Kanit', Segoe UI, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 img{
@@ -65,7 +65,7 @@ nav#lista-opciones{
 
         nav ul li {
             display: inline;
-            margin-right: 90px;
+            margin-right: 70px;
             
             
         }

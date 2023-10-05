@@ -4,48 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edita empleados | Administrador</title>
+    <link rel="stylesheet" href="../../static/css/edita_empleados.css">
 </head>
 <body>
-    
-    <a href="#">Regresar</a>
+    <main id="inicio">
+        
+        <div id="img-parabri">
+            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
+        </div>
+        <form action="/Actualiza_empleados" method="post" id="formu_editar-empleados">
+            <h2>Editar empleados</h2>
+            <div class="cont-campos">
 
-    <form action="/Actualiza_empleados" method="post">
+            <input type="number" name="doc_empleado" id="doc_empleado" placeholder="documento" class="campo" value="{{resul[0]}}">
 
-        <input type="number" name="doc_empleado" id="doc_empleado" placeholder="documento" value="{{resul[0]}}">
+            <input type="text" name="nom_empleado" id="nom_empleado" placeholder="nombre" class="campo" value="{{resul[1]}}">
 
-        <input type="text" name="nom_empleado" id="nom_empleado" placeholder="nombre" value="{{resul[1]}}">
+            <input type="text" name="ape_empleado" id="ape_empleado" placeholder="apellido" class="campo" value="{{resul[2]}}">
 
-        <input type="text" name="ape_empleado" id="ape_empleado" placeholder="apellido" value="{{resul[2]}}">
+            <input type="datetime" name="fecha_nacimiento" id="fecha_nacimiento_empleado" placeholder="fecha de nacimiento" class="campo" value="{{resul[3]}}">
 
-        <input type="datetime" name="fecha_nacimiento" id="fecha_nacimiento_empleado" placeholder="fecha de nacimiento" value="{{resul[3]}}">
+            <input type="tel" name="contacto_empleado" id="contacto_empleado" placeholder="contacto" class="campo" value="{{resul[4]}}">
 
-        <input type="tel" name="contacto_empleado" id="contacto_empleado" placeholder="contacto" value="{{resul[4]}}">
+            <input type="email" name="email_empleado" id="email_empleado" placeholder="correo" class="campo" value="{{resul[5]}}">
 
-        <input type="email" name="email_empleado" id="email_empleado" placeholder="correo" value="{{resul[5]}}">
+            <input type="text" name="direccion_empleado" id="direccion_empleado" placeholder="dirección" class="campo" value="{{resul[6]}}">
 
-        <input type="text" name="direccion_empleado" id="direccion_empleado" placeholder="descripcion" value="{{resul[6]}}">
+            <select name="ciudad_empleado" id="ciudad_empleado">
+                <option value="">Ciudad de residencia</option>
+                <option value="{{resul[7]}}">{{resul[7]}}</option>
+                <option value="Buga">Buga</option>
+                <option value="Tulua">Tulua</option>
+                <option value="Sonso">Sonso</option>
+                <option value="El Vinculo">El Vinculo</option>
+                <option value="Guacari">Guacari</option>
+                <option value="Cali">Cali</option>
+                <option value="Restrepo">Restrepo</option>
+            </select>
 
-        <select name="ciudad_empleado" id="ciudad_empleado">
-            <option value="{{resul[7]}}">{{resul[7]}}</option>
-            <option value="buga">buga</option>
-            <option value="tulua">tulua</option>
-            <option value="sonso">sonso</option>
-            <option value="el vinculo">el vinculo</option>
-            <option value="guacari">guacari</option>
-            <option value="cali">cali</option>
-            <option value="restrepo">restrepo</option>
-        </select>
-
-        <select name="rol" id="rol">
-            <option value="{{resul[8]}}">{{resul[8]}}</option>
-            <option value="administrador">administrador</option>
-            <option value="vendedor">vendedor</option>
-            <option value="almacenista">almacenista</option>
-        </select>
-
-        <button type="submit">actualizar</button>
-
-    </form>
-
+            <select name="rol" id="rol">
+                <option value="">Rol</option>
+                <option value="{{resul[8]}}">{{resul[8]}}</option>
+                <option value="administrador">Administrador</option>
+                <option value="vendedor">Vendedor</option>
+                <option value="almacenista">Almacenista</option>
+            </select>
+            <div id="boton-atras">
+                <button type="submit" class="boton-atras">Actualizar</button>
+            </div>
+        </form>
+        <div id="boton-atras">
+            <a class="boton-atras" href="/muestra_productos">Regresar</a>
+        </div>
+    </main>
 </body>
 </html>

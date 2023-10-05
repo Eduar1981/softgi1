@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empleados</title>
+    <link rel="stylesheet" href="../../static/css/muestra_empleados.css">
 </head>
 <body>
     <h1>Empleados</h1>
 
-    <table id="tabla">
+    <table  class="content-table" id="tabla_empleados">
         <thead >
             <tr>
                 <th>doc_empleado</th>
@@ -20,7 +21,9 @@
                 <th>Direccion</th>
                 <th>ciudad</th>
                 <th>Rol</th>
-                <th>fecha de registro</th>
+                <!-- <th>fecha de registro</th> -->
+                <th></th>
+                <th></th>
 
             </tr>
         </thead>
@@ -28,18 +31,21 @@
         <tbody>
             {% for c in resul %}
             <tr>
-                {% for i in range(0,10) %}
+                {% for i in range(0,9) %}
                     <td>{{c[i]}}</td>
                 {% endfor %}
                     <td>
-                        <a href="edita_empleados/{{c[0]}}">Editar empleado</a>
+                        <a class="boton-editar" href="edita_empleados/{{c[0]}}">Editar</a>
                     </td>
                     <td>
-                        <a  onclick="return confirm('Seguro que deseas eliminar el usuario administrador?')" href="###/{{c[0]}}"><i class="lni lni-cross-circle"></i></a>
+                        <a class="boton-eliminar"  onclick="return confirm('Seguro que deseas eliminar el usuario administrador?')" href="###/{{c[0]}}"><i class="lni lni-cross-circle"></i>Eliminar</a>
                     </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/index'">Regresar al Home</button>
+    </div>
 </body>
 </html>
