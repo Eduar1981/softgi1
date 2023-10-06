@@ -12,6 +12,6 @@ class Cotizaciones:
         self.conexion.commit()
         
     def editarCotizacion(self,editar):
-        bsql = f"UPDATE `cotizaciones` SET documento_operador='{editar[0]}'OR documento_operador='{editar[1]}' OR nombre_operador='{editar[2]}' OR apellido_operador='{editar[3]}' OR fecha_inicio_cotizacion='{editar[4]}' OR fecha_fin_cotizacion='{editar[5]}' OR nombre_cliente_cotizacion='{editar[6]}'"
+        bsql = f"UPDATE `cotizaciones` SET documento_operador='{editar[0]}', documento_operador='{editar[1]}', nombre_operador='{editar[2]}', apellido_operador='{editar[3]}', fecha_inicio_cotizacion='{editar[4]}', fecha_fin_cotizacion='{editar[5]}', nombre_cliente_cotizacion='{editar[6]}'"
         self.cursor.execute(bsql)
         self.conexion.commit()

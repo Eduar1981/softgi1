@@ -792,7 +792,7 @@ def elimina_empleados(doc_empleado):
 @app.route("/Cotizacion")
 def Cotizacion():
     if "email_empleado" in session:
-        msql= f"SELECT `nombre_cliente_cotizacion`, `nombre_operador`, `fecha_inicio_cotizacion`, `fecha_fin_cotizacion` FROM `cotizaciones`"
+        msql= f"SELECT `num_cotizacion`,`nombre_cliente_cotizacion`, `nombre_operador`, `fecha_inicio_cotizacion`, `fecha_fin_cotizacion` FROM `cotizaciones`"
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute(msql)
@@ -840,13 +840,15 @@ def crearCotizacion():
 @app.route("/editarCotizacion/<id_cotizacion>")
 def editarCotizacion(id_cotizacion):
     if "email_empleado" in session:
-        sql = f"SELECT * FROM cotizaciones WHERE num_cotizacion  = '{id_cotizacion}'"
+        sql = f"SELECT * FROM cotizaciones WHERE num_cotizacion = '{id_cotizacion}'"
+        print(id_cotizacion)
         conn = mysql.connect()
         cursor = conn.cursor()                                    #muestra toda la informacion y pone en los imputs
         cursor.execute(sql)
         resultado = cursor.fetchall()
+        print(resultado)
         conn.commit()
-        return render_template("cotizaciones/editar_cotizaciones.html", resul=resultado)
+        return render_template("cotizaciones/editar_cotizaciones.html", resul=resultado[0])
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
