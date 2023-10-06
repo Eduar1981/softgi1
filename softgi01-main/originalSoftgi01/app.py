@@ -787,6 +787,98 @@ def elimina_empleados(doc_empleado):
     empleados.eliminar(doc_empleado)
     return redirect('/muestra_empleados')
 
+#---------------------------------------------------cotizaciones-------------------------------
+
+@app.route("/Cotizacion")
+def Cotizacion():
+    if "email_empleado" in session:
+        msql= f"SELECT `nombre_cliente_cotizacion`, `nombre_operador`, `fecha_inicio_cotizacion`, `fecha_fin_cotizacion` FROM `cotizaciones`"
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(msql)
+        datos = cursor.fetchall()
+        return render_template("/cotizaciones/mostrar_cotizaciones.html", datos=datos)
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+#registro de cotizaciones
+@app.route("/verCotizaciones")
+def mostraCotizaciones():
+    if "email_empleado" in session:
+        return render_template('cotizaciones/registrar_cotizaciones.html')
+
+@app.route('/crearCotizacion', methods=['POST'])
+def crearCotizacion():
+    if "email_empleado" in session:
+        email = session["email_empleado"]
+        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(bsq)
+        resultado = cursor.fetchone()
+        documento_registro = resultado[0]
+        nombre_operador = resultado[1]
+        apellido_operador = resultado[2]
+        nombre_cliente_cotizacion = request.form['clienteCotizacion']
+        bsqd = f"SELECT doc_cliente FROM clientes WHERE nom_cliente='{nombre_cliente_cotizacion}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(bsqd)
+        resultado2 = cursor.fetchone()
+        clienteCotizacion = resultado2[0]
+        fechaInicioCotizacion = request.form['fechaInicioCotizacion']
+        fechaFinCotizacion = request.form['fechaFinCotizacion']
+        datos_cotizaciones = [clienteCotizacion,documento_registro,nombre_operador,apellido_operador,fechaInicioCotizacion,fechaFinCotizacion, nombre_cliente_cotizacion]
+        Crudcotizaciones.crearCotizaciones([clienteCotizacion,documento_registro,nombre_operador,apellido_operador,fechaInicioCotizacion,fechaFinCotizacion, nombre_cliente_cotizacion])
+        return redirect('Cotizacion')
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+#editar cotizacion
+@app.route("/editarCotizacion/<id_cotizacion>")
+def editarCotizacion(id_cotizacion):
+    if "email_empleado" in session:
+        sql = f"SELECT * FROM cotizaciones WHERE num_cotizacion  = '{id_cotizacion}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()                                    #muestra toda la informacion y pone en los imputs
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        conn.commit()
+        return render_template("cotizaciones/editar_cotizaciones.html", resul=resultado)
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
+
+@app.route('/atualizarCotizacion', methods=['POST'])
+def atualizarCotizacion():
+    if "email_empleado" in session:
+        email = session["email_empleado"]
+        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(bsq)
+        resultado = cursor.fetchone()
+        documento_registro = resultado[0]
+        nombre_operador = resultado[1]
+        apellido_operador = resultado[2]
+        nombre_cliente_cotizacion = request.form['clienteCotizacion']
+        bsqd = f"SELECT doc_cliente FROM clientes WHERE nom_cliente='{nombre_cliente_cotizacion}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(bsqd)
+        resultado2 = cursor.fetchone()
+        clienteCotizacion = resultado2[0]
+        fechaInicioCotizacion = request.form['fechaInicioCotizacion']
+        fechaFinCotizacion = request.form['fechaFinCotizacion']
+        datos_cotizaciones = [clienteCotizacion,documento_registro,nombre_operador,apellido_operador,fechaInicioCotizacion,fechaFinCotizacion, nombre_cliente_cotizacion ]
+        Crudcotizaciones.editarCotizacion(datos_cotizaciones)
+        return redirect('Cotizacion')
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port="5096")

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores</title>
+    <link rel="stylesheet" href="../../static/css/muestra_proveedores.css">
+</head>
+<body>
+    <div></div>
+    <h1>Proveedores</h1>
+    <div id="crear-prov">
+    <a class="crear-prov" href="{{url_for('mostraCotizaciones')}}">Crear Proveedores</a>
+    </div>
+    <br>
+
+    <table class="content-table" id="tabla_productos">
+        <thead >
+            <tr>
+                <th>Cliente de cotizacion</th>
+                <th>Nombre del operador</th>
+                <th>Fecha de inicio de cotizacion</th>
+                <th>Fecha fin de cotizacion</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dato in datos %}
+                <tr>
+                    {% for i in range(0,5) %}
+
+                        <td>{{dato[i]}}</td>
+
+                    {% endfor %}
+
+                        <td>
+                            <a class="boton-editar" href=" editarCotizacion/{{dato[0]}}">Editar</a>
+                        </td>
+
+                        <td>
+                            <a class="boton-eliminar"  onclick="return confirm('Seguro que deseas eliminar el producto?')" href="/borraprovee/{{dato[0]}}">Eliminar</a>
+                        </td>
+
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/index'">Regresar al Home</button>
+    </div>
+</body>
+</html>
