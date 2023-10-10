@@ -14,19 +14,6 @@
     <div id="crear-producto">
         <a class="crear-producto" href="{{url_for('registrar_productos')}}">Crear Productos</a>
     </div>
-    
-    <!-- Botón de búsqueda -->
-    <div class="contenedor-busqueda">
-        <button id="mostrarBusqueda" class="boton-busqueda">
-            <i class="fas fa-search"></i>
-        </button>
-        <div id="campoBusqueda" style="display: none;">
-            <form method="POST" action="/buscar_producto">
-                <input type="text" name="terminos_de_busqueda" placeholder="Buscar...">
-                <button type="submit">Buscar</button>
-            </form>
-        </div>
-    </div>
 
 
     <table class="content-table" id="tabla_productos">
