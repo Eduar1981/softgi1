@@ -785,6 +785,19 @@ def Actualiza_empleados():
     empleados.modificar([doc_empleado, nom_empleado, ape_empleado, fecha_nacimiento, contacto_empleado, email_empleado, direccion_empleado, ciudad_empleado, rol])
     return redirect('/muestra_empleados')
 
+#                        -------------------- busca empleados --------------------------
+@app.route('/Busca_empleados', methods=['POST'])
+def Busca_empleados():
+    dato_busqueda = request.form['dato_busqueda']
+    sql = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado`, `fecha_nacimiento_empleado`, `contacto_empleado`, `email_empleado`, `direccion_empleado`, `ciudad_empleado`, `rol` FROM `empleados` WHERE estado='activo' AND doc_empleado LIKE '%{dato_busqueda}%' OR estado='activo' AND nom_empleado LIKE '%{dato_busqueda}%' OR estado='activo' AND ape_empleado LIKE '%{dato_busqueda}%'"
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)             # puede buscar por doc_empleado,nom_empleado y ape_empleado
+    resultado = cursor.fetchall()  
+    conn.commit()
+    return render_template("/empleados/muestra_empleados.html", resul=resultado)
+
+
 
 @app.route('/elimina_empleados/<doc_empleado>')        # Elimina los empleados
 def elimina_empleados(doc_empleado):
