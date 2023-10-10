@@ -662,7 +662,6 @@ def crearProducto():
         flash('Algo esta mal en los datos digitados')
         return redirect(url_for('home'))
 
-# Ruta para la búsqueda de productos
 
 
 
