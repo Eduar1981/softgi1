@@ -5,14 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muestra productos</title>
     <link rel="stylesheet" href="../../static/css/muestra_productos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
 <body>
-    <div></div>
-    <h1>Productos</h1>
+
+        <h1>Productos</h1>
     <div id="crear-producto">
-    <a class="crear-producto" href="{{url_for('registrar_productos')}}">Crear Productos</a>
+        <a class="crear-producto" href="{{url_for('registrar_productos')}}">Crear Productos</a>
     </div>
-    <br>
+    
+    <!-- Botón de búsqueda -->
+    <div class="contenedor-busqueda">
+        <button id="mostrarBusqueda" class="boton-busqueda">
+            <i class="fas fa-search"></i>
+        </button>
+        <div id="campoBusqueda" style="display: none;">
+            <form method="POST" action="/buscar_producto">
+                <input type="text" name="terminos_de_busqueda" placeholder="Buscar...">
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+    </div>
+
 
     <table class="content-table" id="tabla_productos">
         <thead >
@@ -59,5 +74,7 @@
     <div id="boton-atras">
         <button class="boton-atras" onclick="window.location.href='/index'">Regresar al Home</button>
     </div>
+    <script src="{{ url_for('static', filename='javascript/mostrarBtnProd.js') }}"></script>
+
 </body>
 </html>

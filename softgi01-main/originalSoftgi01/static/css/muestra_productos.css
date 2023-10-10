@@ -120,3 +120,20 @@ table th {
 h1 {
     font-size: 40px;
 }
+
+.boton-busqueda {
+
+    background-color: #3498db; /* Color de fondo */
+    border: none; /* Sin borde */
+    border-radius: 8px;
+    color: #fff; /* Color del texto */
+    padding: 13px 20px; /* Espaciado interno */
+    position: relative;
+    cursor: pointer; /* Cursor al pasar por encima */
+    left: 180px;
+    bottom: 40px;
+}
+
+.boton-busqueda i {
+    margin-right: 5px; /* Espacio entre el icono y el texto (ajusta según sea necesario) */
+}

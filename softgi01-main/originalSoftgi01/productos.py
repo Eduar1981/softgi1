@@ -43,3 +43,6 @@ class Productos:
             print(f"Error al borrar el producto: {str(e)}")
             self.conexion.rollback()
             return False
+        
+    
+ 

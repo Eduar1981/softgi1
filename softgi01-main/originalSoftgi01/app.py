@@ -1,5 +1,5 @@
 from conexion import * #Importo la conexion de la base de datos y las funciones de flask, que en este caso se encuentra en el archivo conexion.py 
-
+from productos import buscar_productos  # Importa la función desde productos.py
 
 
 
@@ -661,6 +661,10 @@ def crearProducto():
     else:
         flash('Algo esta mal en los datos digitados')
         return redirect(url_for('home'))
+
+# Ruta para la búsqueda de productos
+
+
 
 @app.route('/muestra_productos')
 def muestra_Productos():
