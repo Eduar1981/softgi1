@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles compras proveedores</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+</head>
+<body>
+    <h2>Detalles de la compra</h2>
+
+    <table  class="content-table" id="tabla_compras">
+        <thead >
+            <tr>
+                <th>numero compra</th>
+                <th>producto</th>
+                <th>Cantidad</th>
+                <th>Valor unidad</th>
+                <th>valor cantidad total</th>
+                <th>total a pagar</th>
+                <th>Direccion</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for c in resul %}
+            <tr>
+                {% for i in range(0,7) %}
+                    <td>{{c[i]}}</td>
+                {% endfor %}
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/muestra_compra_proved'">Regresar</button>
+    </div>
+</body>
+</html>

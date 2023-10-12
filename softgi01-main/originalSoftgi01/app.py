@@ -21,7 +21,6 @@ def registroF(): # defino la funcion de la ruta de registro llamada registroF
 # Ruta de registro de usuario
 @app.route('/registro', methods=['POST']) # defino la ruta que me envia los datos ingresado en el formulario a la base de datos con el metodo post que se utiliza para envio de datos 
 def registro_usuario(): #defino la funcion de la ruta 
-    
     conn = mysql.connect() # Uso mysql.connect para conectar o hacer la conexion con la base de datos, mysql.connect es una de las funciones que utliza flask para conectarse a una base de datos
     cursor = conn.cursor() # Utilizo el con.cursor para ejecutar declaraciones  para comunicarse con la base de dato
     doc_empleado = request.form['documento'] # Utilizo request.form Para trear los datos dijitados en el formulario y la variable docempl la almacena
@@ -803,7 +802,7 @@ def elimina_empleados(doc_empleado):
     empleados.eliminar(doc_empleado)
     return redirect('/muestra_empleados')
 
-#---------------------------------------------------cotizaciones-------------------------------
+#---------------------------------------------------cotizaciones----------------------------------------------------
 
 @app.route("/Cotizacion")
 def Cotizacion():
@@ -896,6 +895,44 @@ def atualizarCotizacion():
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
+
+#---------------------------------------------------compras PROVEEDORES----------------------------------------------------
+
+@app.route("/muestra_compra_proved")
+def muestra_compra_proved():
+    if "email_empleado" in session:
+
+        sql ="SELECT `num_compra`, `proveedor_compra`, `documento_operador`, `nombre_operador`, `apellido_operador`, `date_compra`, `num_factura_proveedor` FROM `comprasproveedores` WHERE estado = 'ACTIVO'"
+        conn = mysql.connect()
+        cursor = conn.cursor()                  # muestra las compras a proveedores
+        cursor.execute(sql)
+        resultado = cursor.fetchall()  
+        conn.commit()
+        return render_template("/compra_proveedores/muestra_compras_proveg.html", resul=resultado) 
+    
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+    
+
+
+@app.route("/muestra_detalles_com/<num_compra>")
+def muestra_detalles_com(num_compra):
+    if "email_empleado" in session:
+        
+        sql = f"SELECT `num_compra`, `producto_compra`, `cantidad_producto_compra`, `valorunidad_prodcompra`, `valortotal_cantidadcomp`, `totalpagar_compra` FROM `detallecomprasproveedores` WHERE num_compra = '{num_compra}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()                  # muestra los detalles de compras a proveedores
+        cursor.execute(sql)
+        resultado = cursor.fetchall()  
+        conn.commit()
+        return render_template("/compra_proveedores/detalles_compras/muestra_detalles.html", resul=resultado)
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
 
 
 if __name__ == '__main__':
