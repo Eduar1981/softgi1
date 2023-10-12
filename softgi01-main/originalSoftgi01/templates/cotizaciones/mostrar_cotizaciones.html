@@ -10,7 +10,8 @@
     <div></div>
     <h1>Proveedores</h1>
     <div id="crear-prov">
-    <a class="crear-prov" href="{{url_for('mostraCotizaciones')}}">Crear Proveedores</a>
+        <a class="crear-prov" href="{{url_for('mostraCotizaciones')}}">Crear cotizacion</a>
+        <a class="crear-prov" href="{{url_for('cotizacionesDetalles')}}">detalle de cotizacion</a>
     </div>
     <br>
 
@@ -40,7 +41,7 @@
                         </td>
 
                         <td>
-                            <a class="boton-eliminar"  onclick="return confirm('Seguro que deseas eliminar el producto?')" href="/borraprovee/{{dato[0]}}">Eliminar</a>
+                            <a class="boton-eliminar"  onclick="return confirm('Seguro que deseas eliminar el producto?')" href="/borraCotizacion/{{dato[0]}}">Eliminar</a>
                         </td>
 
                 </tr>

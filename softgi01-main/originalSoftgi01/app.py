@@ -829,12 +829,123 @@ def crearCotizacion():
         clienteCotizacion = resultado2[0]
         fechaInicioCotizacion = request.form['fechaInicioCotizacion']
         fechaFinCotizacion = request.form['fechaFinCotizacion']
-        datos_cotizaciones = [clienteCotizacion,documento_registro,nombre_operador,apellido_operador,fechaInicioCotizacion,fechaFinCotizacion, nombre_cliente_cotizacion]
+        datos_cotizaciones = [nombre_cliente_cotizacion,documento_registro,nombre_operador,apellido_operador,fechaInicioCotizacion,fechaFinCotizacion, nombre_cliente_cotizacion]
         Crudcotizaciones.crearCotizaciones([clienteCotizacion,documento_registro,nombre_operador,apellido_operador,fechaInicioCotizacion,fechaFinCotizacion, nombre_cliente_cotizacion])
-        return redirect('Cotizacion')
+        return redirect('detalleCotizacion')
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
+    
+#Borrar cotizacion 
+@app.route('/borraCotizacion/<id_cotizacion>')
+def borraCotizacion(id_cotizacion):
+    if "email_empleado" in session:
+        Crudcotizaciones.eliminarCotizacion(id_cotizacion)                       
+        return redirect("/Cotizacion")
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
+
+
+#mostrar detalle de cotizacion
+@app.route('/cotizacionesDetalles')
+def cotizacionesDetalles():
+    bsq = f"SELECT * FROM `detallecotizaciones`"
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(bsq)
+    resultado = cursor.fetchall()
+    return render_template('cotizaciones/mostrar_detalleCotizacion.html', datos = resultado)
+
+#editar detalle de cotizacion
+@app.route("/editarDetalleCotizacion/<id_DetalleCotizacion>")
+def editarDetalleCotizacion(id_DetalleCotizacion):
+    if "email_empleado" in session:
+        sql = f"SELECT * FROM `detallecotizaciones` WHERE `id_detalle_cotizacion` = '{id_DetalleCotizacion}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()                                   
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        conn.commit()
+        return render_template("cotizaciones/editar_detalleCotizacion.html", resul=resultado[0])
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
+#Actualizar detalle de cotizacion
+@app.route('/editarDetalleCotizacions', methods=['POST', 'GET'])
+def editarDetalleCotizacions():
+    if "email_empleado" in session:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        id_detalle = request.form['id']
+        cantidadProductosCotizacion = request.form['cantidadProductosCotizacion']
+        valorunidadProdcotizacion = request.form['valorunidadProdcotizacion']
+        valortotalCantidaproductosCotizacion = request.form['valortotalCantidaproductosCotizacion']
+        servicioCotizacion = request.form['servicioCotizacion']
+        cantidadServiciosCotizacion = request.form['cantidadServiciosCotizacion']
+        valorunidadServicioscotizacion = request.form['valorunidadServicioscotizacion']
+        valortotalCantidadserviciosCotizacion = request.form['valortotalCantidadserviciosCotizacion']
+        totalpagarCotizacion = request.form['totalpagarCotizacion']
+        sql = f"SELECT `num_cotizacion` FROM `cotizaciones` WHERE `num_cotizacion`='1'"
+        cursor.execute(sql)
+        resultado = cursor.fetchone()
+        num_cotizacion  = resultado[0]
+        referenciaProducto = request.form['referenciaProducto']
+        bsql = f"SELECT `id_producto` FROM `productos` WHERE referencia_producto='{referenciaProducto}'"
+        cursor.execute(bsql)
+        resultado2 = cursor.fetchone() 
+        producto_cotizacion = resultado2[0]
+        datos = [id_detalle, num_cotizacion, producto_cotizacion, cantidadProductosCotizacion, valorunidadProdcotizacion, valortotalCantidaproductosCotizacion, servicioCotizacion, cantidadServiciosCotizacion, valorunidadServicioscotizacion, valortotalCantidadserviciosCotizacion, totalpagarCotizacion ]
+        Crudcotizaciones.editarDetalleCotizaciones(datos)
+        return redirect('cotizacionesDetalles')
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
+
+#Borrar cotizacion 
+@app.route('/borraDetalleCotizacion/<id_detalleCotizacion>')
+def borraDetalleCotizacion(id_detalleCotizacion):
+    if "email_empleado" in session:
+        Crudcotizaciones.eliminarDetalleCotizacion(id_detalleCotizacion)                       
+        return redirect("/cotizacionesDetalles")
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
+
+#crear detalle de cotizacion
+@app.route('/detalleCotizacion')
+def detalleCotizacion():
+    return render_template('cotizaciones/detalle_cotizacion.html')
+
+@app.route('/registroDetalleCotizacion', methods=['POST'])
+def registroDetalleCotizacion():
+     if "email_empleado" in session:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cantidadProductosCotizacion = request.form['cantidadProductosCotizacion']
+        valorunidadProdcotizacion = request.form['valorunidadProdcotizacion']
+        valortotalCantidaproductosCotizacion = request.form['valortotalCantidaproductosCotizacion']
+        servicioCotizacion = request.form['servicioCotizacion']
+        cantidadServiciosCotizacion = request.form['cantidadServiciosCotizacion']
+        valorunidadServicioscotizacion = request.form['valorunidadServicioscotizacion']
+        valortotalCantidadserviciosCotizacion = request.form['valortotalCantidadserviciosCotizacion']
+        totalpagarCotizacion = request.form['totalpagarCotizacion']
+        sql = f"SELECT `num_cotizacion` FROM `cotizaciones` WHERE `num_cotizacion`='1'"
+        cursor.execute(sql)
+        resultado = cursor.fetchone()
+        num_cotizacion  = resultado[0]
+        referenciaProducto = request.form['referenciaProducto']
+        bsql = f"SELECT `id_producto` FROM `productos` WHERE referencia_producto='{referenciaProducto}'"
+        cursor.execute(bsql)
+        resultado2 = cursor.fetchone() 
+        producto_cotizacion = resultado2[0]
+        datos = [num_cotizacion, producto_cotizacion, cantidadProductosCotizacion, valorunidadProdcotizacion, valortotalCantidaproductosCotizacion, servicioCotizacion, cantidadServiciosCotizacion, valorunidadServicioscotizacion, valortotalCantidadserviciosCotizacion, totalpagarCotizacion ]
+        Crudcotizaciones.crearDetalleCotizacion(datos)
+        return redirect('Cotizacion')
+     else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
+    
 
 #editar cotizacion
 @app.route("/editarCotizacion/<id_cotizacion>")
@@ -872,9 +983,10 @@ def atualizarCotizacion():
         cursor.execute(bsqd)
         resultado2 = cursor.fetchone()
         clienteCotizacion = resultado2[0]
+        id_c = request.form['id']
         fechaInicioCotizacion = request.form['fechaInicioCotizacion']
         fechaFinCotizacion = request.form['fechaFinCotizacion']
-        datos_cotizaciones = [clienteCotizacion,documento_registro,nombre_operador,apellido_operador,fechaInicioCotizacion,fechaFinCotizacion, nombre_cliente_cotizacion ]
+        datos_cotizaciones = [id_c, clienteCotizacion,documento_registro,nombre_operador,apellido_operador,fechaInicioCotizacion,fechaFinCotizacion, nombre_cliente_cotizacion ]
         Crudcotizaciones.editarCotizacion(datos_cotizaciones)
         return redirect('Cotizacion')
     else:
@@ -883,6 +995,6 @@ def atualizarCotizacion():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port="5096")
+    app.run(host='0.0.0.0', debug=True, port="5090")
 
 

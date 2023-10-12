@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="../../static/css/proveedore.css">
+</head>
+<body>
+
+    <main id="inicio">
+        <div>
+            <h2>CREAR DETALLE DE COTIZACION</h2>
+        </div>
+        <div id="img-parabri">
+            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
+        </div>
+            <div id="boton-atras">
+                <a class="boton-atras" href="{{url_for('Cotizacion')}}">Crear detalle de cotizacion</a>
+            </div>
+            <form action="/registroDetalleCotizacion" method="post" id="formu_proveed">
+                <div class="campos">
+                    <input type="number" name="cantidadProductosCotizacion" id="cantidadProductosCotizacion" placeholder="Cantidad de productos" class="campo" required>
+                    <input type="number" name="valorunidadProdcotizacion" id="valorunidadProdcotizacion" placeholder="Valor unidad del producto" class="campo" required>
+                    <input type="number" name="valortotalCantidaproductosCotizacion" id="valortotalCantidaproductosCotizacion" placeholder="Valor total de producto" class="campo" requiered>
+                    <input type="number" name="servicioCotizacion" id="servicioCotizacion" placeholder="Servicio de cotizacion" class="campo" requiered>
+                    <input type="number" name="cantidadServiciosCotizacion" id="cantidadServiciosCotizacion" placeholder="cantidad de servicion de cotizacion" class="campo" requiered>
+                    <input type="number" name="valorunidadServicioscotizacion" id="valorunidadServicioscotizacion" placeholder="Valor unidad de servicio" class="campo" requiered>
+                    <input type="number" name="valortotalCantidadserviciosCotizacion" id="valortotalCantidadserviciosCotizacion" placeholder="Valor total de la catidad del producto" class="campo" requiered>
+                    <input type="number" name="totalpagarCotizacion" id="totalpagarCotizacion" placeholder="Total a pagar" class="campo" requiered>
+                    <input type="text" name="referenciaProducto" id="referenciaProducto" placeholder=" Referencia de Producto" class="campo" requiered>
+
+                </div>
+                <div id="boton-atras">
+
+                    <input type="submit" value="Registrar" class="boton-atras">
+                </div>
+            </form>
+    </main>
+    
+    
+</body>
+</html>

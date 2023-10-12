@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="../../static/css/proveedore.css">
+</head>
+<body>
+
+    <main id="inicio">
+        <div>
+            <h2>CREAR DETALLE DE COTIZACION</h2>
+        </div>
+        <div id="img-parabri">
+            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
+        </div>
+        <form action="/editarDetalleCotizacions" method="post" id="formu_proveed">
+            <div class="campos">
+                <input type="text" name="id" id="id" class="campo" value="{{resul[0]}}">
+                <input type="number" name="cantidadProductosCotizacion" id="cantidadProductosCotizacion" class="campo" value="{{resul[3]}}">
+                <input type="number" name="valorunidadProdcotizacion" id="valorunidadProdcotizacion" class="campo" value="{{resul[4]}}">
+                <input type="number" name="valortotalCantidaproductosCotizacion" id="valortotalCantidaproductosCotizacion" class="campo" value="{{resul[5]}}">
+                <input type="number" name="servicioCotizacion" id="servicioCotizacion" class="campo" value="{{resul[6]}}">
+                <input type="number" name="cantidadServiciosCotizacion" id="cantidadServiciosCotizacion" class="campo" value="{{resul[7]}}">
+                <input type="number" name="valorunidadServicioscotizacion" id="valorunidadServicioscotizacion" class="campo" value="{{resul[8]}}">
+                <input type="number" name="valortotalCantidadserviciosCotizacion" id="valortotalCantidadserviciosCotizacion" class="campo" value="{{resul[9]}}">
+                <input type="number" name="totalpagarCotizacion" id="totalpagarCotizacion" class="campo" value="{{resul[10]}}">
+                <input type="text" name="referenciaProducto" id="referenciaProducto" class="campo" value="{{resul[2]}}">
+                
+
+            </div>
+            <div id="boton-atras">
+
+                <input type="submit" value="Registrar" class="boton-atras">
+            </div>
+        </form>
+    </main>
+
+
+</body>
+</html>
