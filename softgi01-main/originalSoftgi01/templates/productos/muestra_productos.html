@@ -23,15 +23,16 @@
                 <th>Referencia</th>
                 <th>Categoria</th>
                 <th>Documento proveedor</th>
-                <th>Nombre proveedor</th>
+                <!-- <th>Nombre proveedor</th> -->
                 <th>Nombre producto</th>
-                <th>Precio de entrada</th>
                 <th>Precio de venta</th>
+                <th>Precio de entrada</th>
                 <th>Cantidad</th>
                 <th>Descripción</th>
                 <th>Stock mínimo</th>
                 <th>Ubicación</th>
                 <th>Estante</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -44,7 +45,7 @@
                         <td>{{c[i]}}</td>
 
                     {% endfor %}
-
+                        <td></td>
                         <td>
                             <a class="boton-editar" href="/modificar_producto/{{c[0]}}" >Editar</a>
                         </td>
