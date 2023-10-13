@@ -1020,7 +1020,7 @@ def muestra_compra_proved():
         cursor.execute(sql)
         resultado = cursor.fetchall()  
         conn.commit()
-        return render_template("/compra_proveedores/muestra_compras_proveg.html", resul=resultado) 
+        return render_template("/compra_proveedores/muestra_compras_prove.html", resul=resultado) 
     
     else:
         flash('Porfavor inicia sesion para poder acceder')
