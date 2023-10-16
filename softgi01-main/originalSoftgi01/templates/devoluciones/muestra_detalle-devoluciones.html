@@ -1,32 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proveedores</title>
-    <link rel="stylesheet" href="../../static/css/muestra_proveedores.css">
+    <title>Detalles de las devoluciones</title>
 </head>
 <body>
-    <div></div>
-    <h1>Detalle de cotizacion</h1>
-    <div id="crear-prov">
-        <a class="crear-prov" href="{{url_for('detalleCotizacion')}}">Crear detalle de cotizacion</a>
+    <h1>Detalle de las devoluciones</h1>
+    <div id="mostrar-detalle">
+        <a class="crear-prov" href="{{url_for('detalleDevolcuiones')}}">Crear detalle de cotizacion</a>
     </div>
     <br>
 
     <table class="content-table" id="tabla_productos">
         <thead>
             <tr>
-                <th>id</th>
-                <th>Numero de cotizacion</th>
-                <th>Producto de cotizacion</th>
+                <th>Numero de detalle</th>
+                <th>Numero de devolución</th>
+                <th>Producto en devolución</th>
                 <th>Cantidad de productos</th>
-                <th>Valor por unidad</th>
+                <th>Valor del producto</th>
+                <th>Motivo de la devolución</th>
                 <th>Valor total</th>
-                <th>Servicio de totizacion</th>
-                <th>Cantidad de servicio</th>
-                <th>Valor por unidad de servicio</th>
-                <th>Total a pagar</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -34,14 +29,14 @@
         <tbody>
             {% for dato in datos %}
             <tr>
-                {% for i in range(0,10) %}
+                {% for i in range(0,5) %}
 
                 <td>{{dato[i]}}</td>
 
                 {% endfor %}
 
                 <td>
-                    <a class="boton-editar" href="editarDetalleCotizacion/{{dato[0]}}">Editar</a>
+                    <a class="boton-editar" href="editarDetalleDevolucion/{{dato[0]}}">Editar</a>
                 </td>
 
                 <td>
@@ -56,5 +51,7 @@
     <div id="boton-atras">
         <button class="boton-atras" onclick="window.location.href='/index'">Regresar al Home</button>
     </div>
+</body>
+</html>
 </body>
 </html>

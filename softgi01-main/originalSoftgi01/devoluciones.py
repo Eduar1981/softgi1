@@ -7,7 +7,7 @@ class Devoluciones:
         self.conexion = self.mysql.connect()
         self.cursor = self.conexion.cursor()
 
-    def crearDevolucion(self, devolucion):
+    def crear_devolucion(self, devolucion):
         sql = f"INSERT INTO `devoluciones` (`num_factura`, `documento_operador`, `nombre_operador`, `apellido_operador`, `cliente_devolucion`, `fecha_devolucion`) VALUES  ('{devolucion[0]}','{devolucion[1]}','{devolucion[2]}','{devolucion[3]}','{devolucion[4]}','{devolucion[5]}')"
         self.cursor.execute(sql)
         self.conexion.commit()
@@ -23,7 +23,7 @@ class Devoluciones:
         else:
             return False
         
-    def buscar_Devolucion(self, id_devoluciones):
+    def buscar_devolucion(self, id_devoluciones):
         sql = f"SELECT id_devolucion FROM devoluciones WHERE id_devoluciones = '{id_devoluciones}'"
         self.cursor.execute(sql)
         resultado = self.cursor.fetchall()
@@ -34,13 +34,13 @@ class Devoluciones:
             return True
         
     #modificar clientes
-    def modificar_Devocluion(self, devolucion):
+    def modificar_devolcion(self, devolucion):
         sql=f"UPDATE devoluciones SET id_devolucion='{devolucion[0]}',num_factura='{devolucion[1]}',documento_operador='{devolucion[2]}',nombre_operador='{devolucion[3]}', WHERE 1"
         self.cursor.execute(sql)
         self.conexion.commit()
     
     #Borrar clientes
-    def borrar_Devolucion(self, id_devolucion):
+    def borrar_devolucion(self, id_devolucion):
         if not self.devolucion_Existe_Db(id_devolucion):
             return False  
 

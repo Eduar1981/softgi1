@@ -13,7 +13,7 @@ from categorias import Categorias
 from ManejoUsuarios import manejoUsuarios
 from empleados import Empleados
 from cotizaciones import Cotizaciones
-
+from devoluciones import Devoluciones
 
 
 
@@ -58,3 +58,4 @@ manejoDsuario = manejoUsuarios(mysql, app)
 empleados = Empleados(mysql, app)
 Crudcotizaciones = Cotizaciones(mysql, app)
 lascategorias = Categorias(mysql, app)
+Cruddevoluciones = Devoluciones(mysql, app)

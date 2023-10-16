@@ -19,7 +19,7 @@ body,html{
 }
 
 
-form#formu_producto{
+form#formu_devolucion {
     margin: 0;
     padding: 0;
  
@@ -67,7 +67,7 @@ h2 {
 
 
 /* Formulario */
-form#formu_producto {
+form#formu_devolucion {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
