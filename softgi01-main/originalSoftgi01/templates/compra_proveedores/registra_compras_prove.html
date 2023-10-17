@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registra compras de proveedores</title>
+</head>
+<body>
+
+    <form action="Registrar_compra_p" method="post">
+
+        <select name="proveedor_compra" id="proveedor_compra">
+            <option value="">Proveedor de compra</option>
+                    {% for c in resul %}
+                        <option value="{{c[0]}}">{{c[0]}}</option>
+                    {% endfor %}
+        </select>
+
+        <input type="text" name="producto_compra" placeholder="Producto comprado">
+
+        <input type="number" name="cantidad_compra" placeholder="Cantidad de los prodcutos comprados">
+
+        <input type="number" name="valor_unidad" placeholder="Valor por unidad" >
+
+        <button type="submit">registrar compra</button>
+
+    </form>
+
+    <p>{{mensaj}}</p>
+
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/muestra_compra_proved'">Regresar</button>
+    </div>
+</body>
+</html>

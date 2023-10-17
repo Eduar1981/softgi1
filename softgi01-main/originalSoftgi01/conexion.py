@@ -14,6 +14,7 @@ from ManejoUsuarios import manejoUsuarios
 from empleados import Empleados
 from cotizaciones import Cotizaciones
 from devoluciones import Devoluciones
+from compras_proveedores import Compras_proved
 
 
 
@@ -59,3 +60,4 @@ empleados = Empleados(mysql, app)
 Crudcotizaciones = Cotizaciones(mysql, app)
 lascategorias = Categorias(mysql, app)
 Cruddevoluciones = Devoluciones(mysql, app)
+compras_prove = Compras_proved(mysql, app)
