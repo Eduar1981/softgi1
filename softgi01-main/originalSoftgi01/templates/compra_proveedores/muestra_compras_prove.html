@@ -10,7 +10,7 @@
 <body>
     <h1>Compras a proveedores</h1>
 
-    <form action="#" method="post" id="conten_busqueda">
+    <form action="busca_compras_prov" method="post" id="conten_busqueda">
         <input type="search" placeholder="Busca alguna compra" aria-label="Search" name="dato_busqueda" id="buscador">
         <button type="submit"><i class="lni lni-search-alt"></i></button>
     </form>
@@ -41,10 +41,10 @@
                     <td>{{c[i]}}</td>
                 {% endfor %}
                     <td>
-                        <a class="boton-editar" href="#/{{c[0]}}">Editar</a>
+                        <a class="boton-editar" href="edita_compras_provee/{{c[0]}}">Editar</a>
                     </td>
                     <td>
-                        <a class="boton-eliminar"  onclick="return confirm('Seguro que deseas eliminar el usuario administrador?')" href="#/{{c[0]}}"><i class="lni lni-cross-circle"></i>Canceladar compra</a>
+                        <a class="boton-eliminar"  href="cancelar_compra_proveed/{{c[0]}}"><i class="lni lni-cross-circle"></i>Canceladar compra</a>
                     </td>
                     <td>
                         <a href="muestra_detalles_com/{{c[0]}}">Mas detalles</a>

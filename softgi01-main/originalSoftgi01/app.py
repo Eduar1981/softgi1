@@ -1010,6 +1010,144 @@ def atualizarCotizacion():
 
 #---------------------------------------------------compras PROVEEDORES----------------------------------------------------
 
+
+# ------------- registra compras  --------------
+
+@app.route("/Regitra_compra_prov")
+def Regitra_compra_prov():
+    if "email_empleado" in session:
+
+        sql = "SELECT doc_proveedor FROM proveedores WHERE estado = 'ACTIVO'"
+        conn = mysql.connect()
+        cursor = conn.cursor()                  # consulta todos los documentos de los proveedores y los envia al select
+        cursor.execute(sql)
+        resultado = cursor.fetchall()         # y muestra el html registra_compras_prove
+        conn.commit()
+        return render_template("/compra_proveedores/registra_compras_prove.html",resul = resultado)
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
+@app.route("/Registrar_compra_p", methods=['POST'])
+def Registrar_compra_p():
+    if "email_empleado" in session:
+
+
+        email = session["email_empleado"]
+        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute(bsq)                         # recibe la info y consulta los datos del operador
+        resultado = cursor.fetchone()
+
+        documento_operador = resultado[0]
+        nombre_operador = resultado[1]
+        apellido_operador = resultado[2]
+
+        proveedor_compra = request.form['proveedor_compra']
+        producto_compra = request.form['producto_compra']
+        cantidad_compra = request.form['cantidad_compra']
+        valor_unidad = request.form['valor_unidad']
+        valor_total_unidad = (valor_unidad*cantidad_compra)
+        estado = "ACTIVO"
+        tiempo_compra = datetime.datetime.now()                
+
+        compras_prove.registrar_compra([proveedor_compra, documento_operador, nombre_operador, apellido_operador, tiempo_compra, estado])   # se incerta los datos en la primera tabla
+        
+        sql = f"SELECT num_compra FROM comprasproveedores WHERE date_compra = '{tiempo_compra}'"
+        cursor.execute(sql)
+        num_compra = cursor.fetchone()
+
+        compras_prove.registrar_detalles_compra([num_compra, producto_compra, cantidad_compra, valor_unidad, valor_total_unidad])   # se incerta los datos en la segunda tabla
+
+        mensaje = "¡Compra registrada con exito!"
+        return render_template("/compra_proveedores/registra_compras_prove.html", mensaj = mensaje)
+
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+    
+
+
+# ------------- cancela compras -------
+
+@app.route("/cancelar_compra_proveed/<num_compra>")
+def cancelar_compra_proveed(num_compra):
+    if "email_empleado" in session:
+
+        compras_prove.cacela_compra(num_compra)
+        return redirect("/muestra_compra_proved")
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
+
+# ------- editar detalles de compras a proveedores -----
+
+@app.route("/edita_compras_provee/<num_compra>") 
+def edita_compras_provee(num_compra):
+    if "email_empleado" in session:
+
+        sql = f"SELECT num_compra, producto_compra, cantidad_producto_compra, valorunidad_prodcompra FROM detallecomprasproveedores WHERE num_compra = '{num_compra}' "
+        conn = mysql.connect()
+        cursor = conn.cursor()                  
+        cursor.execute(sql)
+        resultado = cursor.fetchall()  
+        conn.commit()
+        return render_template("/compra_proveedores/edita_compras_prove.html", resul=resultado[0])
+    
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
+@app.route("/actualiza_compra_provee", methods=['POST'])
+def actualiza_compra_provee():
+    if "email_empleado" in session:
+
+        num_compra = request.form['num_compra']
+        producto_compra = request.form['producto_compra']
+        cantidad_compra = request.form['cantidad_compra']
+        valor_unidad = request.form['valor_unidad']
+        valor_total_unidad = (cantidad_compra*valor_unidad)
+        
+        compras_prove.edita_detalles_compra([num_compra, producto_compra, cantidad_compra, valor_unidad, valor_total_unidad])
+
+        return redirect("/muestra_compra_proved")
+    
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
+
+# ------------- buscador --------------
+
+@app.route("/busca_compras_prov")
+def busca_compras_prov():
+    if "email_empleado" in session:
+
+        dato_busqueda = request.form['dato_busqueda']
+        sql = f"SELECT `num_compra`, `proveedor_compra`, `documento_operador`, `nombre_operador`, `apellido_operador`, `date_compra`, `num_factura_proveedor` FROM `comprasproveedores WHERE estado='activo' AND num_compra LIKE '%{dato_busqueda}%' OR estado='activo' AND proveedor_compra LIKE '%{dato_busqueda}%'"
+        conn = mysql.connect()
+        cursor = conn.cursor()                  # muestra las compras a proveedores dependiendo de la busqueda
+        cursor.execute(sql)
+        resultado = cursor.fetchall()  
+        conn.commit()
+        return render_template("/compra_proveedores/muestra_compras_prove.html", resul=resultado)
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
+# --------- muestra compras a proveedores -------
+
 @app.route("/muestra_compra_proved")
 def muestra_compra_proved():
     if "email_empleado" in session:
@@ -1027,6 +1165,7 @@ def muestra_compra_proved():
         return redirect(url_for('home'))
     
 
+# ------------- muestra detalles de compras a proveedores ----------
 
 @app.route("/muestra_detalles_com/<num_compra>")
 def muestra_detalles_com(num_compra):
@@ -1044,7 +1183,7 @@ def muestra_detalles_com(num_compra):
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
 
-#--------------------------------------devoluciones---------------------------------
+#--------------------------------------devoluciones----------------------------------------------------------------
 
 @app.route("/devolucion")
 def devoluciones():

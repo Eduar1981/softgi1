@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edita compras de proveedores</title>
+</head>
+<body>
+
+    <form action="actualiza_compra_provee" method="post">
+
+        <input type="number" name="num_compra" placeholder="numero de compra"  value="{{resul[0]}}">
+
+        <input type="text" name="producto_compra" placeholder="Producto comprado" value="{{resul[1]}}">
+
+        <input type="number" name="cantidad_compra" placeholder="Cantidad de los prodcutos comprados" value="{{resul[2]}}">
+
+        <input type="number" name="valor_unidad" placeholder="Valor por unidad"  value="{{resul[3]}}">
+
+        <button type="submit">actualizar</button>
+
+    </form>
+
+
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/muestra_compra_proved'">Regresar</button>
+    </div>
+</body>
+</html>
