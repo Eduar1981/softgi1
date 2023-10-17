@@ -34,7 +34,7 @@ class Devoluciones:
             return True
         
     #modificar clientes
-    def modificar_devolcion(self, devolucion):
+    def modificar_devolucion(self, devolucion):
         sql=f"UPDATE devoluciones SET id_devolucion='{devolucion[0]}',num_factura='{devolucion[1]}',documento_operador='{devolucion[2]}',nombre_operador='{devolucion[3]}', WHERE 1"
         self.cursor.execute(sql)
         self.conexion.commit()
@@ -55,5 +55,18 @@ class Devoluciones:
             self.conexion.rollback()
             return False
             
+    def crearDetalleDevolucion(self, registrar):
+        bsql = f"INSERT INTO `detalledevoluciones`(`id_detalle_devolucion`, `num_devolucion`, `producto_devolucion`, `cantidad_proddevolucion`, `precio_proddevolucion`, `motivo_devolucion`, `monto_total_devolucion`) VALUES  ('{registrar[0]}','{registrar[1]}','{registrar[2]}','{registrar[3]}','{registrar[4]}','{registrar[5]}','{registrar[6]}','{registrar[7]}')"
+        self.cursor.execute(bsql)
+        self.conexion.commit()
     
+    def editarDetalleDevoluciones(self, editar):
+        bsql =f"UPDATE `detalledevoluciones` SET `id_detalle_devolucion`='{editar[1]}',`num_devolucion`='{editar[2]}',`producto_devolucion`='{editar[3]}',`cantidad_proddevolucion`='{editar[4]}',`precio_proddevolucion`='{editar[5]}',`motivo_devolucion`='{editar[6]}',`monto_total_devolucion`='{editar[7]}' WHERE id_detalle_devolucion"
+        self.cursor.execute(bsql)
+        self.conexion.commit()
+        
+    def eliminarDetalleDevolucion(self,id_detalle_devoluciones):
+        sql = f"DELETE FROM `detalledevoluciones` WHERE  `id_detalle_devolucioncion`='{id_detalle_devoluciones}'"
+        self.cursor.execute(sql)
+        self.conexion.commit()
     

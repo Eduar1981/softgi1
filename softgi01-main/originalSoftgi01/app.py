@@ -1079,7 +1079,7 @@ def crear_devolucion():
         apellido_operador = resultado[2]
         num_factura = request.form['num_factura']
         cliente_devolucion = request.form['cliente_devolucion']
-        bsqd = f"SELCT num_factura FROM ventas num_factura='{num_factura}'"
+        bsqd = f"SELCT num_factura FROM ventas WHERE num_factura='{num_factura}'"
         bsqd = f"SELECT doc_cliente FROM clientes WHERE doc_cliente='{cliente_devolucion}'"
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -1114,49 +1114,45 @@ def detallesDevoluciones():
     cursor = conn.cursor()
     cursor.execute(bsq)
     resultado = cursor.fetchall()
-    return render_template('devoluciones/mostrar_detalleCotizacion.html', datos = resultado)
+    return render_template('devoluciones/muestra_detalle_devoluciones.html', datos = resultado)
 
-#editar detalle de cotizacion
-@app.route("/editarDetalleCotizacion/<id_DetalleCotizacion>")
-def editarDetalleCotizacion(id_DetalleCotizacion):
+#editar detalle de devolucion
+@app.route("/editarDetalleDevolucioncion/<id_DetalleDevolucion>")
+def editarDetalleDevolucion(id_DetalleDevolucion):
     if "email_empleado" in session:
-        sql = f"SELECT * FROM `detallecotizaciones` WHERE `id_detalle_cotizacion` = '{id_DetalleCotizacion}'"
+        sql = f"SELECT * FROM `detalledevoluciones` WHERE `id_detalle_devolucion` = '{id_DetalleDevolucion}'"
         conn = mysql.connect()
         cursor = conn.cursor()                                   
         cursor.execute(sql)
         resultado = cursor.fetchall()
         conn.commit()
-        return render_template("cotizaciones/editar_detalleCotizacion.html", resul=resultado[0])
+        return render_template("devoluciones/editar_detalle_devolucion.html", resul=resultado[0])
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 #Actualizar detalle de cotizacion
-@app.route('/editarDetalleCotizacions', methods=['POST', 'GET'])
-def editarDetalleCotizacions():
+@app.route('/editarDetalleDevoluciones', methods=['POST', 'GET'])
+def editarDetalleDevoluciones():
     if "email_empleado" in session:
         conn = mysql.connect()
         cursor = conn.cursor()
-        id_detalle = request.form['id']
-        cantidadProductosCotizacion = request.form['cantidadProductosCotizacion']
-        valorunidadProdcotizacion = request.form['valorunidadProdcotizacion']
-        valortotalCantidaproductosCotizacion = request.form['valortotalCantidaproductosCotizacion']
-        servicioCotizacion = request.form['servicioCotizacion']
-        cantidadServiciosCotizacion = request.form['cantidadServiciosCotizacion']
-        valorunidadServicioscotizacion = request.form['valorunidadServicioscotizacion']
-        valortotalCantidadserviciosCotizacion = request.form['valortotalCantidadserviciosCotizacion']
-        totalpagarCotizacion = request.form['totalpagarCotizacion']
-        sql = f"SELECT `num_cotizacion` FROM `cotizaciones` WHERE `num_cotizacion`='1'"
+        num_devolucion = request.form['num_devolucion']
+        producto_devolucion = request.form['producto_devolucion']
+        cantidad_proddevolucion = request.form['cantidad_proddevolucion']
+        precio_proddevolucion = request.form['precio_proddevolucion']
+        motivo_devolucion = request.form['motivo_devolucion']
+        monto_total_devolucion = request.form['monto_total_devolucion']
+        sql = f"SELECT `num_devolucion` FROM `devoluciones` WHERE `num_devolucion`='1'"
         cursor.execute(sql)
         resultado = cursor.fetchone()
-        num_cotizacion  = resultado[0]
-        referenciaProducto = request.form['referenciaProducto']
-        bsql = f"SELECT `id_producto` FROM `productos` WHERE referencia_producto='{referenciaProducto}'"
+        num_devolucion  = resultado[1]
+        bsql = f"SELECT `num_devolucion` FROM `devoluciones` WHERE id_devolucion='{num_devolucion}'"
         cursor.execute(bsql)
         resultado2 = cursor.fetchone() 
         producto_cotizacion = resultado2[0]
-        datos = [id_detalle, num_cotizacion, producto_cotizacion, cantidadProductosCotizacion, valorunidadProdcotizacion, valortotalCantidaproductosCotizacion, servicioCotizacion, cantidadServiciosCotizacion, valorunidadServicioscotizacion, valortotalCantidadserviciosCotizacion, totalpagarCotizacion ]
+        datos = [num_devolucion, producto_cotizacion, producto_devolucion, cantidad_proddevolucion, precio_proddevolucion, motivo_devolucion, monto_total_devolucion   ]
         Crudcotizaciones.editarDetalleCotizaciones(datos)
-        return redirect('cotizacionesDetalles')
+        return redirect('detallesDevoluciones')
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
@@ -1166,17 +1162,17 @@ def editarDetalleCotizacions():
 def borraDetalleCotizacion(id_detalleCotizacion):
     if "email_empleado" in session:
         Crudcotizaciones.eliminarDetalleCotizacion(id_detalleCotizacion)                       
-        return redirect("/cotizacionesDetalles")
+        return redirect("/detallesDevoluciones")
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
 #crear detalle de cotizacion
-@app.route('/detalleCotizacion')
+@app.route('/detalleDevoluciones')
 def detalleCotizacion():
-    return render_template('cotizaciones/detalle_cotizacion.html')
+    return render_template('devoluciones/detalle_devoluciones.html')
 
-@app.route('/registroDetalleCotizacion', methods=['POST'])
+@app.route('/registroDetalleDevolucion', methods=['POST'])
 def registroDetalleCotizacion():
      if "email_empleado" in session:
         conn = mysql.connect()
