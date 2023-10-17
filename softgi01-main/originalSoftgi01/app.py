@@ -1296,11 +1296,11 @@ def editarDetalleDevoluciones():
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
-#Borrar cotizacion 
-@app.route('/borraDetalleCotizacion/<id_detalleCotizacion>')
-def borraDetalleCotizacion(id_detalleCotizacion):
+#Borrar detalle de devolucion 
+@app.route('/borraDetalleCotizacion/<id_detalleDevolucion>')
+def borraDetalleDevolucion(id_detalleDevolucion):
     if "email_empleado" in session:
-        Crudcotizaciones.eliminarDetalleCotizacion(id_detalleCotizacion)                       
+        Cruddevoluciones.eliminarDetalleDevolucion(id_detalleDevolucion)                       
         return redirect("/detallesDevoluciones")
     else:
         flash('Algo está mal en los datos digitados')
@@ -1308,58 +1308,55 @@ def borraDetalleCotizacion(id_detalleCotizacion):
 
 #crear detalle de cotizacion
 @app.route('/detalleDevoluciones')
-def detalleCotizacion():
+def detalleDevolucion():
     return render_template('devoluciones/detalle_devoluciones.html')
 
 @app.route('/registroDetalleDevolucion', methods=['POST'])
-def registroDetalleCotizacion():
+def registroDetalleDevolucion():
      if "email_empleado" in session:
         conn = mysql.connect()
         cursor = conn.cursor()
-        cantidadProductosCotizacion = request.form['cantidadProductosCotizacion']
-        valorunidadProdcotizacion = request.form['valorunidadProdcotizacion']
-        valortotalCantidaproductosCotizacion = request.form['valortotalCantidaproductosCotizacion']
-        servicioCotizacion = request.form['servicioCotizacion']
-        cantidadServiciosCotizacion = request.form['cantidadServiciosCotizacion']
-        valorunidadServicioscotizacion = request.form['valorunidadServicioscotizacion']
-        valortotalCantidadserviciosCotizacion = request.form['valortotalCantidadserviciosCotizacion']
-        totalpagarCotizacion = request.form['totalpagarCotizacion']
-        sql = f"SELECT `num_cotizacion` FROM `cotizaciones` WHERE `num_cotizacion`='1'"
+        producto_devolucion = request.form['producto_devolucion']
+        cantidad_proddevolucion = request.form['cantidad_proddevolucion']
+        precio_proddevolucion = request.form['precio_proddevolucion']
+        motivo_devolucion = request.form['motivo_devolucion']
+        monto_total_devolucion = request.form['monto_total_devolucion']
+        sql = f"SELECT `id_devolucion` FROM `devoluciones` WHERE `id_devolucion`='0'"
         cursor.execute(sql)
         resultado = cursor.fetchone()
-        num_cotizacion  = resultado[0]
-        referenciaProducto = request.form['referenciaProducto']
-        bsql = f"SELECT `id_producto` FROM `productos` WHERE referencia_producto='{referenciaProducto}'"
+        id_detalle_devolucion  = resultado[0]
+        num_factura = request.form['num_factura']
+        bsql = f"SELECT `num_factura` FROM `ventas` WHERE num_factura='{num_factura}'"
         cursor.execute(bsql)
         resultado2 = cursor.fetchone() 
-        producto_cotizacion = resultado2[0]
-        datos = [num_cotizacion, producto_cotizacion, cantidadProductosCotizacion, valorunidadProdcotizacion, valortotalCantidaproductosCotizacion, servicioCotizacion, cantidadServiciosCotizacion, valorunidadServicioscotizacion, valortotalCantidadserviciosCotizacion, totalpagarCotizacion ]
+        producto_devolucion = resultado2[0]
+        datos = [id_detalle_devolucion, producto_devolucion, cantidad_proddevolucion, precio_proddevolucion, motivo_devolucion, monto_total_devolucion ]
         Crudcotizaciones.crearDetalleCotizacion(datos)
-        return redirect('Cotizacion')
+        return redirect('Devolucion')
      else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
     
 
 #editar cotizacion
-@app.route("/editarCotizacion/<id_cotizacion>")
-def editarCotizacion(id_cotizacion):
+@app.route("/editarDevolucion/<id_devolucion>")
+def editarCotizacion(id_devolucion):
     if "email_empleado" in session:
-        sql = f"SELECT * FROM cotizaciones WHERE num_cotizacion = '{id_cotizacion}'"
-        print(id_cotizacion)
+        sql = f"SELECT * FROM devoluciones WHERE id_devolucion = '{id_devolucion}'"
+        print(id_devolucion)
         conn = mysql.connect()
-        cursor = conn.cursor()                                    #muestra toda la informacion y pone en los imputs
+        cursor = conn.cursor()     #muestra toda la informacion y pone en los imputs
         cursor.execute(sql)
         resultado = cursor.fetchall()
         print(resultado)
         conn.commit()
-        return render_template("cotizaciones/editar_cotizaciones.html", resul=resultado[0])
+        return render_template("devoluiones/editar_devoluciones.html", resul=resultado[0])
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
 
-@app.route('/atualizarCotizacion', methods=['POST'])
-def atualizarCotizacion():
+@app.route('/actualizarDevolucion', methods=['POST'])
+def atualizarDevolucion():
     if "email_empleado" in session:
         email = session["email_empleado"]
         bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
@@ -1370,19 +1367,18 @@ def atualizarCotizacion():
         documento_registro = resultado[0]
         nombre_operador = resultado[1]
         apellido_operador = resultado[2]
-        nombre_cliente_cotizacion = request.form['clienteCotizacion']
-        bsqd = f"SELECT doc_cliente FROM clientes WHERE nom_cliente='{nombre_cliente_cotizacion}'"
+        cliente_devolucion = request.form['clienteDevolucion']
+        bsqd = f"SELECT doc_cliente FROM clientes WHERE nom_cliente='{cliente_devolucion}'"
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute(bsqd)
         resultado2 = cursor.fetchone()
-        clienteCotizacion = resultado2[0]
+        cliente_devolucion = resultado2[0]
         id_c = request.form['id']
-        fechaInicioCotizacion = request.form['fechaInicioCotizacion']
-        fechaFinCotizacion = request.form['fechaFinCotizacion']
-        datos_cotizaciones = [id_c, clienteCotizacion,documento_registro,nombre_operador,apellido_operador,fechaInicioCotizacion,fechaFinCotizacion, nombre_cliente_cotizacion ]
+        fecha_devolucion = request.form['fecha_devolucion']
+        datos_cotizaciones = [id_c, cliente_devolucion, documento_registro, nombre_operador, apellido_operador,fecha_devolucion, cliente_devolucion ]
         Crudcotizaciones.editarCotizacion(datos_cotizaciones)
-        return redirect('Cotizacion')
+        return redirect('Devolucion')
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
