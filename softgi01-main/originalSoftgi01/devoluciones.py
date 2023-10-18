@@ -33,13 +33,13 @@ class Devoluciones:
         else:
             return True
         
-    #modificar clientes
+    #modificar devoluciones
     def modificar_devolucion(self, devolucion):
         sql=f"UPDATE devoluciones SET id_devolucion='{devolucion[0]}',num_factura='{devolucion[1]}',documento_operador='{devolucion[2]}',nombre_operador='{devolucion[3]}', WHERE 1"
         self.cursor.execute(sql)
         self.conexion.commit()
     
-    #Borrar clientes
+    #Borrar devoluciones
     def borrar_devolucion(self, id_devolucion):
         if not self.devolucion_Existe_Db(id_devolucion):
             return False  

@@ -1339,8 +1339,8 @@ def registroDetalleDevolucion():
     
 
 #editar cotizacion
-@app.route("/editarDevolucion/<id_devolucion>")
-def editarCotizacion(id_devolucion):
+@app.route("/modificar_devolucion/<id_devolucion>")
+def editarDevolucion(id_devolucion):
     if "email_empleado" in session:
         sql = f"SELECT * FROM devoluciones WHERE id_devolucion = '{id_devolucion}'"
         print(id_devolucion)
