@@ -9,7 +9,7 @@
 <body>
     <main id="inicio">
         <div>
-            <h2>EDITAR DEVOLUONES</h2>
+            <h2>EDITAR DEVOLUCIONES</h2>
         </div>
         <div id="img-parabri">
             <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
@@ -17,9 +17,13 @@
             <form action="/atualizarCotizacion" method="post" id="formu_devolucion">
                 <div class="campos">
 
+                    <label for="id">Numero de devolucion</label>
                     <input type="number" name="id" id="id" value="{{resul[0]}}">
 
+                    <label for="num_factura">Numero de factura</label>
                     <input type="number" name="num_factura" id="num_factura"  class="campo" value="{{resul[1]}}">
+
+                    <label for="cliente_devolucion">Documento de cliente</label>
                     <input type="text" name="cliente_devolucion" id="cliente_devolucion" class="campo" value="{{resul[5]}}">
 
                 </div>

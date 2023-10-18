@@ -1185,8 +1185,8 @@ def muestra_detalles_com(num_compra):
 
 #--------------------------------------devoluciones----------------------------------------------------------------
 
-@app.route("/devolucion")
-def devoluciones():
+@app.route("/muestraDevoluciones")
+def muestraDevoluciones():
     if "email_empleado" in session:
         msql= f"SELECT `id_devolucion`, `num_factura`, `documento_operador`, `nombre_operador`, `apellido_operador`, `cliente_devolucion`, `fecha_devolucion` FROM `devoluciones`"
         conn = mysql.connect()
@@ -1199,13 +1199,13 @@ def devoluciones():
         return redirect(url_for('home'))
 
 #registro de devoluciones
-@app.route("/muestraDevolucion")
-def muestraDevoluciones():
+@app.route("/crear_devolucion")
+def crear_devolucion():
     if "email_empleado" in session:
         return render_template('devoluciones/registrar_devolucion.html')
 
-@app.route('/crearDevolucion', methods=['POST'])
-def crear_devolucion():
+@app.route('/crear_devolucion', methods=['POST'])
+def crearDevoluciones():
     if "email_empleado" in session:
         email = session["email_empleado"]
         bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
@@ -1216,7 +1216,7 @@ def crear_devolucion():
         documento_registro = resultado[0]
         nombre_operador = resultado[1]
         apellido_operador = resultado[2]
-        num_factura = request.form['num_factura']
+        """ num_factura = request.form['num_factura'] """
         cliente_devolucion = request.form['cliente_devolucion']
         bsqd = f"SELCT num_factura FROM ventas WHERE num_factura='{num_factura}'"
         bsqd = f"SELECT doc_cliente FROM clientes WHERE doc_cliente='{cliente_devolucion}'"
@@ -1350,7 +1350,7 @@ def editarDevolucion(id_devolucion):
         resultado = cursor.fetchall()
         print(resultado)
         conn.commit()
-        return render_template("devoluiones/editar_devoluciones.html", resul=resultado[0])
+        return render_template("devoluciones/editar_devolucion.html", resul=resultado[0])
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))

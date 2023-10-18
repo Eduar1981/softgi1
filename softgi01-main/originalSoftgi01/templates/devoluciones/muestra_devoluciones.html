@@ -10,12 +10,12 @@
 
     <h1>Devoluciónes</h1>
     <div id="muestra-devoluciones">
-        <a class="boton-editar"  href="{{url_for('registrar_devoluciones')}}">Registrar devolución</a>
+        <a class="boton-editar"  href="{{url_for('crear_devoluciones')}}">Registrar devolución</a>
     </div>
 
 
     <table class="content-tabla" id="tabla-devoluciones">
-        <thead >
+        <thead>
             <tr>
                 <th>Id devolución</th>
                 <th>Numero factura</th>
@@ -27,23 +27,24 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for c in resul %}
+            {% for dato in datos %}
                 <tr>
-                    {% for i in range(0,6) %}
+                    {% for i in range(0,7) %}
 
-                        <td>{{c[i]}}</td>
+                        <td>{{dato[i]}}</td>
 
                     {% endfor %}
                         <td></td>
                         <td>
-                            <a class="boton-editar" href="/modificar_devolucion/{{c[0]}}" >Editar</a>
+                            <a class="boton-editar" href="/modificar_devolucion/{{dato[0]}}" >Editar</a>
                         </td>
 
                         <td>
-                            <a class="boton-eliminar" onclick="return confirm('Seguro que deseas eliminar esta devolución?')" href="/borra_devoluc/{{c[0]}}">Eliminar</a>
+                            <a class="boton-eliminar" onclick="return confirm('Seguro que deseas eliminar esta devolución?')" href="/borra_devoluc/{{dato[0]}}">Eliminar</a>
                         </td>
 
                 </tr>

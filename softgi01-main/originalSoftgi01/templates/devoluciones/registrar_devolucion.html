@@ -8,15 +8,21 @@
 </head>
 <body>
     <main id="inicio">
+        <div>
+            <h2>CREAR DEVOLUCIÓN</h2>
+        </div>
         <div id="img-parabri">
             <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
         </div>
-        <form action="" method="post" id="formu_devolucion">
+        <form action="/crear_devolucion" method="post" id="formu_devolucion">
+
             <div class="campos">
                 <input type="number" name="num_factura" id="num_factura" placeholder="Numero de factura" class="campo">
                 <input type="text" name="cliente_devolucion" id="cliente_devolucion" placeholder="Documento del cliente" class="campo">
+
                 <input type="text" name="producto_devolucion" id="producto_devolucion" placeholder="Nombre del producto" class="campo">
                 <input type="number" name="cantidad_proddevolucion" id="cantidad_proddevolucion" placeholder="Cantidad a devolver" class="campo">
+
                 <input type="number" name="precio_proddevolucion" id="precio_proddevolucion" placeholder="Valor" class="campo">
                 <input type="text" name="motivo_devolucion" id="motivo_devolucion" placeholder="Motivo de la devolucion" class="campo" >
 
@@ -32,6 +38,10 @@
             <div>
                 <button type="submit">Guardar</button>
             </div>
+            <div id="boton-atras">
+                <button class="boton-atras" onclick="window.location.href='/muestraDevoluciones'">Regresar</button>
+            </div>
+            
         </form>
     </main>
 </body>

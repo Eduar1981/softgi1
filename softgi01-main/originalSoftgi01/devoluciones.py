@@ -14,7 +14,6 @@ class Devoluciones:
         
     def devolucion_Existe_Db(self, devolucion):
         sql = f"SELECT COUNT(*) FROM devoluciones WHERE id_devolucion = '{devolucion}'"
-
         self.cursor.execute(sql)
         resultado = self.cursor.fetchone()
 
