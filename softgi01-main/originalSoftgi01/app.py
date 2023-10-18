@@ -1199,7 +1199,7 @@ def devoluciones():
         return redirect(url_for('home'))
 
 #registro de devoluciones
-@app.route("/verDevolucion")
+@app.route("/muestraDevolucion")
 def muestraDevoluciones():
     if "email_empleado" in session:
         return render_template('devoluciones/registrar_devolucion.html')
