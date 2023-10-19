@@ -559,7 +559,7 @@ def registrar_categorias():
         nombre_categoria = request.form['nom_categoria']
         tiempo = datetime.datetime.now()
 
-        lascategorias.crear_categoria([nombre_categoria,tiempo, documento_registro, nombre_operador, apellido_operador])
+        lascategorias.crear_categoria([nombre_categoria, tiempo, documento_registro, nombre_operador, apellido_operador])
         return redirect('categorias')
     
 
@@ -836,11 +836,12 @@ def crearCotizacion():
         nombre_operador = resultado[1]
         apellido_operador = resultado[2]
         nombre_cliente_cotizacion = request.form['clienteCotizacion']
-        bsqd = f"SELECT doc_cliente FROM clientes WHERE nom_cliente='{nombre_cliente_cotizacion}'"
+        bsqd = f"SELECT `doc_cliente` FROM clientes WHERE `nom_cliente`='{nombre_cliente_cotizacion}'"
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute(bsqd)
         resultado2 = cursor.fetchone()
+        print(resultado2)
         clienteCotizacion = resultado2[0]
         fechaInicioCotizacion = request.form['fechaInicioCotizacion']
         fechaFinCotizacion = request.form['fechaFinCotizacion']
@@ -1017,7 +1018,7 @@ def atualizarCotizacion():
 def Regitra_compra_prov():
     if "email_empleado" in session:
 
-        sql = "SELECT doc_proveedor FROM proveedores WHERE estado = 'ACTIVO'"
+        sql = "SELECT doc_proveedor FROM proveedores WHERE estado_proveedor = 'ACTIVO'"
         conn = mysql.connect()
         cursor = conn.cursor()                  # consulta todos los documentos de los proveedores y los envia al select
         cursor.execute(sql)
@@ -1048,7 +1049,8 @@ def Registrar_compra_p():
 
         proveedor_compra = request.form['proveedor_compra']
         producto_compra = request.form['producto_compra']
-        cantidad_compra = request.form['cantidad_compra']
+        Cantidad_compra = request.form['cantidad_compra']
+        cantidad_compra = int(Cantidad_compra)
         valor_unidad = request.form['valor_unidad']
         valor_total_unidad = (valor_unidad*cantidad_compra)
         estado = "ACTIVO"
@@ -1056,18 +1058,23 @@ def Registrar_compra_p():
 
         compras_prove.registrar_compra([proveedor_compra, documento_operador, nombre_operador, apellido_operador, tiempo_compra, estado])   # se incerta los datos en la primera tabla
         
-        sql = f"SELECT num_compra FROM comprasproveedores WHERE date_compra = '{tiempo_compra}'"
+        sql_tiempo = f"SELECT date_compra FROM comprasproveedores WHERE proveedor_compra = '{proveedor_compra}'"
+        cursor.execute(sql_tiempo)
+        tiempo1 = cursor.fetchall()
+        tiempo2 = tiempo1[0][0]
+        
+        sql = f"SELECT num_compra FROM comprasproveedores WHERE date_compra = '{tiempo2}'"
         cursor.execute(sql)
-        num_compra = cursor.fetchone()
-
-        compras_prove.registrar_detalles_compra([num_compra, producto_compra, cantidad_compra, valor_unidad, valor_total_unidad])   # se incerta los datos en la segunda tabla
-
-        mensaje = "¡Compra registrada con exito!"
-        return render_template("/compra_proveedores/registra_compras_prove.html", mensaj = mensaje)
+        num_compra = cursor.fetchall()
+        num = num_compra[0][0]
+        
+        compras_prove.registrar_detalles_compra([num, producto_compra, cantidad_compra, valor_unidad, valor_total_unidad])   # se incerta los datos en la segunda tabla
+        flash('¡Compra registrada con exito!')
+        return redirect("/Regitra_compra_prov")
 
 
     else:
-        flash('Porfavor inicia sesion para poder acceder')
+        flash('Por favor inicia sesion para poder acceder')
         return redirect(url_for('home'))
     
 
@@ -1171,7 +1178,7 @@ def muestra_compra_proved():
 def muestra_detalles_com(num_compra):
     if "email_empleado" in session:
         
-        sql = f"SELECT `num_compra`, `producto_compra`, `cantidad_producto_compra`, `valorunidad_prodcompra`, `valortotal_cantidadcomp`, `totalpagar_compra` FROM `detallecomprasproveedores` WHERE num_compra = '{num_compra}'"
+        sql = f"SELECT `num_compra`,`detallenum_compra`, `producto_compra`, `cantidad_producto_compra`, `valorunidad_prodcompra`, `valortotal_cantidadcomp`, `totalpagar_compra` FROM `detallecomprasproveedores` INNER JOIN comprasproveedores ON comprasproveedores.num_compra = detallenum_compra WHERE num_compra = '{num_compra}'"
         conn = mysql.connect()
         cursor = conn.cursor()                  # muestra los detalles de compras a proveedores
         cursor.execute(sql)

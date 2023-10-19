@@ -15,6 +15,7 @@
                         <option value="{{c[0]}}">{{c[0]}}</option>
                     {% endfor %}
         </select>
+        
 
         <input type="text" name="producto_compra" placeholder="Producto comprado">
 
@@ -26,7 +27,15 @@
 
     </form>
 
-    <p>{{mensaj}}</p>
+    <p> {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}</p>
 
     <div id="boton-atras">
         <button class="boton-atras" onclick="window.location.href='/muestra_compra_proved'">Regresar</button>
