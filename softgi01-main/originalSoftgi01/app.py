@@ -150,7 +150,7 @@ def login():# hago la funcion de la ruta en este caso su nombre es login
 
     """ bsql_emp = f"SELECT email_empleado='{email}', contrasena='{cifrado}' FROM empleados WHERE conemail='confirmado'" """
 
-    bsql_emp = f"SELECT empleados.email_empleado, empleados.doc_empleado, empleados.nom_empleado, empleados.ape_empleado, empleados.contrasena='{cifrado}', tokens.confir_user  FROM empleados INNER JOIN tokens ON empleados.doc_empleado = tokens.doc_empleado WHERE empleados.email_empleado  = '{email}'"
+    bsql_emp = f"SELECT empleados.email_empleado, empleados.doc_empleado, empleados.nom_empleado, empleados.ape_empleado, tokens.confir_user FROM empleados INNER JOIN tokens ON empleados.doc_empleado = tokens.doc_empleado WHERE empleados.email_empleado  = '{email}' AND empleados.contrasena='{cifrado}'"
     cursor.execute(bsql_emp)# ejecuto la consulta 
     resultado = cursor.fetchone()# agrego el resultado de la consulta a la variable resultado
     if resultado is not None:# hago una toma de desicion que donde la consulta resultado tenga dato o no esta vacia me haga el siguiente metodo
