@@ -154,7 +154,7 @@ def login():# hago la funcion de la ruta en este caso su nombre es login
     cursor.execute(bsql_emp)# ejecuto la consulta 
     resultado = cursor.fetchone()# agrego el resultado de la consulta a la variable resultado
     if resultado is not None:# hago una toma de desicion que donde la consulta resultado tenga dato o no esta vacia me haga el siguiente metodo
-        if resultado[5] == 'confirmado':# toma de desicion que se aplica en el caso de que el correo este confirmado 
+        if resultado[4] == 'confirmado':# toma de desicion que se aplica en el caso de que el correo este confirmado 
             session["email_empleado"] = email# Utilizo session para guardar la informacion de la persona ingresada
             session["doc_empleado"] = resultado[1]
             session["nom_empleado"] = resultado[2]
@@ -1211,7 +1211,7 @@ def crear_devolucion():
     if "email_empleado" in session:
         return render_template('devoluciones/registrar_devolucion.html')
 
-@app.route('/crear_devolucion', methods=['POST'])
+""" @app.route('/crear_devolucion', methods=['POST'])
 def crearDevoluciones():
     if "email_empleado" in session:
         email = session["email_empleado"]
@@ -1223,20 +1223,25 @@ def crearDevoluciones():
         documento_registro = resultado[0]
         nombre_operador = resultado[1]
         apellido_operador = resultado[2]
-        """ num_factura = request.form['num_factura'] """
+        documento_operador = resultado[3]
+        num_factura = request.form['num_factura']
         cliente_devolucion = request.form['cliente_devolucion']
-        bsqd = f"SELCT num_factura FROM ventas WHERE num_factura='{num_factura}'"
+        bsqd = f"SELCET num_factura FROM ventas WHERE num_factura='{num_factura}'"
         bsqd = f"SELECT doc_cliente FROM clientes WHERE doc_cliente='{cliente_devolucion}'"
+        bsqd = f"SELECT doc_empleado FROM empleados WHERE doc_empleado='{documento_operador}'"
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute(bsqd)
         resultado2 = cursor.fetchone()
+        resultado3 = cursor.fetchone()
+        print(resultado2)
         num_factura = request.form['num_factura']
         cliente_devolucion = resultado2[0]
+        documento_operador = resultado3[0]
         fecha_devolucion = request.form['fecha_devolucion']
-        datos_devoluciones = [num_factura,cliente_devolucion,documento_registro,nombre_operador,apellido_operador,fecha_devolucion,cliente_devolucion]
-        Cruddevoluciones.crear_devolucione([num_factura,cliente_devolucion,documento_registro,nombre_operador,apellido_operador,fecha_devolucion, cliente_devolucion])
-        return redirect('detalleCotizacion')
+        datos_devoluciones = [num_factura, cliente_devolucion, documento_registro, nombre_operador, apellido_operador, fecha_devolucion, cliente_devolucion]
+        Cruddevoluciones.crear_devolucion([num_factura, cliente_devolucion, documento_operador,nombre_operador,apellido_operador,fecha_devolucion, cliente_devolucion])
+        return redirect('muestraDevoluciones')
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
@@ -1249,6 +1254,55 @@ def borra_devolucion(id_devolucion):
         return redirect("/devolucion")
     else:
         flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home')) """
+
+@app.route('/crear_devolucion', methods=['POST'])
+def crearDevoluciones():
+    if "email_empleado" in session:
+        email = session["email_empleado"]
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        # Obtener los detalles del empleado
+        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
+        cursor.execute(bsq)
+        resultado = cursor.fetchone()
+
+        if resultado:
+            documento_registro = resultado[0]
+            nombre_operador = resultado[1]
+            apellido_operador = resultado[2]
+
+            # Obtener detalles del formulario
+            num_factura = request.form['num_factura']
+            cliente_devolucion = request.form['cliente_devolucion']
+            fecha_devolucion = request.form['fecha_devolucion']
+
+            # Verificar existencia de datos
+            bsqd_venta = f"SELECT num_factura FROM ventas WHERE num_factura='{num_factura}'"
+            cursor.execute(bsqd_venta)
+            resultado_venta = cursor.fetchone()
+
+            bsqd_cliente = f"SELECT doc_cliente FROM clientes WHERE doc_cliente='{cliente_devolucion}'"
+            cursor.execute(bsqd_cliente)
+            resultado_cliente = cursor.fetchone()
+
+            bsqd_empleado = f"SELECT doc_empleado FROM empleados WHERE doc_empleado='{documento_registro}'"
+            cursor.execute(bsqd_empleado)
+            resultado_empleado = cursor.fetchone()
+
+            if resultado_venta and resultado_cliente and resultado_empleado:
+                # Llamar a la función para crear la devolución
+                Cruddevoluciones.crear_devolucion([num_factura, cliente_devolucion, documento_registro, nombre_operador, apellido_operador, fecha_devolucion])
+                return redirect('muestraDevoluciones')
+            else:
+                flash('Algunos datos no existen en la base de datos')
+                return redirect(url_for('home'))
+        else:
+            flash('No se encontró el empleado en la base de datos')
+            return redirect(url_for('home'))
+    else:
+        flash('Por favor inicia sesión para poder acceder')
         return redirect(url_for('home'))
 
 
