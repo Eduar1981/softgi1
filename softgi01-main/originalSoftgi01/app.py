@@ -1,6 +1,6 @@
 from conexion import * #Importo la conexion de la base de datos y las funciones de flask, que en este caso se encuentra en el archivo conexion.py 
 
-
+bd = "mano" # es una prueba
 
 
 @app.route('/') # Inicio la ruta princimpla del programa en este caso home que me muestra como pagina principal un login
@@ -1447,8 +1447,6 @@ def atualizarDevolucion():
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
-    
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port="5090")
 
