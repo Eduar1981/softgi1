@@ -5,6 +5,7 @@ from email.mime.text import MIMEText
 import hashlib, smtplib, random, string, re, datetime, secrets
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature,BadSignature
 from email.message import EmailMessage
+from random import randint
 
 from proveedores import Proveedores
 from productos import Productos

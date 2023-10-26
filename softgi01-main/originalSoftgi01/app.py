@@ -1054,18 +1054,22 @@ def Registrar_compra_p():
         valor_unidad = request.form['valor_unidad']
         valor_total_unidad = (valor_unidad*cantidad_compra)
         estado = "ACTIVO"
-        tiempo_compra = datetime.datetime.now()                
+        tiempo_compra = datetime.datetime.now()
 
-        compras_prove.registrar_compra([proveedor_compra, documento_operador, nombre_operador, apellido_operador, tiempo_compra, estado])   # se incerta los datos en la primera tabla
+        lower = string.ascii_lowercase       
+        upper = string.ascii_uppercase # generador de codigo 
+        num = string.digits 
+        chars = lower + upper + num
+        codigo = random.sample(chars, 10)      
+        codigo_2 = codigo   # variable que guarda el codigo
+
+        compras_prove.registrar_compra([proveedor_compra, documento_operador, nombre_operador, apellido_operador, tiempo_compra, estado, codigo_2])   # se incerta los datos en la primera tabla
         
-        sql_tiempo = f"SELECT date_compra FROM comprasproveedores WHERE proveedor_compra = '{proveedor_compra}'"
-        cursor.execute(sql_tiempo)
-        tiempo1 = cursor.fetchall()
-        tiempo2 = tiempo1[0][0]
         
-        sql = f"SELECT num_compra FROM comprasproveedores WHERE date_compra = '{tiempo2}'"
+        
+        sql = f"SELECT num_compra FROM comprasproveedores WHERE codigo_tabla = '{codigo_2}'"
         cursor.execute(sql)
-        num_compra = cursor.fetchall()
+        num_compra = cursor.fetchall()   # consulta el numero de compra de acuerdo al  codigo de esa tabla
         num = num_compra[0][0]
         
         compras_prove.registrar_detalles_compra([num, producto_compra, cantidad_compra, valor_unidad, valor_total_unidad])   # se incerta los datos en la segunda tabla
@@ -1178,7 +1182,7 @@ def muestra_compra_proved():
 def muestra_detalles_com(num_compra):
     if "email_empleado" in session:
         
-        sql = f"SELECT `num_compra`,`detallenum_compra`, `producto_compra`, `cantidad_producto_compra`, `valorunidad_prodcompra`, `valortotal_cantidadcomp`, `totalpagar_compra` FROM `detallecomprasproveedores` INNER JOIN comprasproveedores ON comprasproveedores.num_compra = detallenum_compra WHERE num_compra = '{num_compra}'"
+        sql = f"SELECT `num_compra`,`detallenum_compra`, `producto_compra`, `cantidad_producto_compra`, `valorunidad_prodcompra`, `valortotal_cantidadcomp`, `totalpagar_compra` FROM `detallecomprasproveedores` WHERE num_compra = '{num_compra}'"
         conn = mysql.connect()
         cursor = conn.cursor()                  # muestra los detalles de compras a proveedores
         cursor.execute(sql)
