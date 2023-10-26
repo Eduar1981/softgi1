@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visaulización de clientes</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
     <link rel="stylesheet" href="../../static/css/muestraclientes.css">
 
 </head>
@@ -11,6 +12,11 @@
     <div>
         <h1>Clientes</h1>
     </div>
+    <form action="Busca_clientes" method="post" id="conten_busqueda">
+        <input type="search" placeholder="Buscar" aria-label="Search" name="dato_busqueda" id="buscador">
+        <button type="submit"><i class="lni lni-search-alt"></i></button>
+    </form>
+
     <div id="crear-prov">
         <a class="crear-prov" href="{{url_for('crearClientes')}}">Crear Clientes</a> 
     </div>
