@@ -667,7 +667,7 @@ def crearProducto():
 @app.route('/muestra_productos')
 def muestra_Productos():
     if "email_empleado" in session:
-        sql = "SELECT * FROM `productos` WHERE estado_producto ='ACTIVO'"           # consulta toda la informacion de productos.
+        sql = "SELECT  `id_producto`, `referencia_producto`, `categoria`, `proveedor`, `nombre_proveedor`, `nombre_producto`, `precio_compra`, `precio_venta`, `cantidad_producto`, `descripcion`, `stockminimo`, `ubicacion`, `estante`FROM `productos` WHERE estado_producto ='ACTIVO'"           # consulta toda la informacion de productos.
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -682,6 +682,20 @@ def muestra_Productos():
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))      
+    
+
+@app.route('/Busca_productos', methods=['POST'])
+def Busca_productos():
+    dato_busqueda = request.form['dato_busqueda']
+    sql = f"SELECT `id_producto`, `referencia_producto`, `categoria`, `proveedor`, `nombre_producto`, `precio_compra`, `precio_venta`, `cantidad_producto`, `descripcion`, `stockminimo`, `ubicacion`, `estante`, `estado_producto`, `nombre_proveedor` FROM `productos` WHERE estado_producto='activo' AND id_producto LIKE '%{dato_busqueda}%' OR estado_producto='activo' AND nombre_producto LIKE '%{dato_busqueda}%' OR estado_producto='activo' AND categoria LIKE '%{dato_busqueda}%' OR estado_producto='activo' AND 'descripcion' LIKE '%{dato_busqueda}'"
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)             # puede buscar por doc_empleado,nom_empleado y ape_empleado
+    resultado = cursor.fetchall()  
+    conn.commit()
+    return render_template("/productos/muestra_productos.html", resul=resultado)
+
+
 
 @app.route("/modificar_producto/<id_producto>")
 def editar_producto(id_producto):

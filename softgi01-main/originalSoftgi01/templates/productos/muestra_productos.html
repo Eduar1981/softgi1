@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muestra productos</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
     <link rel="stylesheet" href="../../static/css/muestra_productos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -11,6 +12,12 @@
 <body>
 
         <h1>Productos</h1>
+
+        <form action="Busca_productos" method="post" id="conten_busqueda">
+            <input type="search" placeholder="Buscar" aria-label="Search" name="dato_busqueda" id="buscador">
+            <button type="submit"><i class="lni lni-search-alt"></i></button>
+        </form>
+
     <div id="crear-producto">
         <a class="crear-producto" href="{{url_for('registrar_productos')}}">Crear Productos</a>
     </div>
@@ -23,7 +30,7 @@
                 <th>Referencia</th>
                 <th>Categoria</th>
                 <th>Documento proveedor</th>
-                <!-- <th>Nombre proveedor</th> -->
+                <th>Nombre proveedor</th>
                 <th>Nombre producto</th>
                 <th>Precio de venta</th>
                 <th>Precio de entrada</th>
@@ -40,7 +47,7 @@
         <tbody>
             {% for c in resul %}
                 <tr>
-                    {% for i in range(0,12) %}
+                    {% for i in range(0,13) %}
 
                         <td>{{c[i]}}</td>
 
