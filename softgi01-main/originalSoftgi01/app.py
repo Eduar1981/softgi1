@@ -1086,8 +1086,8 @@ def Registrar_compra_p():
         
         sql = f"SELECT num_compra FROM comprasproveedores WHERE codigo_tabla = '{codigo_2}'"
         cursor.execute(sql)
-        num_compra = cursor.fetchall()   # consulta el numero de compra de acuerdo al  codigo de esa tabla
-        num = num_compra[0][0]
+        num_compra = cursor.fetchone()   # consulta el numero de compra de acuerdo al  codigo de esa tabla
+        num = num_compra
         
         compras_prove.registrar_detalles_compra([num, producto_compra, cantidad_compra, valor_unidad, valor_total_unidad])   # se incerta los datos en la segunda tabla
         flash('¡Compra registrada con exito!')
