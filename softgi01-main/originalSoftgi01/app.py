@@ -1074,8 +1074,11 @@ def Registrar_compra_p():
         upper = string.ascii_uppercase # generador de codigo 
         num = string.digits 
         chars = lower + upper + num
-        codigo = random.sample(chars, 10)      
-        codigo_2 = codigo   # variable que guarda el codigo
+        codigo = random.sample(chars, 10)
+        codigo_2 = ""  # variable que guarda el codigo
+        for c in codigo:
+            codigo_2+=c
+        print(f"\n {codigo_2} \n")
 
         compras_prove.registrar_compra([proveedor_compra, documento_operador, nombre_operador, apellido_operador, tiempo_compra, estado, codigo_2])   # se incerta los datos en la primera tabla
         
@@ -1197,7 +1200,7 @@ def muestra_compra_proved():
 def muestra_detalles_com(num_compra):
     if "email_empleado" in session:
         
-        sql = f"SELECT `num_compra`,`detallenum_compra`, `producto_compra`, `cantidad_producto_compra`, `valorunidad_prodcompra`, `valortotal_cantidadcomp`, `totalpagar_compra` FROM `detallecomprasproveedores` WHERE num_compra = '{num_compra}'"
+        sql = f"SELECT `detallenum_compra`,`detallenum_compra`, `producto_compra`, `cantidad_producto_compra`, `valorunidad_prodcompra`, `valortotal_cantidadcomp`, `totalpagar_compra` FROM `detallecomprasproveedores` WHERE detallenum_compra = '{num_compra}'"
         conn = mysql.connect()
         cursor = conn.cursor()                  # muestra los detalles de compras a proveedores
         cursor.execute(sql)

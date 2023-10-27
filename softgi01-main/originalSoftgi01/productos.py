@@ -6,7 +6,7 @@ class Productos:
         self.cursor = self.conexion.cursor()
         
     def crearProductos(self, producto):
-        sql = F"INSERT INTO `productos`( `id_producto`, `referencia_producto`, `categoria`, `proveedor`, `nombre_producto`, `precio_compra`, `precio_venta`, `cantidad_producto`, `descripcion`, `stockminimo`, `ubicacion`, `estante`, `fechahora_registro`, `documento_operador`, `nombre_operador`, `apellido_operador`,`nombre_proveedor`, `estado_producto`) VALUES ('{producto[0]}','{producto[1]}','{producto[2]}','{producto[3]}','{producto[4]}','{producto[5]}','{producto[6]}','{producto[7]}','{producto[8]}','{producto[9]}','{producto[10]}', '{producto[11]}', '{producto[12]}', '{producto[13]}' , '{producto[14]}', '{producto[15]}','{producto[16]}', 'ACTIVO')"
+        sql = f"INSERT INTO `productos`( `id_producto`, `referencia_producto`, `categoria`, `proveedor`, `nombre_producto`, `precio_compra`, `precio_venta`, `cantidad_producto`, `descripcion`, `stockminimo`, `ubicacion`, `estante`, `fechahora_registro`, `documento_operador`, `nombre_operador`, `apellido_operador`,`nombre_proveedor`, `estado_producto`) VALUES ('{producto[0]}','{producto[1]}','{producto[2]}','{producto[3]}','{producto[4]}','{producto[5]}','{producto[6]}','{producto[7]}','{producto[8]}','{producto[9]}','{producto[10]}', '{producto[11]}', '{producto[12]}', '{producto[13]}' , '{producto[14]}', '{producto[15]}','{producto[16]}', 'ACTIVO')"
         self.cursor.execute(sql)
         self.conexion.commit() 
     
