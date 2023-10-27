@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de venta</title>
+</head>
+<body>
+    <table  class="content-table" id="tabla_productos">
+        <thead >
+            <tr>
+                <th>numero factura</th>
+                <th>producto factura </th>
+                <th>cantidad productos</th>
+                <th>precio producto</th>
+                <th>valor total productos</th>
+                <th>total pagar factura</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for c in resul %}
+            <tr>
+                {% for i in range(0,6) %}
+                    <td>{{c[i]}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
