@@ -1091,6 +1091,7 @@ def Registrar_compra_p():
         return redirect("/Regitra_compra_prov")
 
 
+
     else:
         flash('Por favor inicia sesion para poder acceder')
         return redirect(url_for('home'))
