@@ -1447,6 +1447,42 @@ def atualizarDevolucion():
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
+
+
+#-------------------------------------------------------- muestra ventas ----------------------------------------------------------------
+
+@app.route("/muestra_ventas")
+def muestra_ventas():
+    if "email_empleado" in session:
+        
+        sql = f"SELECT  `num_factura`,`cliente_factura`, `numero_cotizacion`, `operador_factura`, `fechahora_venta`, `forma_pago`, `medio_pago` FROM `ventas` ORDER BY num_factura DESC"
+        conn = mysql.connect()
+        cursor = conn.cursor()     #muestra toda la informacion
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        return render_template("/ventas/muestra_ventas.html",resul = resultado)
+    
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+    
+@app.route("/muestra_detalles_ventas/<num_factura>")
+def muestra_detalles_ventas(num_factura):
+    if "email_empleado" in session:
+        
+        sql = f"SELECT `num_factura_venta`, `producto_factura`, `cantidad_productos_factura`, `precio_productofactura`, `valortotal_productos_factura`, `total_pagar_factura` FROM `detalleventas` WHERE num_factura_venta = '{num_factura}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     #muestra toda la informacion de detalles
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        return render_template("/ventas/detalle_ventas.html",resul = resultado)
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port="5090")
 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muestra ventas</title>
+</head>
+<body>
+    <table  class="content-table" id="tabla_productos">
+        <thead >
+            <tr>
+                <th>numero factura</th>
+                <th>cliente </th>
+                <th>numero cotizacion</th>
+                <th>operador</th>
+                <th>fechahora venta</th>
+                <th>forma pago</th>
+                <th>medio pago</th>
+                <th>Direccion</th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for c in resul %}
+            <tr>
+                {% for i in range(0,8) %}
+                    <td>{{c[i]}}</td>
+                {% endfor %}
+                    <td>
+                        <a class="boton-editar" href="#/{{c[0]}}">Editar</a>
+                    </td>
+                    <td>
+                        <a class="boton-eliminar"  href="#/{{c[0]}}"><i class="lni lni-cross-circle"></i>Canceladar compra</a>
+                    </td>
+                    <td>
+                        <a href="/muestra_detalles_ventas/{{c[0]}}">Mas detalles</a>
+                    </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/index'">Regresar al Home</button>
+    </div>
+</body>
+</html>
