@@ -667,22 +667,20 @@ def crearProducto():
 @app.route('/muestra_productos')
 def muestra_Productos():
     if "email_empleado" in session:
-        sql = "SELECT  `id_producto`, `referencia_producto`, `categoria`, `proveedor`, `nombre_proveedor`, `nombre_producto`, `precio_compra`, `precio_venta`, `cantidad_producto`, `descripcion`, `stockminimo`, `ubicacion`, `estante`FROM `productos` WHERE estado_producto ='ACTIVO'"           # consulta toda la informacion de productos.
+        sql = "SELECT  p.referencia_producto, c.nom_categoria, p.proveedor, p.nombre_proveedor, p.nombre_producto, p.precio_compra, p.precio_venta, p.cantidad_producto, p.descripcion, p.stockminimo, p.ubicacion, p.estante FROM productos p JOIN categorias c ON p.categoria = c.id_categoria WHERE p.estado_producto ='ACTIVO';" # se realiza un join para la consulta, con la unión de la tabla categoría para obtener el nombre de la categoría en lugar de su ID.
         conn = mysql.connect()
         cursor = conn.cursor()
         cursor.execute(sql)
-        resultado = cursor.fetchall()  
+        resultado = cursor.fetchall()
         conn.commit()
         if (len(resultado) >= 1):
             return render_template("/productos/muestra_productos.html", resul=resultado)   # si hay resultados se muestran.
         else:
             resultado2 = "No hay productos registrados"
-            return render_template("/productos/muestra_productos.html", resul2=resultado2)
-    # sino se muestra el mensaje de resultado2.
+            return render_template("/productos/muestra_productos.html", resul2=resultado2)  # sino se muestra el mensaje de resultado2.
     else:
         flash('Algo está mal en los datos digitados')
-        return redirect(url_for('home'))      
-    
+        return redirect(url_for('home'))
 
 @app.route('/Busca_productos', methods=['POST'])
 def Busca_productos():
