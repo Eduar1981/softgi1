@@ -1231,51 +1231,6 @@ def crear_devolucion():
     if "email_empleado" in session:
         return render_template('devoluciones/registrar_devolucion.html')
 
-""" @app.route('/crear_devolucion', methods=['POST'])
-def crearDevoluciones():
-    if "email_empleado" in session:
-        email = session["email_empleado"]
-        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.execute(bsq)
-        resultado = cursor.fetchone()
-        documento_registro = resultado[0]
-        nombre_operador = resultado[1]
-        apellido_operador = resultado[2]
-        documento_operador = resultado[3]
-        num_factura = request.form['num_factura']
-        cliente_devolucion = request.form['cliente_devolucion']
-        bsqd = f"SELCET num_factura FROM ventas WHERE num_factura='{num_factura}'"
-        bsqd = f"SELECT doc_cliente FROM clientes WHERE doc_cliente='{cliente_devolucion}'"
-        bsqd = f"SELECT doc_empleado FROM empleados WHERE doc_empleado='{documento_operador}'"
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.execute(bsqd)
-        resultado2 = cursor.fetchone()
-        resultado3 = cursor.fetchone()
-        print(resultado2)
-        num_factura = request.form['num_factura']
-        cliente_devolucion = resultado2[0]
-        documento_operador = resultado3[0]
-        fecha_devolucion = request.form['fecha_devolucion']
-        datos_devoluciones = [num_factura, cliente_devolucion, documento_registro, nombre_operador, apellido_operador, fecha_devolucion, cliente_devolucion]
-        Cruddevoluciones.crear_devolucion([num_factura, cliente_devolucion, documento_operador,nombre_operador,apellido_operador,fecha_devolucion, cliente_devolucion])
-        return redirect('muestraDevoluciones')
-    else:
-        flash('Porfavor inicia sesion para poder acceder')
-        return redirect(url_for('home'))
-    
-#Borrar devolucion
-@app.route('/borrar_devolucion/<id_devolucion>')
-def borra_devolucion(id_devolucion):
-    if "email_empleado" in session:
-        Cruddevoluciones.borrar_devolucion(id_devolucion)                       
-        return redirect("/devolucion")
-    else:
-        flash('Algo está mal en los datos digitados')
-        return redirect(url_for('home')) """
-
 @app.route('/crear_devolucion', methods=['POST'])
 def crearDevoluciones():
     if "email_empleado" in session:
@@ -1478,9 +1433,6 @@ def muestra_ventas():
         resultado = cursor.fetchall()
         return render_template("/ventas/muestra_ventas.html",resul = resultado)
     
-    else:
-        flash('Porfavor inicia sesion para poder acceder')
-        return redirect(url_for('home'))
     
 @app.route("/muestra_detalles_ventas/<num_factura>")
 def muestra_detalles_ventas(num_factura):
