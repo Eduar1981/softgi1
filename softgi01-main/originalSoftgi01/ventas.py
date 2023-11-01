@@ -7,10 +7,10 @@ class Ventas:
         self.conexion = self.mysql.connect()
         self.cursor = self.conexion.cursor()
 
-    def crear_venta(self, num_factura, cliente_factura, numero_cotizacion, operador_factura, fechahora_venta, forma_pago, medio_pago, detalles):
+    def crear_venta(self, num_factura, cliente_factura, numero_cotizacion,documento_operador,fechahora_venta, forma_pago, medio_pago, detalles):
         # Crear una nueva venta en la tabla "VENTAS"
-        query_ventas = "INSERT INTO VENTAS (num_factura, cliente_factura, numero_cotizacion, operador_factura, fechahora_venta, forma_pago, medio_pago) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        valores_ventas = (num_factura, cliente_factura, numero_cotizacion, operador_factura, fechahora_venta, forma_pago, medio_pago)
+        query_ventas = "INSERT INTO VENTAS (num_factura, cliente_factura, numero_cotizacion, documento_operador, fechahora_venta, forma_pago, medio_pago) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        valores_ventas = (num_factura, cliente_factura, numero_cotizacion, documento_operador, fechahora_venta, forma_pago, medio_pago)
 
         try:
             self.cursor.execute(query_ventas, valores_ventas)
@@ -54,7 +54,7 @@ class Ventas:
     def obtener_ventas(self):
         # Obtener todas las ventas de la tabla "VENTAS" con sus detalles de "DETALLEVENTAS"
         query = """
-            SELECT VENTAS.num_factura, VENTAS.cliente_factura, VENTAS.numero_cotizacion, VENTAS.operador_factura, 
+            SELECT VENTAS.num_factura, VENTAS.cliente_factura, VENTAS.numero_cotizacion, VENTAS.documento_operador, 
             VENTAS.fechahora_venta, VENTAS.forma_pago, VENTAS.medio_pago, DETALLEVENTAS.num_factura_venta, 
             DETALLEVENTAS.producto_factura, DETALLEVENTAS.cantidad_productos_factura, DETALLEVENTAS.precio_productofactura, 
             DETALLEVENTAS.valortotal_productos_factura, DETALLEVENTAS.servicio_factura, DETALLEVENTAS.cantidad_servicios_factura, 
@@ -83,15 +83,15 @@ class Ventas:
         except Exception as e:
             return str(e)
         
-    def actualizar_venta(self, venta_id, num_factura, cliente_factura, numero_cotizacion, operador_factura, fechahora_venta, forma_pago, medio_pago, detalles):
+    def actualizar_venta(self, venta_id, num_factura, cliente_factura, numero_cotizacion, documento_operador, fechahora_venta, forma_pago, medio_pago, detalles):
         # Actualizar una venta en la tabla "VENTAS"
         query_ventas = """
             UPDATE VENTAS 
-            SET num_factura = %s, cliente_factura = %s, numero_cotizacion = %s, operador_factura = %s, 
+            SET num_factura = %s, cliente_factura = %s, numero_cotizacion = %s, documento_operador = %s, 
             fechahora_venta = %s, forma_pago = %s, medio_pago = %s 
             WHERE id = %s
         """
-        valores_ventas = (num_factura, cliente_factura, numero_cotizacion, operador_factura, fechahora_venta, forma_pago, medio_pago, venta_id)
+        valores_ventas = (num_factura, cliente_factura, numero_cotizacion, documento_operador, fechahora_venta, forma_pago, medio_pago, venta_id)
 
         try:
             self.cursor.execute(query_ventas, valores_ventas)
