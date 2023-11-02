@@ -1521,7 +1521,26 @@ def editarventa(num_factura):
         return redirect(url_for('home'))
 
 
+@app.route("/editarDetalleventas/<id_detalle_factura>")
+def editarDetalleventa(id_detalle_factura):
+    if "email_empleado" in session:
+        sql = f"SELECT * FROM `detalleventas` WHERE `id_detalle_factura` = '{id_detalle_factura}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()                                   
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        conn.commit()
+        return render_template("ventas/editar_detalle.html", resul=resultado[0])
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
+    
 
+@app.route('/borraDetalleventas/<id_detalle_factura>')
+def borraDetalleventas(id_detalle_factura):
+    if "email_empleado" in session:
+        Cruddevoluciones.eliminarDetalleventas(id_detalle_factura)                       
+        return redirect("/detallesventas")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port="5090")
