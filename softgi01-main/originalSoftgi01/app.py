@@ -1504,6 +1504,25 @@ def crearDevoluciones():
         flash('Por favor inicia sesión para poder acceder')
         return redirect(url_for('home'))
 
+@app.route("/modificar_venta/<num_factura>")
+def editarventa(num_factura):
+    if "email_empleado" in session:
+        sql = f"SELECT * FROM ventas WHERE num_factura = '{num_factura}'"
+        print(num_factura)
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        print(resultado)
+        conn.commit()
+        return render_template("ventas/editar_ventas.html", resul=resultado[0])
+    else:
+        flash('Algo está mal en los datos digitados')
+        return redirect(url_for('home'))
+
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port="5090")
 
