@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar venta</title>
+    
+</head>
+<body>
+    <main id="inicio">
+        <div>
+            <h2>CREAR VENTA</h2>
+        </div>
+        <div id="img-parabri">
+            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
+        </div>
+        <form action="/crear_venta" method="post" id="formu_venta">
+
+            <div class="campos">
+                <input type="number" name="num_factura" id="num_factura" placeholder="Numero de factura" class="campo">
+                <input type="text" name="cliente_factura" id="cliente_factura" placeholder="Documento del cliente" class="campo">
+
+                <input type="text" name="documento_operador" id="documento_operador" placeholder="Nombre del producto" class="campo">
+                <input type="number" name="fechahora_venta" id="fechahora_venta" placeholder="Cantidad a devolver" class="campo">
+
+                <input type="number" name="forma_pago" id="forma_pago" placeholder="Valor" class="campo">
+                <input type="text" name="medio_pago" id="medio_pago" placeholder="Motivo de la devolucion" class="campo" >
+            </div>
+            
+            <div>
+                <button type="submit">Guardar</button>
+            </div>
+
+        </form>
+    </main>
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/index'">Regresar  al Home</button>
+    </div>
+</body>
+</html>
