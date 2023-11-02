@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar detalle venta</title>
+    
+</head>
+<body>
+    <main id="inicio">
+        <div>
+            <h2>Editar detalle de venta</h2>
+        </div>
+        <div id="img-parabri">
+            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
+        </div>
+        <form action="/editarDetalleventas" method="post" id="formu-detalle-venta">
+            <div class="campos">
+                <input type="text" name="id" id="id" class="campo" value="{{resul[0]}}">
+                
+                <input type="number" name="num_factura" id="num_factura" class="campo" value="{{resul[1]}}">
+                <input type="text" name="producto_factura" id="producto_factura" class="campo" value="{{resul[2]}}">
+
+                <input type="number" name="cantidad_productos_factura" id="cantidad_productos_factura" class="campo" value="{{resul[3]}}">
+                <input type="number" name="precio_productofactura" id="precio_productofactura" class="campo" value="{{resul[4]}}">
+                
+                <input type="text" name="precio_serviciofactura" id="precio_serviciofactura" class="campo" value="{{resul[5]}}">
+                <input type="number" name="total_pagar_factura" id="total_pagar_factura" class="campo" value="{{resul[6]}}">
+            </div>
+            <div id="boton-atras">
+
+                <input type="submit" value="Registrar" class="boton-atras">
+            </div>
+            <div id="boton-atras">
+                <button class="boton-atras" onclick="window.location.href='/index'">Regresar al Home</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
