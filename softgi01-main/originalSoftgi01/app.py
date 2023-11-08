@@ -1450,13 +1450,13 @@ def muestra_detalles_ventas(num_factura):
         return redirect(url_for('home'))
 
 #registro de venta
-@app.route("/crear_venta")
-def crear_ventas():
+@app.route("/verCrear_ventas")
+def verCrear_ventas():
     if "email_empleado" in session:
         return render_template('ventas/registrar_venta.html')
 
 @app.route('/crear_venta', methods=['POST'])
-def crearDevoluciones():
+def crear_venta():
     if "email_empleado" in session:
         email = session["email_empleado"]
         conn = mysql.connect()
