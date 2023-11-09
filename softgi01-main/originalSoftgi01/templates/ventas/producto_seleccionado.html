@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/verCrear_ventas">Regresar</a>
+
+    <br>
+    <!-- muestra el nombre del producto que seleccione -->
+    <h1>Producto seleccionado: {{nom_p[0]}}</h1> 
+    <br>
+
+    <!-- Formulario para enviar la cantidad a vender -->
+    <form action="/confirma_p_seleccionado" methobd="post">
+
+        <input type="hidden" name="id_producto" placeholder="Codigo del producto" value="{{id_p}}" required>
+        <input type="hidden" name="nombre_producto" value="{{nom_p[0]}}">
+        <input type="hidden" name="precio_unidad" value="{{nom_p[1]}}">     <!-- estos 4 inputs estan ocultos -->
+        <input type="hidden" name="Stock_disponible" value="{{nom_p[2]}}">
+
+        <!-- El usuario solo digita este input -->
+        <input type="number" name="cantidad_digitada" placeholder="Digite la cantidad a vender" required> 
+
+        <button type="submit">Realizar</button>
+
+    </form>
+
+</body>
+</html>

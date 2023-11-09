@@ -7,34 +7,85 @@
     
 </head>
 <body>
-    <main id="inicio">
-        <div>
-            <h2>CREAR VENTA</h2>
-        </div>
-        <div id="img-parabri">
-            <img src="../../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" alt="logo-fondo-parabrisas-sin-fondo" id="logo">
-        </div>
-        <form action="/crear_venta" method="post" id="formu_venta">
 
-            <div class="campos">
-                <input type="number" name="num_factura" id="num_factura" placeholder="Numero de factura" class="campo">
-                <input type="text" name="cliente_factura" id="cliente_factura" placeholder="Documento del cliente" class="campo">
 
-                <input type="text" name="documento_operador" id="documento_operador" placeholder="Nombre del producto" class="campo">
-                <input type="number" name="fechahora_venta" id="fechahora_venta" placeholder="Cantidad a devolver" class="campo">
+    <!-- Realiza la busqueda de un producto del inventario -->
+    <form action="/Busca_produc_ven" method="post" id="conten_busqueda">
+        <input type="search" placeholder="Busca productos por codigo o nombre" aria-label="Search" name="id_nombre" id="buscador">
+        <button type="submit">Buscar</button>
+    </form>
 
-                <input type="number" name="forma_pago" id="forma_pago" placeholder="Valor" class="campo">
-                <input type="text" name="medio_pago" id="medio_pago" placeholder="Motivo de la devolucion" class="campo" >
-            </div>
-            
-            <div>
-                <button type="submit">Guardar</button>
-            </div>
+    <div><!-- tabla que muestra todos los productos del inventario -->
+        <table>
+            <thead >
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre producto </th>
+                    <th>Precio unitario</th>
+                    <th>Stock disponible</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
 
-        </form>
-    </main>
-    <div id="boton-atras">
-        <button class="boton-atras" onclick="window.location.href='/index'">Regresar  al Home</button>
+            <tbody>         
+                {% for c in prod %}
+                <tr>
+                    {% for i in range(0,4) %}
+                        <td>{{c[i]}}</td>
+                    {% endfor %}
+                        <td>
+                            <a href="/m_selector_cantidad_p/{{c[0]}}">Seleccionar cantidad</a>
+                        </td>
+                        <td>
+                            <a href="/selector_una_cantidad/{{c[0]}}">Adquirir</a>
+                        </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+
+    <br>
+
+    <div><!-- Formulario para realizar la venta de los productos -->
+
+    </div>
+
+    <br>
+
+
+
+    <div><!-- Tabla que muestra los productos seleccionados para la venta -->
+        <table>
+            <thead >
+                <tr>
+                    <th>Nombre producto </th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad adquirida</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>         
+                {% for c in prod_carr %}
+                <tr>
+                    {% for i in range(1,5) %}
+                        <td>{{c[i]}}</td>
+                    {% endfor %}
+                        <td>
+                            <a href="#/{{c[0]}}">Eliminar</a>
+                        </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h1>$ {{Total}}</h1>
+    </div>
+
+
 </body>
 </html>
