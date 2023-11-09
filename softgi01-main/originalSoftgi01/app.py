@@ -1454,6 +1454,7 @@ def muestra_detalles_ventas(num_factura):
 
 
 
+
 #---------------------------------------- Selector de 1 cantidad solo producto para Ventas -------------------------------------------
 @app.route("/selector_una_cantidad/<id_producto>")
 def selector_una_cantidad(id_producto):
@@ -1600,6 +1601,9 @@ def Busca_produc_ven():
 def verCrear_ventas():
     if "email_empleado" in session:
 
+        # Muestra el documento del operador
+        documento_operador = session["doc_empleado"]
+
         # consulta los productos del inventario
         sql = "SELECT `id_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
         conn = mysql.connect()
@@ -1626,7 +1630,7 @@ def verCrear_ventas():
 
 
         # muestra el HTML registrar_venta
-        return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = Suma_total) 
+        return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = Suma_total, operador = documento_operador) 
     
 
     else:

@@ -50,6 +50,35 @@
 
     <div><!-- Formulario para realizar la venta de los productos -->
 
+        <form action="#" method="post">
+            
+            <input type="number" name="doc_operador" placeholder="Cedula del operador"  required> 
+
+            <input type="number" name="doc_cliente" placeholder="Cedula del Cliente"  required>
+
+            <!-- Forma de pago -->
+            <select name="forma_de_pago">
+
+                
+                <option value="efectivo">Efectivo</option>
+                <option value="Nequi">Nequi</option>
+                <option value="Daviplata">Daviplata</option>
+                <option value="Bancolombia">Bancolombia</option>
+                <option value="Tarjeta debito">Tarjeta debito</option>
+                <option value="Tarjeta credito">Tarjeta credito</option>
+
+            </select>
+
+            <!-- Tipo de venta -->
+            <select name="tipo_de_venta">
+
+                <option value="venta">Venta</option>
+                <option value="venta_credito">Venta a credito</option>
+
+            </select>
+
+        </form>
+
     </div>
 
     <br>
