@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Productos</h1>
+
+        <form action="Busca_productos" method="post" id="conten_busqueda">
+            <input type="search" placeholder="Buscar" aria-label="Search" name="dato_busqueda" id="buscador">
+            <button type="submit"><i class="lni lni-search-alt"></i></button>
+        </form>
+
+    <div id="crear-producto">
+        <a class="crear-producto" href="{{url_for('registrar_productos')}}">Crear Productos</a>
+    </div>
+
+
+    <table class="content-table" id="tabla_productos">
+        <thead >
+            <tr>
+                <!-- <th>Id producto</th> -->
+                <th>Referencia</th>
+                <th>Categoria</th>
+                <th>Documento proveedor</th>
+                <th>Nombre proveedor</th>
+                <th>Nombre producto</th>
+                <th>Precio de venta</th>
+                <th>Precio de entrada</th>
+                <th>Cantidad</th>
+                <th>Descripción</th>
+                <th>Stock mínimo</th>
+                <th>Ubicación</th>
+                <th>Estante</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in resul %}
+                <tr>
+                    {% for i in range(0,13) %}
+
+                        <td>{{c[i]}}</td>
+
+                    {% endfor %}
+                        <td></td>
+                        <!-- <td>
+                            <a class="boton-editar" href="/modificar_producto/{{c[0]}}" >Editar</a>
+                        </td>
+
+                        <td>
+                            <a class="boton-eliminar" onclick="return confirm('Seguro que deseas eliminar el producto?')" href="/borra_produc/{{c[0]}}">Eliminar</a>
+                        </td> -->
+
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/index'">Regresar al Home</button>
+    </div>
+
+</body>
+</html>
