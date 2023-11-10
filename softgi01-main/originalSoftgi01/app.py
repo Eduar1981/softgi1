@@ -1455,6 +1455,123 @@ def muestra_detalles_ventas(num_factura):
 
 
 
+
+
+
+
+
+#----------------------------------------------- <<<< REALIZA LA VENTA >>> --------------------------------------------------
+
+@app.route("/confirma_venta", methods = ['POST'])
+def confirma_venta():
+    if "email_empleado" in session:
+
+#-------------------------------------------- informacion por si hay un error -----------
+
+        # Muestra el documento del operador
+        documento_operador = session["doc_empleado"]
+
+        # consulta los productos del inventario
+        sql = "SELECT `id_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        productos_inven = cursor.fetchall()
+        conn.commit()
+
+        # consulta los productos seleccionados para venta
+        sql = "SELECT `id_producto`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total` FROM `carritoventas`"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        productos_carr = cursor.fetchall()
+        conn.commit()
+
+        # Realiza la suma de el total de todos los productos seleccionados
+        sql = "SELECT SUM(total) FROM carritoventas"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql) 
+        Suma_total = cursor.fetchall()
+        conn.commit()
+
+#--------------------------------------------------------------------
+
+        # valido si hay productos o no
+        sql = f"SELECT `id_producto` FROM carritoventas"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        busqueda = cursor.fetchall()
+        conn.commit()
+
+        # 1 - valido que la venta no este vacia - 
+        if ((len(busqueda)) > 0):
+
+            # recibo la info del FRONT-END
+            doc_operador = request.form['doc_operador']
+            doc_cliente = request.form['doc_cliente']
+            forma_de_pago = request.form['forma_de_pago']
+            tipo_de_venta = request.form['tipo_de_venta']
+
+            # consulto info del operador
+            sql = f"SELECT * FROM `empleados` WHERE doc_empleado = '{doc_operador}'"
+            conn = mysql.connect()
+            cursor = conn.cursor()     
+            cursor.execute(sql)
+            info_operador = cursor.fetchall()
+            conn.commit()
+
+            # 2 - valido que el operador exista
+            if ((len(info_operador)) > 0):
+
+                # consulto info cliente
+                sql = f"SELECT * FROM `clientes` WHERE estado_cliente = 'ACTIVO' AND doc_cliente = '{doc_cliente}'"
+                conn = mysql.connect()
+                cursor = conn.cursor()     
+                cursor.execute(sql)
+                info_cliente = cursor.fetchall()
+                conn.commit()
+
+                # 3 - valido que el cliente exista
+                if ((len(info_cliente)) > 0):
+
+
+
+                    # 4 ----------- Validacion tipo de venta --------------
+                    if (tipo_de_venta == "venta_normal"):
+                        print(" aqui viene la venta NORMAL ")
+                    # 4
+                    else:
+                        print(" aqui viene la venta a CREDITO ")
+
+
+
+
+                # 3
+                else:
+                    mensaje_error = "¡El cliente no existe en la base de datos!"
+                    return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = Suma_total, operador = documento_operador, mensaje = mensaje_error) 
+
+            # 2
+            else:
+                mensaje_error = "¡Identificacion del operador invalida!"
+                return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = Suma_total, operador = documento_operador, mensaje = mensaje_error) 
+        #  1 
+        else:
+            # envio mensaje del error
+            mensaje_error = "¡No hay productos seleccionados!"
+            # muestra el HTML registrar_venta
+            return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = Suma_total, operador = documento_operador, mensaje = mensaje_error) 
+        
+
+
+        
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
 #---------------------------------------- Elimina Todos los productos seleccionados -------------------------------------------
 @app.route("/elimina_todo_seleccionado_p")
 def elimina_todo_seleccionado_p():
