@@ -1529,6 +1529,11 @@ def confirma_p_seleccionado():
         stock_disponible = request.form['Stock_disponible']
         cantidad_digitada = request.form['cantidad_digitada']
 
+        # covierto los valores de texto a numeros 
+        precio_unidad = float(precio_unidad)
+        stock_disponible = int(stock_disponible)
+        cantidad_digitada = int(cantidad_digitada)
+
         # Saco el total a pagar por la catidad digitada
         total = (precio_unidad * cantidad_digitada)
 
@@ -1624,7 +1629,7 @@ def verCrear_ventas():
         sql = "SELECT SUM(total) FROM carritoventas"
         conn = mysql.connect()
         cursor = conn.cursor()     
-        cursor.execute(sql)
+        cursor.execute(sql) 
         Suma_total = cursor.fetchall()
         conn.commit()
 
