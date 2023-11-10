@@ -1455,6 +1455,153 @@ def muestra_detalles_ventas(num_factura):
 
 
 
+#---------------------------------------- Elimina Todos los productos seleccionados -------------------------------------------
+@app.route("/elimina_todo_seleccionado_p")
+def elimina_todo_seleccionado_p():
+    if "email_empleado" in session:
+
+        # consulto todos los id_productos de carrito_ventas
+        sql = "SELECT `id_producto` FROM `carritoventas`"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        id_productos = cursor.fetchall()
+        conn.commit()
+
+        # saco la consulta de [[]] 2 listas a una sola []
+        id_productos_2 = id_productos[0]
+
+        # realizo el FOR que elimine uno por uno
+        for i in id_productos_2:
+
+            # consulto el stock disponible que tiene el producto 
+            sql = f"SELECT `cantidad_producto` FROM `productos` WHERE id_producto = '{i}'"
+            conn = mysql.connect()
+            cursor = conn.cursor()     
+            cursor.execute(sql)
+            stock_disponible = cursor.fetchall()
+            conn.commit()
+
+            # consulto la cantidad seleccionada del producto en el carrito ventas
+            sql = f"SELECT `cantidad_adquirida` FROM `carritoventas` WHERE id_producto = '{i}'"
+            conn = mysql.connect()
+            cursor = conn.cursor()     
+            cursor.execute(sql)
+            cantidad_adquirida = cursor.fetchall()
+            conn.commit()
+
+            # sumo al stock disponible la cantidad que adquirida
+            stock_disponible = (stock_disponible[0][0] + cantidad_adquirida[0][0])
+
+            # inserto el nuevo stock en la base de datos
+            sql = f"UPDATE `productos` SET `cantidad_producto`='{stock_disponible}' WHERE id_producto = '{i}'"
+            conn = mysql.connect()
+            cursor = conn.cursor()     
+            cursor.execute(sql)
+            conn.commit()
+
+            # borro el producto seleccionado de la tabla carrito_ventas
+            sql = f"DELETE FROM `carritoventas` WHERE id_producto = '{i}'"
+            conn = mysql.connect()
+            cursor = conn.cursor()     
+            cursor.execute(sql)
+            conn.commit()
+
+        return redirect("/verCrear_ventas")
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+    
+
+
+#---------------------------------------- Selector de 1 cantidad solo producto para Ventas -------------------------------------------
+@app.route("/selector_una_cantidad/<id_producto>")
+def selector_una_cantidad(id_producto):
+    if "email_empleado" in session:
+
+        cantidad_adquirida = 1
+
+        # consulto la informacion del producto
+        sql = f"SELECT `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE id_producto = '{id_producto}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        info_producto = cursor.fetchall()
+        conn.commit()
+
+        # saco la consulta de [[]] 2 listas a una sola []
+        info_producto_2 = info_producto[0] 
+
+        # actualizo el stock disponible del producto
+        stock_disponible = (info_producto_2[2] - cantidad_adquirida)
+        sql = f"UPDATE `productos` SET `cantidad_producto` = '{stock_disponible}' WHERE id_producto = '{id_producto}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        conn.commit()
+
+        # inserto los datos en la tabla Carrito ventas
+        sql = f"INSERT INTO `carritoventas`(`id_producto`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total`) VALUES ('{id_producto}','{info_producto_2[0]}','{info_producto_2[1]}','{cantidad_adquirida}','{info_producto_2[1]}')"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        conn.commit()
+
+
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+#---------------------------------------- Elimina productos 1 por 1 seleccionados -------------------------------------------
+@app.route("/elimina_p_select/<id_producto>")
+def elimina_p_select(id_producto):
+    if "email_empleado" in session:
+
+        # consulto el stock disponible que tiene el producto 
+        sql = f"SELECT `cantidad_producto` FROM `productos` WHERE id_producto = '{id_producto}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        stock_disponible = cursor.fetchall()
+        conn.commit()
+
+        # consulto la cantidad seleccionada del producto en el carrito ventas
+        sql = f"SELECT `cantidad_adquirida` FROM `carritoventas` WHERE id_producto = '{id_producto}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        cantidad_adquirida = cursor.fetchall()
+        conn.commit()
+
+        # sumo al stock disponible la cantidad que adquirida
+        stock_disponible = (stock_disponible[0][0] + cantidad_adquirida[0][0])
+
+        # inserto el nuevo stock en la base de datos
+        sql = f"UPDATE `productos` SET `cantidad_producto`='{stock_disponible}' WHERE id_producto = '{id_producto}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        conn.commit()
+
+        # borro el producto seleccionado de la tabla carrito_ventas
+        sql = f"DELETE FROM `carritoventas` WHERE id_producto = '{id_producto}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     
+        cursor.execute(sql)
+        conn.commit()
+
+        return redirect("/verCrear_ventas")
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+    
+
+
 #---------------------------------------- Selector de 1 cantidad solo producto para Ventas -------------------------------------------
 @app.route("/selector_una_cantidad/<id_producto>")
 def selector_una_cantidad(id_producto):

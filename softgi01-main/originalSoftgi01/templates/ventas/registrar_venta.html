@@ -103,12 +103,17 @@
                         <td>{{c[i]}}</td>
                     {% endfor %}
                         <td>
-                            <a href="#/{{c[0]}}">Eliminar</a>
+                            <a href="/elimina_p_select/{{c[0]}}">Eliminar</a>
                         </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+
+    <!-- Boton que elimina todos los productos del carrito de ventas -->
+    <div>
+        <a href="/elimina_todo_seleccionado_p">Vaciar carrito de ventas</a>
     </div>
 
     <div>
