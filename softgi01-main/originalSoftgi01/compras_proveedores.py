@@ -13,7 +13,7 @@ class Compras_proved:
         self.conexion.commit()
         
     def registrar_detalles_compra(self,datos_compra):
-        sql = f"INSERT INTO detallecomprasproveedores (num_compra, producto_compra, cantidad_producto_compra, valorunidad_prodcompra, valortotal_cantidadcomp) VALUES ('{datos_compra[0]}','{datos_compra[1]}','{datos_compra[2]}','{datos_compra[3]}','{datos_compra[4]}')"
+        sql = f"INSERT INTO detallecomprasproveedores (detallenum_compra, producto_compra, cantidad_producto_compra, valorunidad_prodcompra, valortotal_cantidadcomp) VALUES ('{datos_compra[0]}','{datos_compra[1]}','{datos_compra[2]}','{datos_compra[3]}','{datos_compra[4]}')"
         self.cursor.execute(sql)
         self.conexion.commit()
 

@@ -14,7 +14,7 @@
     <br>
 
     <!-- Formulario para enviar la cantidad a vender -->
-    <form action="/confirma_p_seleccionado" methobd="post">
+    <form action="/confirma_p_seleccionado" method="post">
 
         <input type="hidden" name="id_producto" placeholder="Codigo del producto" value="{{id_p}}" required>
         <input type="hidden" name="nombre_producto" value="{{nom_p[0]}}">
@@ -27,6 +27,11 @@
         <button type="submit">Realizar</button>
 
     </form>
+
+    <!-- muestra el menaje de error -->
+    <div>
+        <p>{{mensaje_Error}}</p>
+    </div>
 
 </body>
 </html>

@@ -8,19 +8,16 @@
 </head>
 <body>
 
-    <h1>Ventas</h1>
+    <h1>Historial de ventas</h1>
    
     <table  class="content-table" id="tabla_ventas">
         <thead >
             <tr>
-                <th>numero factura</th>
-                <th>cliente </th>
-                <th>numero cotizacion</th>
-                <th>operador</th>
-                <th>fechahora venta</th>
-                <th>forma pago</th>
-                <th>medio pago</th>
-                <th>Direccion</th>
+                <th>Numero factura</th>
+                <th> C.C cliente</th>
+                <th>Vendedor</th>
+                <th>Fecha de  venta</th>
+                <th>Forma de pago</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -31,15 +28,9 @@
         <tbody>
             {% for c in resul %}
             <tr>
-                {% for i in range(0,8) %}
+                {% for i in range(0,5) %}
                     <td>{{c[i]}}</td>
                 {% endfor %}
-                    <td>
-                        <a class="boton-editar" href="#/{{c[0]}}">Editar</a>
-                    </td>
-                    <td>
-                        <a class="boton-eliminar"  href="#/{{c[0]}}"><i class="lni lni-cross-circle"></i>Canceladar compra</a>
-                    </td>
                     <td>
                         <a href="/muestra_detalles_ventas/{{c[0]}}">Mas detalles</a>
                     </td>

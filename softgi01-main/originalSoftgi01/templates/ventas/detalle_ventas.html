@@ -6,22 +6,26 @@
     <title>Detalle de venta</title>
 </head>
 <body>
+    <div>
+        <a href="/muestra_ventas">Regresar</a>
+    </div>
+
+    <br>
+
     <table  class="content-table" id="tabla_productos">
         <thead >
             <tr>
-                <th>numero factura</th>
-                <th>producto factura </th>
-                <th>cantidad productos</th>
-                <th>precio producto</th>
-                <th>valor total productos</th>
-                <th>total pagar factura</th>
+                <th>Numero factura</th>
+                <th>Productos </th>
+                <th>Cantidad Total</th>
+                <th>Total pagado</th>
             </tr>
         </thead>
 
         <tbody>
             {% for c in resul %}
             <tr>
-                {% for i in range(0,5) %}
+                {% for i in range(0,4) %}
                     <td>{{c[i]}}</td>
                 {% endfor %}
             </tr>

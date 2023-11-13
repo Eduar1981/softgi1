@@ -52,7 +52,7 @@
 
         <form action="#" method="post">
             
-            <input type="number" name="doc_operador" placeholder="Cedula del operador"  required> 
+            <input type="number" name="doc_operador" placeholder="Cedula del operador" value="{{operador}}"  required> 
 
             <input type="number" name="doc_cliente" placeholder="Cedula del Cliente"  required>
 
@@ -77,11 +77,15 @@
 
             </select>
 
+            <button type="submit">Registrar venta</button>
+
         </form>
 
     </div>
-    <div>
+
+    <div><!-- mensajes del sistema -->
         <p>{{mensaje}}</p>
+        <p>{{mensaje_2}}</p>
     </div>
 
     <br>
@@ -119,8 +123,9 @@
         <a href="/elimina_todo_seleccionado_p">Vaciar carrito de ventas</a>
     </div>
 
+    <!-- Suma total a pagar -->
     <div>
-        <h1>$ {{Total[0][0]}}</h1>
+        <h1>$ {{Total}}</h1>
     </div>
 
 
