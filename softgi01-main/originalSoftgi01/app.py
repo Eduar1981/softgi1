@@ -1428,7 +1428,7 @@ def atualizarDevolucion():
 def muestra_ventas():
     if "email_empleado" in session:
         
-        sql = "SELECT  `num_factura`, `cliente_factura`, `operador_factura`, `fechahora_venta`, `forma_pago` FROM `ventas` ORDER BY num_factura DESC"
+        sql = "SELECT  `num_factura`, `cliente_factura`, `documento_operador`, `nombre_operador`, `apellido_operador`, `fechahora_venta`, `forma_pago` FROM `ventas` ORDER BY num_factura DESC"
         conn = mysql.connect()
         cursor = conn.cursor()     
         cursor.execute(sql)

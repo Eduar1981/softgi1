@@ -15,7 +15,9 @@
             <tr>
                 <th>Numero factura</th>
                 <th> C.C cliente</th>
-                <th>Vendedor</th>
+                <th>c.c operador</th>
+                <th>Nombre operador</th>
+                <th>Apellido operador</th>
                 <th>Fecha de  venta</th>
                 <th>Forma de pago</th>
                 <th></th>
@@ -28,7 +30,7 @@
         <tbody>
             {% for c in resul %}
             <tr>
-                {% for i in range(0,5) %}
+                {% for i in range(0,7) %}
                     <td>{{c[i]}}</td>
                 {% endfor %}
                     <td>
