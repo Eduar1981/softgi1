@@ -8,7 +8,7 @@ class Ventas:
     # ----------------------------------------- VENTAS NORMALES -------------------------------------------------
 
     def crear_venta(self, venta):
-        sql = f"INSERT INTO `ventas`(`cliente_factura`,`operador_factura`, `fechahora_venta`, `forma_pago`, `codigo_tabla`) VALUES ('{venta[0]}','{venta[1]}','{venta[2]}','{venta[3]}','{venta[4]}')"
+        sql = f"INSERT INTO `ventas`(`cliente_factura`,`documento_operador`, `fechahora_venta`, `forma_pago`, `codigo_tabla`, `nombre_operador`, `apellido_operador`) VALUES ('{venta[0]}','{venta[1]}','{venta[2]}','{venta[3]}','{venta[4]}','{venta[5]}','{venta[6]}')"
         self.cursor.execute(sql)
         self.conexion.commit()
 
