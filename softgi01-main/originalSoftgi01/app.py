@@ -386,7 +386,7 @@ def buscar_cliente():
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM clientes WHERE estado_cliente='ACTIVO' AND nom_cliente LIKE %s", (f"%{busqueda}%",))
-   #buscador de clientes
+    #buscador de clientes
             resultados = cursor.fetchall()
             conn.close()
             return render_template('clientes/muestraclientes.html', resulta=resultados) # Envía los resultados al mismo formulario de registroclientes.html
@@ -2083,99 +2083,35 @@ def verCrear_ventas():
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
 
-
-#----------------------------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-""" @app.route('/crear_venta', methods=['POST'])
-def crear_venta():
+#--------------------------------carrito ventas--------------------------------
+@app.route("/ventas_credito")
+def credito_mostrar():
     if "email_empleado" in session:
-        email = session["email_empleado"]
-        conn = mysql.connect()
-        cursor = conn.cursor()
-
-        # Obtener los detalles del empleado
-        bsq = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado` FROM empleados WHERE email_empleado='{email}'"
-        cursor.execute(bsq)
-        resultado = cursor.fetchone()
-
-        if resultado:
-            documento_registro = resultado[0]
-            nombre_operador = resultado[1]
-            apellido_operador = resultado[2]
-
-            # Obtener detalles del formulario
-            num_factura = request.form['num_factura']
-            cliente_devolucion = request.form['cliente_devolucion']
-            fecha_devolucion = request.form['fecha_devolucion']
-
-            # Verificar existencia de datos
-            bsqd_venta = f"SELECT num_factura FROM ventas WHERE num_factura='{num_factura}'"
-            cursor.execute(bsqd_venta)
-            resultado_venta = cursor.fetchone()
-
-            bsqd_cliente = f"SELECT doc_cliente FROM clientes WHERE doc_cliente='{cliente_devolucion}'"
-            cursor.execute(bsqd_cliente)
-            resultado_cliente = cursor.fetchone()
-
-            bsqd_empleado = f"SELECT doc_empleado FROM empleados WHERE doc_empleado='{documento_registro}'"
-            cursor.execute(bsqd_empleado)
-            resultado_empleado = cursor.fetchone()
-
-            if resultado_venta and resultado_cliente and resultado_empleado:
-                # Llamar a la función para crear la devolución
-                Cruddevoluciones.crear_venta([num_factura, cliente_devolucion, documento_registro, nombre_operador, apellido_operador, fecha_devolucion])
-                return redirect('muestra_ventas')
-            else:
-                flash('Algunos datos no existen en la base de datos')
-                return redirect(url_for('home'))
-        else:
-            flash('No se encontró el empleado en la base de datos')
-            return redirect(url_for('home'))
-    else:
-        flash('Por favor inicia sesión para poder acceder')
-        return redirect(url_for('home'))
-
-@app.route("/modificar_venta/<num_factura>")
-def editarventa(num_factura):
-    if "email_empleado" in session:
-        sql = f"SELECT * FROM ventas WHERE num_factura = '{num_factura}'"
-        print(num_factura)
+        sql= "SELECT contador, cliente, productos, credito_total, credito_restante, operador, fecha_venta FROM ventas_credito;"
         conn = mysql.connect()
         cursor = conn.cursor()     
-        cursor.execute(sql)
-        resultado = cursor.fetchall()
-        print(resultado)
+        cursor.execute(sql) 
+        contador = cursor.fetchall()
         conn.commit()
-        return render_template("ventas/editar_ventas.html", resul=resultado[0])
-    else:
-        flash('Algo está mal en los datos digitados')
-        return redirect(url_for('home'))
+    return
 
 
-@app.route("/editarDetalleventas/<id_detalle_factura>")
-def editarDetalleventa(id_detalle_factura):
+@app.route("/historial_credito")
+def historial():
     if "email_empleado" in session:
-        sql = f"SELECT * FROM `detalleventas` WHERE `id_detalle_factura` = '{id_detalle_factura}'"
+        sql= "SELECT contador, contador_ventacredito, abono, operador, fecha_abono FROM historial_credito"
         conn = mysql.connect()
-        cursor = conn.cursor()                                   
-        cursor.execute(sql)
-        resultado = cursor.fetchall()
+        cursor = conn.cursor()     
+        cursor.execute(sql) 
+        contador = cursor.fetchall()
         conn.commit()
-        return render_template("ventas/editar_detalle.html", resul=resultado[0])
-    else:
-        flash('Algo está mal en los datos digitados')
-        return redirect(url_for('home'))
-    
+
 
 @app.route('/borraDetalleventas/<id_detalle_factura>')
 def borraDetalleventas(id_detalle_factura):
     if "email_empleado" in session:
         Cruddevoluciones.eliminarDetalleventas(id_detalle_factura)                       
-        return redirect("/detallesventas") """
+        return redirect("/detallesventas") 
 """ ======================= Buscadores ============================= """
 
 @app.route('/buscarProvedores', methods=['POST', 'GET'])
@@ -2194,6 +2130,10 @@ def buscarProvedores():
         return render_template('provedor/buscarProvedor.html', results=results)
 
     return render_template('provedor/buscarProvedor.html')
+
+
+
+
 
 
 
