@@ -3,46 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <title>Login</title>
+
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/login.css">
 </head>
 <body>
-    <main id="inicio">
+    <main id="inicio"> 
+            <div id="contenedor">
+                <div id="logo">
+                    <figure class="logo">
+                        <img src="../static/img/parabrisas_logo.png" alt="logo de la empresa">
+                    </figure>
+                </div>
 
-        <div id="padre">
-
-            <div id="caja-login">
-                <form  id="login" name="login" action="/login" method="post">
-
-                    <div class="cont-campos">
-                        <label for="correo">Correo Eletronico</label>
-                        <input class="ancho" type="email" name="correo" id="correo" placeholder="Ingrese su correo"  required>
-                    </div>
-
-                    <div class="cont-campos">
-                        <label for="">Contraseña</label>
-                        <input class="ancho" type="password" name="contrasena" id="contrasena" placeholder="Ingrese su contraseña"   required >
-                    </div>
-
-                    <div id="btn" >
-                    <button id="btn-entrar" class="boton" type="submit" value="Ingresar">Ingresar</button>
-                    </div>
-
-                    <div class="opciones">
-                        <div class="opcion">
-                            <a href="#">Usar Huella</a>
+                <div id="info">    
+                    <form id="campo_entrar" class="campo_entrar" name="login" action="/login" method="post">
+                        <div class="campos">
+                            <i class="lni lni-postcard"></i>
+                            <input id="cliente_doc" type="number" name="cedula" id="cedula" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" minlength="10" autocomplete="off" tabindex="1" placeholder="Cédula" autofocus="" required>
                         </div>
 
-                        <div class="opcion">
-                            <a href="{{url_for ('registroF')}}">Crear Usuario</a>
+                        <div class="campos">    
+                            <i class="lni lni-lock-alt"></i>
+                            <input id="cliente_cel" type="password" name="contrasena" id="contrasena"   placeholder="Contraseña" required>
                         </div>
+                        <button type="submit" class="btn fondo-color color-blanco"  value="Ingresar">Ingresar</button>
+                    </form>
 
-                        <div class="opcion">
-                            <a href="{{url_for ('solicitarCambio_contraseña')}}">¿Olvidaste tu contraseña?</a>
-                        </div>
+            
+                    <div id="entrar">
+                        <a href=""> 
+                            <figure id="huella"><img src="../static/img/huella.png" alt=""></figure>
+                        </a>
+                        
                     </div>
-
-                    {% with messages = get_flashed_messages() %}
+                </div> 
+            </div>
+            {% with messages = get_flashed_messages() %}
                         {% if messages %}
                             <ul>
                                 {% for message in messages %}
@@ -50,26 +48,8 @@
                                 {% endfor %}
                             </ul>
                         {% endif %}
-                    {% endwith %}
-
-                </form>
-            </div>
-
-            
-            <div id="caja-logo">
-                <figure>
-                    <img src="../static/img/logo_parabrisas_delvalle_PNG_sinFondo.png" id="logo-softgi" alt="softgi">
-                </figure>
-
-                <div class="ctn-texto">
-                <p>Bienvenidos a</p>
-                <h1>SOFTGI</h1>
-                </div>
-            </div>
-
-        </div>
-        
+            {% endwith %}        
+        <p class="firma">ADSO 01 2023</p>   
     </main>
-
 </body>
 </html>

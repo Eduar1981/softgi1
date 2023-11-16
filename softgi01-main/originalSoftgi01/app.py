@@ -52,7 +52,7 @@ def registro_usuario(): #defino la funcion de la ruta
             # Envía el correo de confirmación
             enviar_correo_confirmacion(nom_empleado, email_empleado, mi_token2)# ejecuto la funcion de enviar_correo_confirmacion(nom_empleado, email_empleado, mi_token2) enviado 3 variables que son nom_empleado, email_empleado, mi_token2 para enviar como imformacion al correo segun definido en la variable email_empleado con un token unico y el nombre de la persona q se le envia el correo
             tiemporegistro = datetime.datetime.now()
-            todoRegistro =[doc_empleado, nom_empleado, ape_empleado, fechaNacimiento, contactoEmpleado, email_empleado, direccion, ciudad, clave1, rol, tiemporegistro]
+            todoRegistro =[doc_empleado, nom_empleado, ape_empleado, fechaNacimiento, contactoEmpleado, email_empleado, direccion, ciudad, cifrada, rol, tiemporegistro]
             manejoDsuario.registroUsuarios(todoRegistro)
             
             fecha_registro = datetime.datetime.now()#la variable fecha _registro obtiene el tiempo hora fecha año y segundo que estas actual
@@ -141,7 +141,7 @@ def home():# hago la funcion de la ruta en este caso su nombre es home
 
 @app.route('/login', methods=["POST"])# Ruta de login
 def login():# hago la funcion de la ruta en este caso su nombre es login
-    email = request.form['correo'] # Utilizo request.form Para trear los datos dijitados en el formulario
+    cedula = request.form['cedula'] # Utilizo request.form Para trear los datos dijitados en el formulario
     password = request.form['contrasena'] # Utilizo request.form Para trear los datos dijitados en el formulario
     connt = mysql.connect()# Utilizo el con.cursor para ejecutar declaraciones  para comunicarse con la base de dato
     cursor = connt.cursor()# Utilizo el con.cursor para ejecutar declaraciones  para comunicarse con la base de dato
@@ -149,12 +149,12 @@ def login():# hago la funcion de la ruta en este caso su nombre es login
 
     """ bsql_emp = f"SELECT email_empleado='{email}', contrasena='{cifrado}' FROM empleados WHERE conemail='confirmado'" """
 
-    bsql_emp = f"SELECT empleados.email_empleado, empleados.doc_empleado, empleados.nom_empleado, empleados.ape_empleado, tokens.confir_user FROM empleados INNER JOIN tokens ON empleados.doc_empleado = tokens.doc_empleado WHERE empleados.email_empleado  = '{email}' AND empleados.contrasena='{cifrado}'"
+    bsql_emp = f"SELECT empleados.email_empleado, empleados.doc_empleado, empleados.nom_empleado, empleados.ape_empleado, tokens.confir_user FROM empleados INNER JOIN tokens ON empleados.doc_empleado = tokens.doc_empleado WHERE empleados.doc_empleado  = '{cedula}' AND empleados.contrasena='{cifrado}'"
     cursor.execute(bsql_emp)# ejecuto la consulta 
     resultado = cursor.fetchone()# agrego el resultado de la consulta a la variable resultado
     if resultado is not None:# hago una toma de desicion que donde la consulta resultado tenga dato o no esta vacia me haga el siguiente metodo
         if resultado[4] == 'confirmado':# toma de desicion que se aplica en el caso de que el correo este confirmado 
-            session["email_empleado"] = email# Utilizo session para guardar la informacion de la persona ingresada
+            session["email_empleado"] = resultado[1]# Utilizo session para guardar la informacion de la persona ingresada
             session["doc_empleado"] = resultado[1]
             session["nom_empleado"] = resultado[2]
             session["ape_empleado"] = resultado[3]
@@ -385,10 +385,11 @@ def buscar_cliente():
             # Realiza la consulta en la base de datos utilizando MySQL y Flask-MySQL
             conn = mysql.connect()
             cursor = conn.cursor()
-            cursor.execute(f"SELECT * FROM clientes WHERE nom_cliente LIKE %s", (f"%{busqueda}%",))   #buscador de clientes
+            cursor.execute("SELECT * FROM clientes WHERE estado_cliente='ACTIVO' AND nom_cliente LIKE %s", (f"%{busqueda}%",))
+   #buscador de clientes
             resultados = cursor.fetchall()
             conn.close()
-            return render_template('registroclientes.html', resultados=resultados) # Envía los resultados al mismo formulario de registroclientes.html
+            return render_template('clientes/muestraclientes.html', resulta=resultados) # Envía los resultados al mismo formulario de registroclientes.html
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))
@@ -798,7 +799,7 @@ def Actualiza_empleados():
 @app.route('/Busca_empleados', methods=['POST'])
 def Busca_empleados():
     dato_busqueda = request.form['dato_busqueda']
-    sql = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado`, `fecha_nacimiento_empleado`, `contacto_empleado`, `email_empleado`, `direccion_empleado`, `ciudad_empleado`, `rol` FROM `empleados` WHERE estado='activo' AND doc_empleado LIKE '%{dato_busqueda}%' OR estado='activo' AND nom_empleado LIKE '%{dato_busqueda}%' OR estado='activo' AND ape_empleado LIKE '%{dato_busqueda}%'"
+    sql = f"SELECT `doc_empleado`, `nom_empleado`, `ape_empleado`, `fecha_nacimiento_empleado`, `contacto_empleado`, `email_empleado`, `direccion_empleado`, `ciudad_empleado`, `rol` FROM `empleados` WHERE estado='activo' AND doc_empleado LIKE '%{dato_busqueda}%' OR nom_empleado LIKE '%{dato_busqueda}%' OR ape_empleado LIKE '%{dato_busqueda}%'"
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(sql)             # puede buscar por doc_empleado,nom_empleado y ape_empleado
@@ -1157,18 +1158,19 @@ def actualiza_compra_provee():
 
 # ------------- buscador --------------
 
-@app.route("/busca_compras_prov")
+@app.route("/busca_compras_prov", methods=['POST', 'GET'])
 def busca_compras_prov():
     if "email_empleado" in session:
-
-        dato_busqueda = request.form['dato_busqueda']
-        sql = f"SELECT `num_compra`, `proveedor_compra`, `documento_operador`, `nombre_operador`, `apellido_operador`, `date_compra`, `num_factura_proveedor` FROM `comprasproveedores WHERE estado='activo' AND num_compra LIKE '%{dato_busqueda}%' OR estado='activo' AND proveedor_compra LIKE '%{dato_busqueda}%'"
-        conn = mysql.connect()
-        cursor = conn.cursor()                  # muestra las compras a proveedores dependiendo de la busqueda
-        cursor.execute(sql)
-        resultado = cursor.fetchall()  
-        conn.commit()
-        return render_template("/compra_proveedores/muestra_compras_prove.html", resul=resultado)
+        if request.method == 'POST':
+            dato_busqueda = request.form['dato_busqueda']
+            sql = f"SELECT `num_compra`, `proveedor_compra`, `documento_operador`, `nombre_operador`, `apellido_operador`, `date_compra`, `num_factura_proveedor` FROM `comprasproveedores` WHERE estado='activo' AND (num_compra LIKE '%{dato_busqueda}%' OR proveedor_compra LIKE '%{dato_busqueda}%')"
+            conn = mysql.connect()
+            cursor = conn.cursor()                  # muestra las compras a proveedores dependiendo de la busqueda
+            cursor.execute(sql)
+            resultado = cursor.fetchall()  
+            conn.commit()
+            return render_template("/compra_proveedores/muestra_compras_prove.html", resul=resultado)
+        return redirect('muestra_compra_proved')
 
     else:
         flash('Porfavor inicia sesion para poder acceder')
@@ -2174,6 +2176,24 @@ def borraDetalleventas(id_detalle_factura):
     if "email_empleado" in session:
         Cruddevoluciones.eliminarDetalleventas(id_detalle_factura)                       
         return redirect("/detallesventas") """
+""" ======================= Buscadores ============================= """
+
+@app.route('/buscarProvedores', methods=['POST', 'GET'])
+def buscarProvedores():
+    if request.method == 'POST':
+        # Get the search term from the form
+        buscar = request.form['buscarProvedor']
+
+        # Query the database
+        conn = mysql.connect()
+        cursor = conn.cursor() 
+        cursor.execute("SELECT * FROM proveedores WHERE estado_proveedor = %s AND nom_proveedor LIKE %s", ('ACTIVO', '%' + buscar + '%',))
+        results = cursor.fetchall()
+        cursor.close()
+
+        return render_template('provedor/buscarProvedor.html', results=results)
+
+    return render_template('provedor/buscarProvedor.html')
 
 
 

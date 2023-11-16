@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Proveedores</title>
+</head>
+<body>
+    <h1>Buscar Proveedores</h1>
+
+    <form method="post" action="/buscarProvedores">
+        <label for="search_term">Buscar:</label>
+        <input type="text" name="buscarProvedor" id="buscarProvedor" required>
+        <button type="submit">Buscar</button>
+    </form>
+    <thead >
+        <table class="content-table" id="tabla_productos">
+        <tr>
+            <th>Documento proveedor</th>
+            <th>Nombre proveedor</th>
+            <th>Contacto proveedor</th>
+            <th>Correo electrónico</th>
+            <th>Dirección proveedor</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for c in results %}
+                <tr>
+                {% for i in range(0,5) %}
+
+                    <td>{{c[i]}}</td>
+
+                {% endfor %}
+            </tr>
+            {% endfor %} 
+    </tbody>
+</table>
+
+</body>
+</html>
