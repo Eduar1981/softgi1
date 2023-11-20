@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas a credito</title>
+</head>
+<body>
+    <h1>ventas a credito</h1>
+
+    <form action="buscador_venta_c" method="post" id="conten_busqueda">
+        <input type="search" placeholder="Busca por C.C cliente o por C.C operador" aria-label="Search" name="dato_busqueda" id="buscador">
+        <button type="submit">buscar</button>
+    </form>
+   
+    <table  class="content-table" id="tabla_ventas">
+        <thead >
+            <tr>
+                <th> C.C cliente</th>
+                <th>Productos</th>
+                <th>Credito total</th>
+                <th>Credito restante</th>
+                <th>c.c operador</th>
+                <th>Fecha de venta</th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for c in resul %}
+            <tr>
+                {% for i in range(1,7) %}
+                    <td>{{c[i]}}</td>
+                {% endfor %}
+                    <td>
+                        <a href="/#/{{c[0]}}">Historial de abonos</a>
+                    </td>
+                    <td>
+                        <a href="/#/{{c[0]}}">realizar abono</a>
+                    </td>
+                    <td>
+                        <a href="/#/{{c[0]}}">Venta cancelada</a>
+                    </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="boton-atras">
+        <button class="boton-atras" onclick="window.location.href='/index'">Regresar al Home</button>
+    </div>
+</body>
+</html>
