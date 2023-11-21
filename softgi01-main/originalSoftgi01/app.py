@@ -1451,16 +1451,49 @@ def muestra_detalles_ventas(num_factura):
         cursor = conn.cursor()     #muestra toda la informacion de detalles
         cursor.execute(sql)
         resultado = cursor.fetchall()
-        return render_template("/ventas/detalle_ventas.html",resul = resultado)
+        
 
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
 
 
+# -------------------------------- Buscador ventas a credito ---------------------
 
+@app.route("/buscador_venta_c", methods = ['POST'])
+def buscador_venta_c():
+    if "email_empleado" in session:
 
+        # recibe la info
+        busqueda = request.form['dato_busqueda']
 
+        sql = f"SELECT `contador`, `cliente`, `productos`, `credito_total`, `credito_restante`, `operador`, `fecha_venta` FROM `ventas_credito`  WHERE estado ='ACTIVO' AND cliente LIKE '%{busqueda}%' OR estado='ACTIVO' AND operador LIKE '%{busqueda}%'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     #muestra toda la informacion de la busqueda
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        return render_template("/ventas_credito/muestra_ventas.html",resul = resultado)
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+#-------------------------------------------------------- Historial de ventas a credito ----------------------------------------------------------------
+
+@app.route("/muestra_ventas_credito")
+def muestra_ventas_credito():
+    if "email_empleado" in session:
+        
+        sql = "SELECT `contador`, `cliente`, `productos`, `credito_total`, `credito_restante`, `operador`, `fecha_venta` FROM `ventas_credito` WHERE estado = 'ACTIVO'"
+        conn = mysql.connect()
+        cursor = conn.cursor()     #muestra toda la informacion
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        return render_template("/ventas_credito/muestra_ventas.html",resul = resultado)
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
 
 
 
@@ -2083,9 +2116,22 @@ def verCrear_ventas():
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
 
+<<<<<<< HEAD
 #--------------------------------carrito ventas--------------------------------
 @app.route("/ventas_credito")
 def credito_mostrar():
+=======
+
+#----------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------
+
+#prueba
+
+
+
+""" @app.route('/crear_venta', methods=['POST'])
+def crear_venta():
+>>>>>>> 06d58f787115791b6110e6099466b902b04b8528
     if "email_empleado" in session:
         sql= "SELECT contador, cliente, productos, credito_total, credito_restante, operador, fecha_venta FROM ventas_credito;"
         conn = mysql.connect()
