@@ -1730,7 +1730,7 @@ def elimina_todo_seleccionado_p():
                 conn.commit()
 
                 # consulto la cantidad seleccionada del producto en el carrito ventas
-                sql = f"SELECT `cantidad_adquirida` FROM `carritoventas` WHERE id_producto = '{id_producto}' AND contador = '{contador_2[i]}'"
+                sql = f"SELECT `cantidad_adquirida` FROM `carritoventas` WHERE id_producto = '{id_producto}'"
                 conn = mysql.connect()
                 cursor = conn.cursor()     
                 cursor.execute(sql)
@@ -1748,7 +1748,7 @@ def elimina_todo_seleccionado_p():
                 conn.commit()
 
                 # borro el producto seleccionado de la tabla carrito_ventas
-                sql = f"DELETE FROM `carritoventas` WHERE contador = '{contador_2[i]}'"
+                sql = f"DELETE FROM `carritoventas` WHERE id_producto = '{id_producto}'"
                 conn = mysql.connect()
                 cursor = conn.cursor()     
                 cursor.execute(sql)
@@ -1813,7 +1813,7 @@ def elimina_p_select(contador):
         conn.commit()
 
         # consulto la cantidad seleccionada del producto en el carrito ventas
-        sql = f"SELECT `cantidad_adquirida` FROM `carritoventas` WHERE id_producto = '{id_producto}' AND contador = '{contador}'"
+        sql = f"SELECT `cantidad_adquirida` FROM `carritoventas` WHERE id_producto = '{id_producto}'"
         conn = mysql.connect()
         cursor = conn.cursor()     
         cursor.execute(sql)
@@ -1831,7 +1831,7 @@ def elimina_p_select(contador):
         conn.commit()
 
         # borro el producto seleccionado de la tabla carrito_ventas
-        sql = f"DELETE FROM `carritoventas` WHERE contador = '{contador}'"
+        sql = f"DELETE FROM `carritoventas` WHERE id_producto = '{id_producto}'"
         conn = mysql.connect()
         cursor = conn.cursor()     
         cursor.execute(sql)
@@ -1862,7 +1862,7 @@ def selector_una_cantidad(id_producto):
         conn.commit()
 
          # 1 - valido si la cantidad digitada es menor a la disponible 
-        if (stock[0][0] > cantidad_adquirida):
+        if (stock[0][0] > cantidad_adquirida) or (stock[0][0] == 1 and cantidad_adquirida == 1):
 
             # consulto la informacion del producto
             sql = f"SELECT `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE id_producto = '{id_producto}'"
@@ -1883,14 +1883,46 @@ def selector_una_cantidad(id_producto):
             cursor.execute(sql)
             conn.commit()
 
-            # inserto los datos en la tabla Carrito ventas
-            sql = f"INSERT INTO `carritoventas`(`id_producto`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total`) VALUES ('{id_producto}','{info_producto_2[0]}','{info_producto_2[1]}','{cantidad_adquirida}','{info_producto_2[1]}')"
+            # 2 consulto si la cantidad  adquirida en el carrito ventas
+            sql = f"SELECT `cantidad_adquirida` FROM `carritoventas` WHERE id_producto = '{id_producto}'"
             conn = mysql.connect()
             cursor = conn.cursor()     
             cursor.execute(sql)
+            cantidad_carrito = cursor.fetchall()
             conn.commit()
+            
+            # 2 - valido si ya esta seleccionado el producto
+            if ((len(cantidad_carrito)) > 0):
+                
 
-            return redirect("/verCrear_ventas")
+                # sumamos la cantidad ya seleccionado con lo digitado
+                cantidad_total_adqui = (cantidad_carrito[0][0] + cantidad_adquirida)
+
+                # saco el nuevo total a pagar
+                total = (cantidad_total_adqui * info_producto_2[1])
+
+                # actualizo la info del registro de carrito venta
+                sql = f"UPDATE `carritoventas` SET `cantidad_adquirida`='{cantidad_total_adqui}',`total`='{total}' WHERE id_producto = '{id_producto}'"
+                conn = mysql.connect()
+                cursor = conn.cursor()     
+                cursor.execute(sql)
+                conn.commit()
+
+                return redirect("/verCrear_ventas")
+
+
+
+            # 2
+            else:
+
+                # inserto los datos en la tabla Carrito ventas
+                sql = f"INSERT INTO `carritoventas`(`id_producto`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total`) VALUES ('{id_producto}','{info_producto_2[0]}','{info_producto_2[1]}','{cantidad_adquirida}','{info_producto_2[1]}')"
+                conn = mysql.connect()
+                cursor = conn.cursor()     
+                cursor.execute(sql)
+                conn.commit()
+
+                return redirect("/verCrear_ventas")
 
         # 1
         else:
@@ -1984,30 +2016,67 @@ def confirma_p_seleccionado():
 
 
         # 1 - valido si la cantidad digitada es menor a la disponible 
-        if (stock[0][0] > cantidad_digitada):
-
-
-            # Saco el total a pagar por la catidad digitada
-            total = (precio_unidad * cantidad_digitada)
-
-            # Actualizo el stock disponible del producto 
-            stock_disponible = (stock_disponible - cantidad_digitada)
-
-            # Actualizo el stock en la base de datos
-            sql = f"UPDATE `productos` SET `cantidad_producto` = '{stock_disponible}' WHERE id_producto = '{id_producto}'"
+        if (stock[0][0] > cantidad_digitada) or (stock[0][0] == 1 and cantidad_digitada == 1):
+            
+            sql = f"SELECT `cantidad_adquirida` FROM `carritoventas` WHERE id_producto = '{id_producto}'"
             conn = mysql.connect()
             cursor = conn.cursor()     
             cursor.execute(sql)
+            cantidad_carrito = cursor.fetchall()
             conn.commit()
+            
+            # 2 - valido si ya esta seleccionado el producto
+            if ((len(cantidad_carrito)) > 0):
 
-            # inserto los datos en la tabla Carrito ventas
-            sql = f"INSERT INTO `carritoventas`(`id_producto`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total`) VALUES ('{id_producto}','{nombre_producto}','{precio_unidad}','{cantidad_digitada}','{total}')"
-            conn = mysql.connect()
-            cursor = conn.cursor()     
-            cursor.execute(sql)
-            conn.commit()
+                # Actualizo el stock disponible del producto 
+                stock_disponible = (stock_disponible - cantidad_digitada)
 
-            return redirect("/verCrear_ventas")
+                # Actualizo el stock en la base de datos
+                sql = f"UPDATE `productos` SET `cantidad_producto` = '{stock_disponible}' WHERE id_producto = '{id_producto}'"
+                conn = mysql.connect()
+                cursor = conn.cursor()     
+                cursor.execute(sql)
+                conn.commit()
+
+                # sumamos la cantidad ya seleccionado con lo digitado
+                cantidad_total_adqui = (cantidad_carrito[0][0] + cantidad_digitada)
+
+                # saco el nuevo total a pagar
+                total = (cantidad_total_adqui * precio_unidad)
+
+                # actualizo la info del registro de carrito venta
+                sql = f"UPDATE `carritoventas` SET `cantidad_adquirida`='{cantidad_total_adqui}',`total`='{total}' WHERE id_producto = '{id_producto}'"
+                conn = mysql.connect()
+                cursor = conn.cursor()     
+                cursor.execute(sql)
+                conn.commit()
+
+                return redirect("/verCrear_ventas")
+
+
+            # 2 inserta normal
+            else:
+                # Saco el total a pagar por la catidad digitada
+                total = (precio_unidad * cantidad_digitada)
+
+                # Actualizo el stock disponible del producto 
+                stock_disponible = (stock_disponible - cantidad_digitada)
+
+                # Actualizo el stock en la base de datos
+                sql = f"UPDATE `productos` SET `cantidad_producto` = '{stock_disponible}' WHERE id_producto = '{id_producto}'"
+                conn = mysql.connect()
+                cursor = conn.cursor()     
+                cursor.execute(sql)
+                conn.commit()
+
+                # inserto los datos en la tabla Carrito ventas
+                sql = f"INSERT INTO `carritoventas`(`id_producto`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total`) VALUES ('{id_producto}','{nombre_producto}','{precio_unidad}','{cantidad_digitada}','{total}')"
+                conn = mysql.connect()
+                cursor = conn.cursor()     
+                cursor.execute(sql)
+                conn.commit()
+
+                return redirect("/verCrear_ventas")
         
         # 1
         else:
@@ -2118,7 +2187,8 @@ def verCrear_ventas():
 
 
 
-
+#------------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------
 
 
 
