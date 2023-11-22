@@ -2116,49 +2116,12 @@ def verCrear_ventas():
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
 
-<<<<<<< HEAD
-#--------------------------------carrito ventas--------------------------------
-@app.route("/ventas_credito")
-def credito_mostrar():
-=======
-
-#----------------------------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------
-
-#prueba
 
 
 
-""" @app.route('/crear_venta', methods=['POST'])
-def crear_venta():
->>>>>>> 06d58f787115791b6110e6099466b902b04b8528
-    if "email_empleado" in session:
-        sql= "SELECT contador, cliente, productos, credito_total, credito_restante, operador, fecha_venta FROM ventas_credito;"
-        conn = mysql.connect()
-        cursor = conn.cursor()     
-        cursor.execute(sql) 
-        contador = cursor.fetchall()
-        conn.commit()
-    return
 
 
-@app.route("/historial_credito")
-def historial():
-    if "email_empleado" in session:
-        sql= "SELECT contador, contador_ventacredito, abono, operador, fecha_abono FROM historial_credito"
-        conn = mysql.connect()
-        cursor = conn.cursor()     
-        cursor.execute(sql) 
-        contador = cursor.fetchall()
-        conn.commit()
 
-
-@app.route('/borraDetalleventas/<id_detalle_factura>')
-def borraDetalleventas(id_detalle_factura):
-    if "email_empleado" in session:
-        Cruddevoluciones.eliminarDetalleventas(id_detalle_factura)                       
-        return redirect("/detallesventas") 
-""" ======================= Buscadores ============================= """
 
 @app.route('/buscarProvedores', methods=['POST', 'GET'])
 def buscarProvedores():
