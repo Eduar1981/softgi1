@@ -2,7 +2,7 @@ from conexion import * #Importo la conexion de la base de datos y las funciones 
 
 
 
-@app.route('/') # Inicio la ruta princimpla del programa en este caso home que me muestra como pagina principal un login
+@app.route('/') # Inicio la ruta principal del programa en este caso home que me muestra como pagina principal un login
 def registro(): # Defino la funcion de la ruta principal en este caso la funcion se llama registro
     return redirect('/home') # Retorno o lo devuelvo la ruta home para que me muestre la pagina segun la definicion
 
@@ -123,12 +123,12 @@ def confirmar_correo(token): #declaro la funcion con el nombre confirma_correo
 
 @app.route('/inicio')# Ruta de inicio
 def inicio(): # hago la funcion de la ruta en este caso su nombre es inicio
-    if "email_empleado" in session:# verifico que se alla iniciado sesion
+    if "email_empleado" in session:# verifico que se haya iniciado sesion
         return render_template('index.html') # renderizo a la pagina inicioexitoso.html
     else: # de lo contrario que no haya inicado sesion
         flash('Algo está mal en sus datos digitados') # indico un mensaje 
         return redirect(url_for('home')) # redirijo a la pagina home
-
+ 
 
 @app.route('/index')
 def index():
@@ -1667,8 +1667,16 @@ def confirma_venta():
                         cursor.execute(sql)
                         conn.commit()
 
+                        # consulta los productos seleccionados para venta
+                        sql = "SELECT `contador`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total` FROM `carritoventas`"
+                        conn = mysql.connect()
+                        cursor = conn.cursor()     
+                        cursor.execute(sql)
+                        productos_carr_actualizado = cursor.fetchall()
+                        conn.commit()
+
                         mensaje_exitoso = "¡Venta a credito realizada!"
-                        return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = 0, operador = documento_operador, mensaje_2 = mensaje_exitoso)
+                        return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr_actualizado, Total = 0, operador = documento_operador, mensaje_2 = mensaje_exitoso)
 
 
 
