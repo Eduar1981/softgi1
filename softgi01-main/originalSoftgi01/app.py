@@ -1451,8 +1451,9 @@ def muestra_detalles_ventas(num_factura):
         cursor = conn.cursor()     #muestra toda la informacion de detalles
         cursor.execute(sql)
         resultado = cursor.fetchall()
-        
 
+        return render_template("/ventas/detalle_ventas.html", resul = resultado)
+        
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
