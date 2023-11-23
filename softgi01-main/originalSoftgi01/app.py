@@ -705,7 +705,7 @@ def editar_producto(id_producto):
         cursor.execute(sql)
         resultado = cursor.fetchall()  
         conn.commit()
-        return render_template("/productos/edita_productos.html", resul= resultado[0])
+        return render_template("/productos/edita_productos.html", resul= resultado)
     else:
         flash('Algo está mal en los datos digitados')
         return redirect(url_for('home'))      
