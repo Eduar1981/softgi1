@@ -30,59 +30,59 @@
         <section id="buscar">
             <div id="buscador">
                 <i class="lni lni-search-alt"></i>
-                <input type="text">
+                <input type="text" placeholder="parabrisas, manijas, alarmas, etc...">
             </div>
         </section>
 
         <section id="modulos">
-            <div id="producto" class="modulos">
-                <a href="{{url_for('muestra_Productos')}}">
+            <a href="{{url_for('muestra_Productos')}}" class="campo_a">
+                <div id="producto" class="modulos">
                     <figure><img src="../static/img/modulos/producto.png" alt=""></figure>
-                </a>
-                <p class="titulo">Productos</p>
-            </div>
-            <div id="ventas" class="modulos">
-                <a href="{{url_for('muestra_ventas')}}">
+                    <p class="titulo">Productos</p>
+                </div>
+            </a>
+            <a href="{{url_for('muestra_ventas')}}" class="campo_a">
+                <div id="ventas" class="modulos">
                     <figure><img src="../static/img/modulos/ventas.png" alt=""></figure>
-                </a>
-                <p class="titulo">Ventas</p>
-            </div>
-            <div id="cotizaciones" class="modulos">
-                <a href="{{url_for('Cotizacion')}}">
+                    <p class="titulo">Ventas</p>
+                </div>
+            </a>
+            <a href="{{url_for('Cotizacion')}}" class="campo_a">
+                <div id="cotizaciones" class="modulos">
                     <figure><img src="../static/img/modulos/cotizaciones.png" alt=""></figure>
-                </a>
-                <p class="titulo">Cotizaciones</p>
-            </div>
-            <div id="compras_proveedores" class="modulos">
-                <a href="{{url_for('muestra_compra_proved')}}">
+                    <p class="titulo">Cotizaciones</p>
+                </div>
+            </a>
+            <a href="{{url_for('muestra_compra_proved')}}" class="campo_a">
+                <div id="compras_proveedores" class="modulos">
                     <figure><img src="../static/img/modulos/compras_proveedores.png" alt=""></figure>
-                </a>
-                <p class="titulo">Compras a proveedores</p>
-            </div>
-            <div id="devoluciones" class="modulos">
-                <a href="{{url_for('muestraDevoluciones')}}">
+                    <p class="titulo">Compras a proveedores</p>
+                </div>
+            </a>
+            <a href="{{url_for('muestraDevoluciones')}}" class="campo_a">
+                <div id="devoluciones" class="modulos">
                     <figure><img src="../static/img/modulos/devoluciones.png" alt=""></figure>
-                </a>
-                <p class="titulo">Devoluciones</p>
-            </div>
-            <div id="clientes" class="modulos">
-                <a href="{{url_for('clientes')}}">
+                    <p class="titulo">Devoluciones</p>
+                </div>
+            </a>
+            <a href="{{url_for('clientes')}}" class="campo_a">
+                <div id="clientes" class="modulos">
                     <figure><img src="../static/img/modulos/clientes.png" alt=""></figure>
+                    <p class="titulo">Clientes</p>
+                </div>
                 </a>
-                <p class="titulo">Clientes</p>
-            </div>
-            <div id="empleados" class="modulos">
-                <a href="muestra_empleados">
+            <a href="muestra_empleados" class="campo_a">
+                <div id="empleados" class="modulos">
                     <figure><img src="../static/img/modulos/empleados.png" alt=""></figure>
-                </a>
-                <p class="titulo">Empleados</p>
-            </div>
-            <div id="administracion" class="modulos">
-                <a href="">
+                    <p class="titulo">Empleados</p>
+                </div>
+            </a>
+            <a href="" class="campo_a">
+                <div id="administracion" class="modulos">
                     <figure><img src="../static/img/modulos/administracion.png" alt=""></figure>
-                </a>
-                <p class="titulo">Administración</p>
-            </div>
+                    <p class="titulo">Administración</p>
+                </div>
+            </a>
         </section>
     </main>
 </body>
