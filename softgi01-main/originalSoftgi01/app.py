@@ -1642,8 +1642,16 @@ def confirma_venta():
                         cursor.execute(sql)
                         conn.commit()
 
+                        # consulta los productos seleccionados para venta
+                        sql = "SELECT `contador`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total` FROM `carritoventas`"
+                        conn = mysql.connect()
+                        cursor = conn.cursor()     
+                        cursor.execute(sql)
+                        productos_carr_actualizado = cursor.fetchall()
+                        conn.commit()
+
                         mensaje_exitoso = "¡Venta realizada!"
-                        return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = 0, operador = documento_operador, mensaje_2 = mensaje_exitoso) 
+                        return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr_actualizado, Total = 0, operador = documento_operador, mensaje_2 = mensaje_exitoso) 
 
 
 
