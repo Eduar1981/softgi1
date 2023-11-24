@@ -1514,7 +1514,7 @@ def confirma_venta():
         documento_operador = session["doc_empleado"]
 
         # consulta los productos del inventario
-        sql = "SELECT `id_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
+        sql = "SELECT `id_producto`, `referencia_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
         conn = mysql.connect()
         cursor = conn.cursor()     
         cursor.execute(sql)
@@ -1625,7 +1625,7 @@ def confirma_venta():
                         conn.commit()
 
                         #consulto el numero de productos seleccionados
-                        sql = "SELECT COUNT(*) FROM `carritoventas`"
+                        sql = "SELECT SUM(cantidad_adquirida) FROM `carritoventas`"
                         conn = mysql.connect()
                         cursor = conn.cursor()     
                         cursor.execute(sql)
@@ -1670,7 +1670,7 @@ def confirma_venta():
                         # consulta los productos seleccionados actualizados para venta
                         sql = "SELECT `contador`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total` FROM `carritoventas`"
                         conn = mysql.connect()
-                        cursor = conn.cursor()     
+                        cursor = conn.cursor()  
                         cursor.execute(sql)
                         productos_carr_disponible = cursor.fetchall()
                         conn.commit()
@@ -1781,7 +1781,7 @@ def elimina_todo_seleccionado_p():
             documento_operador = session["doc_empleado"]
 
             # consulta los productos del inventario
-            sql = "SELECT `id_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
+            sql = "SELECT `id_producto`, `referencia_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
             conn = mysql.connect()
             cursor = conn.cursor()     
             cursor.execute(sql)
@@ -1948,7 +1948,7 @@ def selector_una_cantidad(id_producto):
             documento_operador = session["doc_empleado"]
 
             # consulta los productos del inventario
-            sql = "SELECT `id_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
+            sql = "SELECT `id_producto`, `referencia_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
             conn = mysql.connect()
             cursor = conn.cursor()     
             cursor.execute(sql)
@@ -2124,7 +2124,7 @@ def Busca_produc_ven():
         documento_operador = session["doc_empleado"]
 
         # consulta los productos del inventario segun la busqueda realizada
-        sql = f"SELECT `id_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos`  WHERE estado_producto ='ACTIVO' AND id_producto LIKE '%{busqueda}%' OR estado_producto='ACTIVO' AND nombre_producto LIKE '%{busqueda}%'"
+        sql = f"SELECT `id_producto`, `referencia_producto` , `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos`  WHERE estado_producto ='ACTIVO' AND referencia_producto LIKE '%{busqueda}%' OR estado_producto='ACTIVO' AND nombre_producto LIKE '%{busqueda}%'"
         conn = mysql.connect()
         cursor = conn.cursor()     
         cursor.execute(sql)
@@ -2169,7 +2169,7 @@ def verCrear_ventas():
         documento_operador = session["doc_empleado"]
 
         # consulta los productos del inventario
-        sql = "SELECT `id_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
+        sql = "SELECT `id_producto`, `referencia_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
         conn = mysql.connect()
         cursor = conn.cursor()     
         cursor.execute(sql)

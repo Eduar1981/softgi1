@@ -19,7 +19,7 @@
         <table>
             <thead >
                 <tr>
-                    <th>Codigo</th>
+                    <th>Referencias</th>
                     <th>Nombre producto </th>
                     <th>Precio unitario</th>
                     <th>Stock disponible</th>
@@ -31,7 +31,7 @@
             <tbody>         
                 {% for c in prod %}
                 <tr>
-                    {% for i in range(0,4) %}
+                    {% for i in range(1,5) %}
                         <td>{{c[i]}}</td>
                     {% endfor %}
                         <td>
