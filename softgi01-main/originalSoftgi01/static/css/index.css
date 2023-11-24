@@ -43,7 +43,7 @@ main#inicio{
         position: relative;
         width: 100%; 
         display: flex;
-        height: 10vh;
+        /* height: 10vh; */
     }
 
         div#logo{
@@ -63,6 +63,7 @@ main#inicio{
         }
 
             div#nombre p#usuario{
+                color: #595959;
                 font-size: 1.5em;
                 font-weight: 500;
                 margin: 8px;
@@ -89,7 +90,7 @@ section#buscar{
         }
 
         #buscador > input{
-            border: solid 1px #aaa;
+            border: solid 1px #828282;
             border-radius: 5px;
             font-family: 'Barlow', sans-serif;
             font-size: 15px;
@@ -127,17 +128,40 @@ section#modulos{
 
 .modulos{
     margin: 0 auto;
-    border: solid 1px #aaa;
+    border: none;
     border-radius: 5px;
     width: 70%;
     align-self: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* background-color: #f5f5f5; */
 }
 
 .titulo{
     font-family: 'Barlow', sans-serif;
-    color: #358CB4;
+    color: #828282;
     margin: 8px;
+}
+
+.campo_a{
+    text-decoration: none;
+}
+
+
+/*---------------------------------REPONSIVE----------------------------------*/
+
+@media screen and (min-width: 700px){
+    div#logo figure#logo{
+        width: 200px;
+
+    }   
+}
+
+
+@media screen and (min-width:1000px){
+    div#logo figure#logo{
+        width: 200px;
+
+    }   
 }
