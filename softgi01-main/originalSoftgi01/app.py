@@ -1459,6 +1459,103 @@ def muestra_detalles_ventas(num_factura):
         return redirect(url_for('home'))
 
 
+
+
+
+
+
+
+#-------------------------------------------------------- abonos ventas a credito ----------------------------------------------------------------
+
+@app.route("/abono_credito/<contador>")
+def abono_credito(contador):
+    if "email_empleado" in session:
+
+        # muestra el html
+        return render_template("/ventas_credito/abono_venta.html",cont = contador)
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
+
+# ------- recibe la info del FRONT-END -----
+
+@app.route("/confirma_abono", methods = ['POST'])
+def confirma_abono():
+    if "email_empleado" in session:
+
+        contador = request.form['contador']
+        abono = request.form['abono']
+        documento_operador = session["doc_empleado"]    
+
+        # combierto el texto a numero
+        abono = int(abono)
+
+        # conuslto el credito restante
+        sql = f"SELECT `credito_restante` FROM `ventas_credito` WHERE contador = '{contador}'"
+        conn = mysql.connect()
+        cursor = conn.cursor()    
+        cursor.execute(sql)
+        credito_restante = cursor.fetchall()
+        conn.commit()
+
+        # 1 - valido si la cantidad digitada es menor a la debida
+        if (credito_restante[0][0] >= abono):
+
+            credito_actual = (credito_restante[0][0] - abono)
+            tiempo_venta = datetime.datetime.now()
+
+            # 2 - valido si la resta = 0
+            if (credito_actual == 0):
+
+                # se cambia el estado de ACTIVO a CANCELADO
+                ventas.abono_completo(contador)
+                return redirec("/muestra_ventas_credito")
+            
+            
+            # 2 
+            else:
+                # se incerta la info
+                ventas.actualiza_credito_rest([credito_actual, contador])
+
+
+        # 1
+        else:
+            mensaj = "¡Cantidd digitada mayor a la debida!"
+            return render_template("/ventas_credito/abono_venta.html",cont = contador, mensaje = mensaj)
+            
+
+
+
+
+
+
+
+
+
+
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
+#-------------------------------------------------------- Cancelador ventas a credito ----------------------------------------------------------------
+
+@app.route("/cancela_venta_c/<contador>")
+def cancela_venta_c(contador):
+    if "email_empleado" in session:
+
+        ventas.venta_cancelada_cred(contador)
+        return redirec("/muestra_ventas_credito")
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
 # -------------------------------- Buscador ventas a credito ---------------------
 
 @app.route("/buscador_venta_c", methods = ['POST'])
@@ -1495,6 +1592,9 @@ def muestra_ventas_credito():
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
+
+
+
 
 
 
@@ -1667,7 +1767,6 @@ def confirma_venta():
                         cursor.execute(sql)
                         conn.commit()
 
-<<<<<<< HEAD
                         # consulta los productos seleccionados actualizados para venta
                         sql = "SELECT `contador`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total` FROM `carritoventas`"
                         conn = mysql.connect()
@@ -1678,18 +1777,7 @@ def confirma_venta():
 
                         mensaje_exitoso = "¡Venta a credito realizada!"
                         return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr_disponible, Total = 0, operador = documento_operador, mensaje_2 = mensaje_exitoso)
-=======
-                        # consulta los productos seleccionados para venta
-                        sql = "SELECT `contador`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total` FROM `carritoventas`"
-                        conn = mysql.connect()
-                        cursor = conn.cursor()     
-                        cursor.execute(sql)
-                        productos_carr_actualizado = cursor.fetchall()
-                        conn.commit()
 
-                        mensaje_exitoso = "¡Venta a credito realizada!"
-                        return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr_actualizado, Total = 0, operador = documento_operador, mensaje_2 = mensaje_exitoso)
->>>>>>> 6acf3d6707ca1db2158c78f45582bfa36ff33d60
 
 
 

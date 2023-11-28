@@ -23,6 +23,23 @@ class Ventas:
             sql = f"INSERT INTO `ventas_credito`(`cliente`, `productos`, `credito_total`, `credito_restante`, `operador`, `fecha_venta`, `estado`) VALUES ('{venta[0]}','{venta[1]}','{venta[2]}','{venta[3]}','{venta[4]}','{venta[5]}','ACTIVO')"
             self.cursor.execute(sql)
             self.conexion.commit()
+
+    def venta_cancelada_cred(self, contador):
+            sql = f"UPDATE `ventas_credito` SET `estado`='PAGADA' WHERE contador = '{contador}'"
+            self.cursor.execute(sql)
+            self.conexion.commit()
+
+    # abono por si se completa el credito
+    def abono_completo(self, contador):
+            sql = f"UPDATE `ventas_credito` SET `credito_restante`='{0}', `estado`='PAGADO' WHERE contador = '{contador}'"
+            self.cursor.execute(sql)
+            self.conexion.commit()
+
+    # actualiza credito restante
+    def actualiza_credito_rest(self, info):
+            sql = f"UPDATE `ventas_credito` SET `credito_restante`='{info[0]}' WHERE contador = '{info[1]}'"
+            self.cursor.execute(sql)
+            self.conexion.commit()
         
 
 
