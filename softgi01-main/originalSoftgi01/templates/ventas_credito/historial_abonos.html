@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/muestra_ventas_credito">Regresar</a>
+    <br>
+    <h1>Historial de abonos</h1>
+    <br>
+    <table  class="content-table" id="tabla_ventas">
+        <thead >
+            <tr>
+                <th>Total abonado</th>
+                <th>C.C operador</th>
+                <th>Fecha</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for c in resul %}
+            <tr>
+
+                {% for i in range(0,3) %}
+                    <td>{{c[i]}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1465,6 +1465,25 @@ def muestra_detalles_ventas(num_factura):
 
 
 
+#-------------------------------------------------------- Muestra Historial de abonos ----------------------------------------------------------------
+
+@app.route("/historial_abonos/<contador>")
+def historial_abonos(contador):
+    if "email_empleado" in session:
+        
+        sql = f"SELECT `abono`, `operador`, `fecha_abono` FROM `historial_credito` WHERE contador_ventacredito = '{contador}' ORDER BY contador DESC"
+        conn = mysql.connect()
+        cursor = conn.cursor()     #muestra toda la informacion
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        conn.commit()
+        return render_template("/ventas_credito/historial_abonos.html",resul = resultado)
+
+    else:
+        flash('Porfavor inicia sesion para poder acceder')
+        return redirect(url_for('home'))
+
+
 #-------------------------------------------------------- abonos ventas a credito ----------------------------------------------------------------
 
 @app.route("/abono_credito/<contador>")
@@ -1492,7 +1511,7 @@ def confirma_abono():
 
         # combierto el texto a numero
         abono = int(abono)
-
+        
         # conuslto el credito restante
         sql = f"SELECT `credito_restante` FROM `ventas_credito` WHERE contador = '{contador}'"
         conn = mysql.connect()
@@ -1512,31 +1531,23 @@ def confirma_abono():
 
                 # se cambia el estado de ACTIVO a CANCELADO
                 ventas.abono_completo(contador)
-                return redirec("/muestra_ventas_credito")
+                return redirect("/muestra_ventas_credito")
             
             
             # 2 
             else:
-                # se incerta la info
+                # se actualiza el credito restante
                 ventas.actualiza_credito_rest([credito_actual, contador])
 
+                # se incerta en el historial el abono realizado
+                ventas.insert_historial_abn([contador, abono, documento_operador, tiempo_venta])
+                return redirect("/muestra_ventas_credito")
 
         # 1
         else:
             mensaj = "¡Cantidd digitada mayor a la debida!"
             return render_template("/ventas_credito/abono_venta.html",cont = contador, mensaje = mensaj)
             
-
-
-
-
-
-
-
-
-
-
-
     else:
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
@@ -1548,8 +1559,9 @@ def confirma_abono():
 def cancela_venta_c(contador):
     if "email_empleado" in session:
 
+        # funciona al validar q se pago completo el credito 
         ventas.venta_cancelada_cred(contador)
-        return redirec("/muestra_ventas_credito")
+        return redirect("/muestra_ventas_credito")
 
     else:
         flash('Porfavor inicia sesion para poder acceder')
@@ -1576,7 +1588,7 @@ def buscador_venta_c():
         flash('Porfavor inicia sesion para poder acceder')
         return redirect(url_for('home'))
 
-#-------------------------------------------------------- Historial de ventas a credito ----------------------------------------------------------------
+#-------------------------------------------------------- muestra Historial de ventas a credito ----------------------------------------------------------------
 
 @app.route("/muestra_ventas_credito")
 def muestra_ventas_credito():

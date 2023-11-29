@@ -19,11 +19,13 @@ class Ventas:
 
 # ----------------------------------------- VENTAS A CREDITO ----------------------------------------------------
 
+    # ingresa la info de venta a credito
     def crear_venta_credito(self, venta):
             sql = f"INSERT INTO `ventas_credito`(`cliente`, `productos`, `credito_total`, `credito_restante`, `operador`, `fecha_venta`, `estado`) VALUES ('{venta[0]}','{venta[1]}','{venta[2]}','{venta[3]}','{venta[4]}','{venta[5]}','ACTIVO')"
             self.cursor.execute(sql)
             self.conexion.commit()
 
+    # si se pago el credito completo estado = pagadoj 
     def venta_cancelada_cred(self, contador):
             sql = f"UPDATE `ventas_credito` SET `estado`='PAGADA' WHERE contador = '{contador}'"
             self.cursor.execute(sql)
@@ -40,13 +42,19 @@ class Ventas:
             sql = f"UPDATE `ventas_credito` SET `credito_restante`='{info[0]}' WHERE contador = '{info[1]}'"
             self.cursor.execute(sql)
             self.conexion.commit()
-        
 
-
+    # incerta el abono en el historial 
+    def insert_historial_abn(self, info):
+            sql = f"INSERT INTO `historial_credito`(`contador_ventacredito`, `abono`, `operador`, `fecha_abono`) VALUES ('{info[0]}','{info[1]}','{info[2]}','{info[3]}')"
+            self.cursor.execute(sql)
+            self.conexion.commit()
 
 # -----------------------------------------------------------------------------------------------------------------
 
  
+
+
+
         
     def buscar_venta(self, num_factura):
         sql = f"SELECT num_factura FROM ventas WHERE num_factura = '{num_factura}'"
