@@ -21,6 +21,9 @@ figure img{
     margin: 0;
     width: 100%;
 }
+a :hover {
+    background-color: chartreuse;
+}
 
 main#inicio{
     margin: 0;
