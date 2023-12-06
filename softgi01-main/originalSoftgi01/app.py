@@ -154,10 +154,23 @@ def login():# hago la funcion de la ruta en este caso su nombre es login
     resultado = cursor.fetchone()# agrego el resultado de la consulta a la variable resultado
     if resultado is not None:# hago una toma de desicion que donde la consulta resultado tenga dato o no esta vacia me haga el siguiente metodo
         if resultado[4] == 'confirmado':# toma de desicion que se aplica en el caso de que el correo este confirmado 
-            session["email_empleado"] = resultado[1]# Utilizo session para guardar la informacion de la persona ingresada
+            session["email_empleado"] = resultado[0]# Utilizo session para guardar la informacion de la persona ingresada
             session["doc_empleado"] = resultado[1]
             session["nom_empleado"] = resultado[2]
             session["ape_empleado"] = resultado[3]
+
+            # consulta el rol del empleado
+            sql = f"SELECT `rol` FROM `empleados` WHERE doc_empleado = '{resultado[1]}'"
+            conn = mysql.connect()
+            cursor = conn.cursor() 
+            cursor.execute(sql)
+            rol = cursor.fetchall()
+            conn.commit()
+
+            # se almacena el resultado
+            session["rol"] = rol[0][0]
+
+
             print(session)
             print(resultado)
             return redirect(url_for('inicio'))#redirijo 
@@ -2278,38 +2291,44 @@ def Busca_produc_ven():
 def verCrear_ventas():
     if "email_empleado" in session:
 
-        # Muestra el documento del operador
-        documento_operador = session["doc_empleado"]
+        rol = session["rol"]
+        if rol == "administrado" or rol == "vendedor":
 
-        # consulta los productos del inventario
-        sql = "SELECT `id_producto`, `referencia_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
-        conn = mysql.connect()
-        cursor = conn.cursor()     
-        cursor.execute(sql)
-        productos_inven = cursor.fetchall()
-        conn.commit()
+            # Muestra el documento del operador
+            documento_operador = session["doc_empleado"]
 
-        # consulta los productos seleccionados para venta
-        sql = "SELECT `contador`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total` FROM `carritoventas`"
-        conn = mysql.connect()
-        cursor = conn.cursor()     
-        cursor.execute(sql)
-        productos_carr = cursor.fetchall()
-        conn.commit()
+            # consulta los productos del inventario
+            sql = "SELECT `id_producto`, `referencia_producto`, `nombre_producto`, `precio_venta`, `cantidad_producto` FROM `productos` WHERE `estado_producto`= 'ACTIVO'"
+            conn = mysql.connect()
+            cursor = conn.cursor()     
+            cursor.execute(sql)
+            productos_inven = cursor.fetchall()
+            conn.commit()
 
-        # Realiza la suma de el total de todos los productos seleccionados
-        sql = "SELECT SUM(total) FROM carritoventas"
-        conn = mysql.connect()
-        cursor = conn.cursor()     
-        cursor.execute(sql) 
-        Suma_total = cursor.fetchall()
-        conn.commit()
+            # consulta los productos seleccionados para venta
+            sql = "SELECT `contador`, `nombre_producto`, `precio_venta`, `cantidad_adquirida`, `total` FROM `carritoventas`"
+            conn = mysql.connect()
+            cursor = conn.cursor()     
+            cursor.execute(sql)
+            productos_carr = cursor.fetchall()
+            conn.commit()
 
-        # le asigno el 0 si la suma es none
-        if Suma_total[0][0] is not None:
-            return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = Suma_total[0][0], operador = documento_operador) 
+            # Realiza la suma de el total de todos los productos seleccionados
+            sql = "SELECT SUM(total) FROM carritoventas"
+            conn = mysql.connect()
+            cursor = conn.cursor()     
+            cursor.execute(sql) 
+            Suma_total = cursor.fetchall()
+            conn.commit()
+
+            # le asigno el 0 si la suma es none
+            if Suma_total[0][0] is not None:
+                return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = Suma_total[0][0], operador = documento_operador) 
+            else:
+                return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = 0, operador = documento_operador) 
+        
         else:
-             return render_template('ventas/registrar_venta.html', prod = productos_inven, prod_carr = productos_carr, Total = 0, operador = documento_operador) 
+            return redirect("/inicio")
 
     else:
         flash('Porfavor inicia sesion para poder acceder')
